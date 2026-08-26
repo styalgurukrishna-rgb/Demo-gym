@@ -1,0 +1,6 @@
+{
+  "name": "KSG DEMO GYM",
+  "description": "World-Class Luxury Cinematic Fitness Website - Transform Your Body. Upgrade Your Life.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
