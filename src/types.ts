@@ -10,6 +10,9 @@ export type PageType =
   | 'pricing'
   | 'booking'
   | 'contact'
+  | 'privacy'
+  | 'terms'
+  | 'not-found'
   | 'login'
   | 'member-dashboard'
   | 'trainer-dashboard'
@@ -145,8 +148,22 @@ export interface DemoInquiryLead {
   createdAt: string;
 }
 
+export interface SeoConfig {
+  metaTitle: string;
+  metaDescription: string;
+  keywords: string[];
+  ogImage?: string;
+  canonicalUrl?: string;
+  author?: string;
+  robots?: string;
+}
+
 export interface BrandConfig {
   gymName: string;
+  name?: string;
+  shortName?: string;
+  logoSubtitle?: string;
+  establishedYear?: string;
   tagline: string;
   logo: string;
   logoBadge: string;
@@ -154,6 +171,7 @@ export interface BrandConfig {
   aboutText: string;
   storyHeading: string;
   storyDescription: string;
+  experienceYears?: string;
 }
 
 export interface ThemeColors {
@@ -162,6 +180,8 @@ export interface ThemeColors {
   accentColor: string;
   backgroundColor: string;
   textColor: string;
+  primary?: string;
+  secondary?: string;
 }
 
 export interface HeroConfig {
@@ -171,6 +191,13 @@ export interface HeroConfig {
   secondaryButtonText: string;
   heroImage: string;
   heroVideo: string;
+  badge?: string;
+  titleMain?: string;
+  titleHighlight?: string;
+  subtitle?: string;
+  primaryCtaText?: string;
+  secondaryCtaText?: string;
+  backgroundImage?: string;
 }
 
 export interface ContactConfig {
@@ -184,21 +211,35 @@ export interface ContactConfig {
   instagram: string;
   facebook: string;
   youtube: string;
+  landmark?: string;
+  state?: string;
+  pincode?: string;
+  workingHours?: {
+    weekdays: string;
+    sunday: string;
+  };
 }
 
 export interface WhatsAppConfig {
   whatsappNumber: string;
   defaultMessage: string;
   trainerDefaultMessage?: string;
+  number?: string;
 }
 
 export interface GymConfig {
   id: string;
   brand: BrandConfig;
   colors: ThemeColors;
+  theme?: {
+    primary: string;
+    secondary: string;
+    accent?: string;
+  };
   hero: HeroConfig;
   contact: ContactConfig;
   whatsapp: WhatsAppConfig;
+  seo: SeoConfig;
   demoMode: boolean;
   whiteLabelMode: boolean;
   clientPreviewMode: boolean;

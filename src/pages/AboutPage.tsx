@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { GYM_INFO, STATS_DATA, TIMELINE_DATA, TRAINERS } from '../data/gymData';
 import { PageType, ModalState, Trainer } from '../types';
+import { AboutFaqSection } from '../components/AboutFaqSection';
 
 interface AboutPageProps {
   onNavigate: (page: PageType) => void;
@@ -285,7 +286,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenModal })
         </div>
       </section>
 
-      {/* 6. CALL TO ACTION */}
+      {/* 6. FREQUENTLY ASKED QUESTIONS */}
+      <AboutFaqSection onNavigate={onNavigate} onOpenModal={onOpenModal} />
+
+      {/* 7. CALL TO ACTION */}
       <section className="py-16 bg-gradient-to-r from-zinc-900 via-zinc-950 to-zinc-900 border-t border-zinc-800 text-center">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-2xl sm:text-4xl font-black text-white uppercase tracking-tight">

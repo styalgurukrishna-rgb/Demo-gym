@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { 
   Star, 
@@ -12,8 +12,8 @@ import {
   Sparkles,
   PhoneCall
 } from 'lucide-react';
-import { TRAINERS } from '../data/gymData';
 import { PageType, ModalState, Trainer } from '../types';
+import { leadStore } from '../services/leadStore';
 
 interface TrainersPageProps {
   onNavigate: (page: PageType) => void;
@@ -22,6 +22,14 @@ interface TrainersPageProps {
 
 export const TrainersPage: React.FC<TrainersPageProps> = ({ onNavigate, onOpenModal }) => {
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>('all');
+  const [trainers, setTrainers] = useState<Trainer[]>(leadStore.getTrainers());
+
+  useEffect(() => {
+    const unsub = leadStore.subscribe(() => {
+      setTrainers(leadStore.getTrainers());
+    });
+    return () => unsub();
+  }, []);
 
   const specialties = [
     { id: 'all', label: 'All Master Coaches' },
@@ -32,13 +40,14 @@ export const TrainersPage: React.FC<TrainersPageProps> = ({ onNavigate, onOpenMo
     { id: 'crossfit', label: 'CrossFit & Olympic Lifting' }
   ];
 
-  const filteredTrainers = TRAINERS.filter((trainer: Trainer) => {
+  const filteredTrainers = trainers.filter((trainer: Trainer) => {
     if (selectedSpecialty === 'all') return true;
-    if (selectedSpecialty === 'strength') return trainer.specialization.toLowerCase().includes('powerlifting') || trainer.specialization.toLowerCase().includes('hypertrophy');
-    if (selectedSpecialty === 'recomp') return trainer.specialization.toLowerCase().includes('recomposition') || trainer.specialization.toLowerCase().includes('dietetics');
-    if (selectedSpecialty === 'hiit') return trainer.specialization.toLowerCase().includes('vo2') || trainer.specialization.toLowerCase().includes('hiit');
-    if (selectedSpecialty === 'mobility') return trainer.specialization.toLowerCase().includes('mobility') || trainer.specialization.toLowerCase().includes('rehab');
-    if (selectedSpecialty === 'crossfit') return trainer.specialization.toLowerCase().includes('olympic') || trainer.specialization.toLowerCase().includes('plyometrics');
+    const spec = (trainer.specialization || '').toLowerCase();
+    if (selectedSpecialty === 'strength') return spec.includes('powerlifting') || spec.includes('hypertrophy') || spec.includes('strength');
+    if (selectedSpecialty === 'recomp') return spec.includes('recomposition') || spec.includes('diet') || spec.includes('fat loss');
+    if (selectedSpecialty === 'hiit') return spec.includes('vo2') || spec.includes('hiit') || spec.includes('conditioning');
+    if (selectedSpecialty === 'mobility') return spec.includes('mobility') || spec.includes('rehab') || spec.includes('posture');
+    if (selectedSpecialty === 'crossfit') return spec.includes('olympic') || spec.includes('plyometrics') || spec.includes('crossfit');
     return true;
   });
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { 
   CheckCircle2, 
@@ -11,8 +11,9 @@ import {
   CreditCard,
   QrCode
 } from 'lucide-react';
-import { PRICING_PLANS, FAQS } from '../data/gymData';
+import { FAQS } from '../data/gymData';
 import { PageType, ModalState, PricingPlan } from '../types';
+import { leadStore } from '../services/leadStore';
 
 interface PricingPageProps {
   onNavigate: (page: PageType) => void;
@@ -21,6 +22,14 @@ interface PricingPageProps {
 
 export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenModal }) => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'quarterly' | 'annual'>('monthly');
+  const [plans, setPlans] = useState<PricingPlan[]>(leadStore.getPlans());
+
+  useEffect(() => {
+    const unsub = leadStore.subscribe(() => {
+      setPlans(leadStore.getPlans());
+    });
+    return () => unsub();
+  }, []);
 
   const discountMultiplier = billingCycle === 'annual' ? 0.75 : billingCycle === 'quarterly' ? 0.88 : 1;
 
@@ -90,13 +99,25 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenModa
               <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-emerald-500 text-black font-extrabold">Save 25%</span>
             </button>
           </div>
+
+          {/* Help Me Choose Button */}
+          <div className="mt-6">
+            <button
+              id="pricing-help-me-choose-btn"
+              onClick={() => onOpenModal('helpMeChoose')}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/40 text-amber-400 font-extrabold text-xs uppercase tracking-wider transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95"
+            >
+              <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+              <span>Not Sure Which Plan? • Help Me Choose</span>
+            </button>
+          </div>
         </div>
       </section>
 
       {/* 2. PRICING CARDS */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {PRICING_PLANS.map((plan: PricingPlan, idx: number) => {
+          {plans.map((plan: PricingPlan, idx: number) => {
             const calculatedPrice = Math.round(plan.price * discountMultiplier);
             const isHighlight = plan.isPopular || plan.isVIP;
 

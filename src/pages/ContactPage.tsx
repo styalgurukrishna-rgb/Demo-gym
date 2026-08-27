@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { 
   MapPin, 
@@ -13,9 +13,9 @@ import {
   Building2,
   Navigation
 } from 'lucide-react';
-import { GYM_INFO } from '../data/gymData';
-import { PageType, ModalState } from '../types';
+import { PageType, ModalState, GymConfig } from '../types';
 import { leadStore } from '../services/leadStore';
+import { gymConfigStore } from '../services/gymConfigStore';
 
 interface ContactPageProps {
   onNavigate: (page: PageType) => void;
@@ -23,6 +23,15 @@ interface ContactPageProps {
 }
 
 export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
+  const [config, setConfig] = useState<GymConfig>(gymConfigStore.getConfig());
+
+  useEffect(() => {
+    const unsub = gymConfigStore.subscribe((newConfig) => {
+      setConfig(newConfig);
+    });
+    return () => unsub();
+  }, []);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -59,8 +68,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
   };
 
   const handleWhatsAppDirect = () => {
-    const text = `Hi KSG DEMO GYM! I would like to inquire about membership and training packages.`;
-    window.open(`https://wa.me/${GYM_INFO.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(text)}`, '_blank');
+    const text = `Hi ${config.brand.gymName}! I would like to inquire about membership and training packages.`;
+    const num = (config.whatsapp.number || '+919876543210').replace(/[^0-9]/g, '');
+    window.open(`https://wa.me/${num}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   return (
@@ -73,7 +83,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
             <Building2 className="w-4 h-4" /> Always Accessible
           </div>
           <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white uppercase leading-tight">
-            CONTACT <span className="text-amber-400">KSG DEMO GYM</span>
+            CONTACT <span className="text-amber-400">{config.brand.gymName}</span>
           </h1>
           <p className="text-base sm:text-xl text-zinc-300 max-w-2xl mx-auto mt-4 font-light">
             Have questions about memberships, coaching, or corporate athletic programs? Connect with our team 24/7.
@@ -89,11 +99,11 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
               <span>CHAT ON WHATSAPP</span>
             </button>
             <a
-              href={`tel:${GYM_INFO.phone}`}
+              href={`tel:${config.contact.phone || '+91 98765 43210'}`}
               className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-bold text-xs uppercase tracking-wider border border-zinc-800 transition-all"
             >
               <Phone className="w-4 h-4 text-amber-400" />
-              <span>CALL: {GYM_INFO.phone}</span>
+              <span>CALL: {config.contact.phone || '+91 98765 43210'}</span>
             </a>
           </div>
         </div>
@@ -236,7 +246,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                   <MapPin className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-zinc-200 block">Address</span>
-                    <span className="text-zinc-400">{GYM_INFO.address}</span>
+                    <span className="text-zinc-400">{config.contact.address || 'Indiranagar 100ft Road, Bangalore'}</span>
                   </div>
                 </div>
 
@@ -244,7 +254,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                   <Clock className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-zinc-200 block">Operating Hours</span>
-                    <span className="text-zinc-400">{GYM_INFO.hours}</span>
+                    <span className="text-zinc-400">{config.contact.hours || '5:00 AM - 11:00 PM'}</span>
                   </div>
                 </div>
 
@@ -252,7 +262,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                   <Phone className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-zinc-200 block">Phone</span>
-                    <span className="text-zinc-400">{GYM_INFO.phone}</span>
+                    <span className="text-zinc-400">{config.contact.phone || '+91 98765 43210'}</span>
                   </div>
                 </div>
 
@@ -260,7 +270,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                   <Mail className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-zinc-200 block">Email</span>
-                    <span className="text-zinc-400">{GYM_INFO.email}</span>
+                    <span className="text-zinc-400">{config.contact.email || 'contact@ksggym.com'}</span>
                   </div>
                 </div>
               </div>

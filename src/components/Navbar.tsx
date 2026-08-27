@@ -16,8 +16,9 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { soundManager } from './common/SoundEffects';
-import { PageType, ModalState, User as UserType } from '../types';
+import { PageType, ModalState, User as UserType, GymConfig } from '../types';
 import { leadStore } from '../services/leadStore';
+import { gymConfigStore } from '../services/gymConfigStore';
 
 interface NavbarProps {
   currentPage: PageType;
@@ -34,6 +35,14 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [currentUser, setCurrentUser] = useState<UserType | null>(null);
+  const [config, setConfig] = useState<GymConfig>(gymConfigStore.getConfig());
+
+  useEffect(() => {
+    const unsub = gymConfigStore.subscribe((newConfig) => {
+      setConfig(newConfig);
+    });
+    return () => unsub();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -93,17 +102,21 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => handleNavClick('home')}
             className="flex items-center gap-2.5 group focus:outline-none shrink-0 cursor-pointer text-left"
           >
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-red-500 via-amber-500 to-yellow-500 p-[1.5px] shadow-lg shadow-red-900/30 group-hover:scale-105 transition-transform duration-300">
-              <div className="w-full h-full bg-zinc-950 rounded-[10px] flex items-center justify-center">
-                <Dumbbell className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 group-hover:rotate-12 transition-transform duration-300" />
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 p-[1.5px] shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform duration-300">
+              <div className="w-full h-full bg-zinc-950 rounded-[10px] flex items-center justify-center overflow-hidden">
+                {config.brand.logoUrl ? (
+                  <img src={config.brand.logoUrl} alt={config.brand.gymName} className="w-full h-full object-cover" />
+                ) : (
+                  <Dumbbell className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400 group-hover:rotate-12 transition-transform duration-300" />
+                )}
               </div>
             </div>
             <div className="flex flex-col">
               <span className="font-sans font-black tracking-wider text-base sm:text-lg text-white flex items-center gap-1 uppercase">
-                KSG <span className="text-amber-400">DEMO</span> <span className="text-red-500">GYM</span>
+                {config.brand.gymName}
               </span>
-              <span className="text-[9px] tracking-[0.22em] text-zinc-400 font-bold uppercase -mt-0.5">
-                Luxury Fitness Platform
+              <span className="text-[9px] tracking-[0.22em] text-zinc-400 font-bold uppercase -mt-0.5 truncate max-w-[180px]">
+                {config.brand.tagline || 'Luxury Fitness Platform'}
               </span>
             </div>
           </button>

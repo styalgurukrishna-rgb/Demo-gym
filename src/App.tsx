@@ -3,8 +3,10 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { FloatingActions } from './components/FloatingActions';
 import { LoadingScreen } from './components/LoadingScreen';
+import { CookieConsentBanner } from './components/CookieConsentBanner';
+import { OfflineNotice } from './components/OfflineNotice';
 
-// 12 Full Production Pages
+// Production Pages
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { ProgramsPage } from './pages/ProgramsPage';
@@ -18,6 +20,9 @@ import { LoginPage } from './pages/LoginPage';
 import { MemberDashboardPage } from './pages/MemberDashboardPage';
 import { TrainerDashboardPage } from './pages/TrainerDashboardPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
+import { TermsPage } from './pages/TermsPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 // Modals
 import { JoinModal } from './components/Modals/JoinModal';
@@ -33,9 +38,16 @@ import { AdminCrmModal } from './components/Modals/AdminCrmModal';
 import { ExitIntentModal } from './components/Modals/ExitIntentModal';
 import { ConsultationModal } from './components/Modals/ConsultationModal';
 import { DemoHighlightsModal } from './components/Modals/DemoHighlightsModal';
+import { DemoInquiryModal } from './components/Modals/DemoInquiryModal';
+import { SmartPlanAdvisorModal } from './components/Modals/SmartPlanAdvisorModal';
+import { DemoWebsiteBadge } from './components/DemoWebsiteBadge';
 
 import { PageType, ModalState, Program, Trainer, Facility, PricingPlan, MemberProfile } from './types';
 import { leadStore } from './services/leadStore';
+import { gymConfigStore } from './services/gymConfigStore';
+import { applyPageSeo } from './utils/seo';
+import { updateStructuredData } from './utils/structuredData';
+import { analytics } from './utils/analytics';
 import { Sparkles } from 'lucide-react';
 import { soundManager } from './components/common/SoundEffects';
 
@@ -43,7 +55,7 @@ export default function App() {
   // Loading screen state
   const [isLoading, setIsLoading] = useState(true);
 
-  // 12-Page Navigation Routing State
+  // Dynamic Routing State
   const [currentPage, setCurrentPage] = useState<PageType>('home');
 
   // Modal states
@@ -59,12 +71,33 @@ export default function App() {
   const [selectedTrainer, setSelectedTrainer] = useState<Trainer | null>(null);
   const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
 
-  // Exit intent detection
+  // Apply dynamic SEO and structured data whenever page or config changes
+  useEffect(() => {
+    const config = gymConfigStore.getConfig();
+    applyPageSeo(currentPage, config);
+    updateStructuredData(config);
+    analytics.trackEvent('page_view', { page: currentPage });
+  }, [currentPage]);
+
+  // Subscribe to config changes for real-time SEO & Schema updates
+  useEffect(() => {
+    const unsub = gymConfigStore.subscribe((newCfg) => {
+      applyPageSeo(currentPage, newCfg);
+      updateStructuredData(newCfg);
+    });
+    return () => unsub();
+  }, [currentPage]);
+
+  // Exit intent detection (session-based)
   useEffect(() => {
     let hasTriggered = false;
+    const isDismissed = sessionStorage.getItem('ksg_exit_intent_dismissed');
+    if (isDismissed) return;
+
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 10 && !hasTriggered) {
         hasTriggered = true;
+        sessionStorage.setItem('ksg_exit_intent_dismissed', 'true');
         setModalState({ type: 'exitIntent' });
       }
     };
@@ -166,6 +199,15 @@ export default function App() {
         {currentPage === 'contact' && (
           <ContactPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
         )}
+        {currentPage === 'privacy' && (
+          <PrivacyPolicyPage onNavigate={handleNavigate} />
+        )}
+        {currentPage === 'terms' && (
+          <TermsPage onNavigate={handleNavigate} />
+        )}
+        {currentPage === 'not-found' && (
+          <NotFoundPage onNavigate={handleNavigate} />
+        )}
         {currentPage === 'login' && (
           <LoginPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
         )}
@@ -179,6 +221,12 @@ export default function App() {
           <AdminDashboardPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
         )}
       </main>
+
+      {/* Network Offline Status Alert */}
+      <OfflineNotice />
+
+      {/* Cookie & Privacy Consent Banner */}
+      <CookieConsentBanner onViewPrivacyPolicy={() => handleNavigate('privacy')} />
 
       {/* 4. Footer */}
       <Footer onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
@@ -261,6 +309,24 @@ export default function App() {
           handleCloseModal();
           handleNavigate('booking');
         }}
+        onViewMembership={() => {
+          handleCloseModal();
+          handleNavigate('pricing');
+        }}
+      />
+
+      {/* Smart Plan Advisor / Help Me Choose Modal */}
+      <SmartPlanAdvisorModal
+        isOpen={modalState.type === 'helpMeChoose'}
+        onClose={handleCloseModal}
+        onSelectPlan={(plan) => {
+          handleCloseModal();
+          handleOpenModal('payment', { plan, finalPrice: plan.price, billingCycle: 'monthly' });
+        }}
+        onBookTrial={() => {
+          handleCloseModal();
+          handleNavigate('booking');
+        }}
       />
 
       {/* 9. Virtual Tour 4K Player Popup */}
@@ -316,6 +382,18 @@ export default function App() {
           handleCloseModal();
           handleNavigate('booking');
         }}
+      />
+
+      {/* 14. Demo Website Inquiry Modal */}
+      <DemoInquiryModal
+        isOpen={modalState.type === 'demoInquiry'}
+        onClose={handleCloseModal}
+      />
+
+      {/* Floating Demo Website Badge */}
+      <DemoWebsiteBadge
+        onOpenCustomizer={() => handleNavigate('admin-dashboard')}
+        onOpenInquiry={() => handleOpenModal('demoInquiry')}
       />
     </div>
   );

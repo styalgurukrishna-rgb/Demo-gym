@@ -4,8 +4,9 @@ import { Sparkles, ArrowRight, Flame, Award, ChevronLeft, ChevronRight } from 'l
 import { soundManager } from './common/SoundEffects';
 
 interface TransformationSectionProps {
-  onOpenConsultation: () => void;
-  onOpenTrial: () => void;
+  onOpenConsultation?: () => void;
+  onOpenTrial?: () => void;
+  onStartTransformation?: () => void;
 }
 
 const TRANSFORMATIONS = [
@@ -62,7 +63,9 @@ const TRANSFORMATIONS = [
 export const TransformationSection: React.FC<TransformationSectionProps> = ({
   onOpenConsultation,
   onOpenTrial,
+  onStartTransformation,
 }) => {
+  const handleAction = onStartTransformation || onOpenTrial || onOpenConsultation || (() => {});
   const [currentIndex, setCurrentIndex] = useState(0);
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
@@ -231,7 +234,7 @@ export const TransformationSection: React.FC<TransformationSectionProps> = ({
                 id="start-transformation-cta-btn"
                 onClick={() => {
                   soundManager.playClick();
-                  onOpenTrial();
+                  handleAction();
                 }}
                 className="w-full py-4 px-6 rounded-2xl font-black text-xs uppercase tracking-widest bg-gradient-to-r from-[#DC2626] via-[#EF4444] to-[#B91C1C] text-white shadow-xl shadow-red-600/30 hover:shadow-red-600/60 hover:scale-[1.02] active:scale-98 transition-all cursor-pointer flex items-center justify-center gap-2"
               >

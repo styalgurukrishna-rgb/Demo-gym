@@ -112,6 +112,7 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
     setTrainers(leadStore.getTrainers());
     setPlans(leadStore.getPlans());
     setNotifications(leadStore.getNotifications());
+    setInquiriesCount(leadStore.getDemoInquiries().length);
   };
 
   useEffect(() => {
@@ -353,15 +354,19 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
           </div>
         </div>
 
-        {/* 8 NAVIGATION TABS */}
+        {/* NAVIGATION TABS */}
         <div className="flex overflow-x-auto no-scrollbar gap-2 border-b border-zinc-800 pb-3">
           {[
+            { id: 'customizer', label: 'Website Customizer', icon: Sliders },
             { id: 'overview', label: 'KPIs & Analytics', icon: LayoutDashboard },
-            { id: 'members', label: 'Member Roster', count: members.length, icon: Users },
             { id: 'leads', label: 'Lead Pipeline', count: leads.filter(l => l.status === 'New').length, icon: UserPlus },
             { id: 'bookings', label: 'Trial Bookings', count: pendingBookingsCount, icon: Calendar },
-            { id: 'trainers', label: 'Trainer Staff', count: trainers.length, icon: Award },
-            { id: 'plans', label: 'Plan Pricing', count: plans.length, icon: DollarSign },
+            { id: 'plans', label: 'Plans Manager', count: plans.length, icon: DollarSign },
+            { id: 'trainers', label: 'Trainers Manager', count: trainers.length, icon: Award },
+            { id: 'gallery', label: 'Gallery Manager', icon: ImageIcon },
+            { id: 'testimonials', label: 'Testimonials', icon: Star },
+            { id: 'inquiries', label: 'Website Inquiries', count: inquiriesCount, icon: Globe },
+            { id: 'members', label: 'Member Roster', count: members.length, icon: Users },
             { id: 'whatsapp', label: 'WhatsApp Automation', icon: MessageCircle },
             { id: 'backup', label: 'Backup & Restore', icon: Database },
           ].map((tab) => {
@@ -391,6 +396,11 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
             );
           })}
         </div>
+
+        {/* TAB 0: WEBSITE CUSTOMIZER */}
+        {activeTab === 'customizer' && (
+          <WebsiteCustomizerPanel onNavigate={onNavigate} />
+        )}
 
         {/* TAB 1: OVERVIEW & KPIS */}
         {activeTab === 'overview' && (
@@ -744,100 +754,29 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
           </div>
         )}
 
-        {/* TAB 5: TRAINER STAFF MANAGEMENT */}
+        {/* TAB: TRAINER STAFF MANAGEMENT */}
         {activeTab === 'trainers' && (
-          <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-white">
-                Master Trainers & Coaches ({trainers.length})
-              </h3>
-              <button
-                onClick={() => setShowAddTrainerModal(true)}
-                className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-xs uppercase flex items-center gap-1.5 shadow-md cursor-pointer"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Add Trainer</span>
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {trainers.map((t) => (
-                <div key={t.id} className="p-6 rounded-3xl bg-zinc-900 border border-zinc-800 space-y-4">
-                  <div className="flex items-center gap-4">
-                    <img
-                      src={t.image}
-                      alt={t.name}
-                      className="w-14 h-14 rounded-2xl object-cover border border-amber-500/40"
-                    />
-                    <div>
-                      <h4 className="text-base font-black text-white">{t.name}</h4>
-                      <p className="text-xs text-amber-400">{t.role}</p>
-                      <p className="text-[11px] text-zinc-500">{t.experience} • Rating {t.rating} ★</p>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-zinc-400 line-clamp-2">{t.bio}</p>
-
-                  <div className="pt-3 border-t border-zinc-800 flex items-center justify-between text-xs">
-                    <span className="text-zinc-500">Clients: {t.clientsTrained}</span>
-                    <button
-                      onClick={() => leadStore.deleteTrainer(t.id)}
-                      className="text-red-400 hover:text-red-300 font-bold text-xs"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <TrainersManagerPanel />
         )}
 
-        {/* TAB 6: PLAN PRICING MANAGEMENT */}
+        {/* TAB: PLAN PRICING MANAGEMENT */}
         {activeTab === 'plans' && (
-          <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-sm font-bold uppercase tracking-wider text-white">
-                  Dynamic Gym Pricing Matrix ({plans.length} Tiers)
-                </h3>
-                <p className="text-xs text-zinc-400">Edit prices in real-time. Changes immediately reflect on the public Pricing Page.</p>
-              </div>
-            </div>
+          <PlansManagerPanel />
+        )}
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {plans.map((p) => (
-                <div key={p.id} className="p-6 rounded-3xl bg-zinc-900 border border-zinc-800 space-y-5">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-base font-black text-white">{p.name}</h4>
-                    {p.isPopular && <span className="px-2 py-0.5 rounded bg-amber-500 text-black text-[10px] font-black uppercase">POPULAR</span>}
-                  </div>
+        {/* TAB: GALLERY MEDIA MANAGEMENT */}
+        {activeTab === 'gallery' && (
+          <GalleryManagerPanel />
+        )}
 
-                  <div className="space-y-2">
-                    <label className="block text-xs font-bold uppercase text-zinc-400">Base Monthly Price (₹)</label>
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="number"
-                        defaultValue={p.price}
-                        onBlur={(e) => handleUpdatePlanPrice(p.id, Number(e.target.value))}
-                        className="w-full px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-amber-400 font-mono font-bold text-base focus:border-amber-500 focus:outline-none"
-                      />
-                    </div>
-                  </div>
+        {/* TAB: TESTIMONIALS REPUTATION MANAGEMENT */}
+        {activeTab === 'testimonials' && (
+          <TestimonialsManagerPanel />
+        )}
 
-                  <div className="space-y-1.5 pt-2 border-t border-zinc-800">
-                    <span className="text-[11px] font-bold uppercase text-zinc-500 block">Included Features</span>
-                    {p.features.slice(0, 4).map((f, i) => (
-                      <div key={i} className="text-xs text-zinc-300 flex items-center gap-2">
-                        <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                        <span>{f}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* TAB: WEBSITE INQUIRIES */}
+        {activeTab === 'inquiries' && (
+          <DemoInquiriesPanel />
         )}
 
         {/* TAB 7: WHATSAPP & NOTIFICATION ENGINE */}

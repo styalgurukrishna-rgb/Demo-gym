@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { 
   Dumbbell, 
@@ -14,21 +14,48 @@ import {
   Play
 } from 'lucide-react';
 import { STATS_DATA, PROGRAMS, GYM_INFO, TESTIMONIALS } from '../data/gymData';
-import { PageType, ModalState, Program } from '../types';
+import { PageType, ModalState, Program, GymConfig, Trainer, PricingPlan } from '../types';
 import { Hero } from '../components/Hero';
 import { WhyChooseUsSection } from '../components/WhyChooseUsSection';
+import { HomeTrainerSection } from '../components/HomeTrainerSection';
+import { HomePricingSection } from '../components/HomePricingSection';
 import { TransformationSection } from '../components/TransformationSection';
 import { TestimonialsSection } from '../components/TestimonialsSection';
 import { FacilitiesSection } from '../components/FacilitiesSection';
 import { TrustCertificationsSection } from '../components/TrustCertificationsSection';
 import { AiFitnessCoachSection } from '../components/AiFitnessCoachSection';
+import { DemoFeatureShowcase } from '../components/DemoFeatureShowcase';
+import { RoiBusinessBenefitSection } from '../components/RoiBusinessBenefitSection';
+import { gymConfigStore } from '../services/gymConfigStore';
+import { soundManager } from '../components/common/SoundEffects';
 
 interface HomePageProps {
   onNavigate: (page: PageType) => void;
   onOpenModal: (type: ModalState['type'], data?: any) => void;
+  onSelectTrainerForBooking?: (trainerName: string) => void;
 }
 
-export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenModal }) => {
+export const HomePage: React.FC<HomePageProps> = ({ 
+  onNavigate, 
+  onOpenModal,
+  onSelectTrainerForBooking 
+}) => {
+  const [config, setConfig] = useState<GymConfig>(gymConfigStore.getConfig());
+
+  useEffect(() => {
+    const unsub = gymConfigStore.subscribe((newConfig) => {
+      setConfig(newConfig);
+    });
+    return () => unsub();
+  }, []);
+
+  const handleTrainerBooking = (trainer: Trainer) => {
+    if (onSelectTrainerForBooking) {
+      onSelectTrainerForBooking(trainer.name);
+    }
+    onNavigate('booking');
+  };
+
   return (
     <div className="w-full text-zinc-100 selection:bg-amber-500 selection:text-black">
       {/* 1. HERO SECTION */}
@@ -68,13 +95,13 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenModal }) =
         </div>
       </section>
 
-      {/* 3. WHY CHOOSE US */}
+      {/* 3. WHY CHOOSE US (6 Trust Cards) */}
       <WhyChooseUsSection 
         onBookTrial={() => onNavigate('booking')}
         onConsultation={() => onOpenModal('consultation')}
       />
 
-      {/* 4. FEATURED PROGRAMS PREVIEW */}
+      {/* 4. TRAIN WITH PURPOSE: FEATURED PROGRAMS */}
       <section id="programs-preview" className="py-24 bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.05),transparent_60%)] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -84,16 +111,19 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenModal }) =
                 <Flame className="w-3.5 h-3.5" /> High-Performance Disciplines
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight uppercase">
-                Featured <span className="text-amber-400">Programs</span>
+                TRAIN WITH <span className="text-amber-400">PURPOSE</span>
               </h2>
-              <p className="text-zinc-400 text-base sm:text-lg max-w-2xl mt-3">
+              <p className="text-zinc-400 text-base sm:text-lg max-w-2xl mt-3 font-light">
                 Scientifically structured training splits backed by Olympic strength coaches and biomechanical progression.
               </p>
             </div>
             <button
               id="view-all-programs-btn"
-              onClick={() => onNavigate('programs')}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-sm tracking-wide transition-all border border-zinc-700 hover:border-amber-500/40 group self-start md:self-auto"
+              onClick={() => {
+                soundManager.playClick();
+                onNavigate('programs');
+              }}
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-sm tracking-wide transition-all border border-zinc-700 hover:border-amber-500/40 group self-start md:self-auto cursor-pointer"
             >
               <span>VIEW ALL PROGRAMS</span>
               <ArrowRight className="w-4 h-4 text-amber-400 group-hover:translate-x-1 transition-transform" />
@@ -148,15 +178,21 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenModal }) =
                   <div className="flex items-center gap-3 pt-2">
                     <button
                       id={`start-program-${prog.id}`}
-                      onClick={() => onNavigate('booking')}
-                      className="flex-1 py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-xs tracking-wider uppercase transition-all shadow-md active:scale-95 text-center"
+                      onClick={() => {
+                        soundManager.playClick();
+                        onNavigate('booking');
+                      }}
+                      className="flex-1 py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-xs tracking-wider uppercase transition-all shadow-md active:scale-95 text-center cursor-pointer"
                     >
                       Start Program
                     </button>
                     <button
                       id={`view-details-${prog.id}`}
-                      onClick={() => onOpenModal('program', prog)}
-                      className="p-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 hover:text-white transition-all border border-zinc-700"
+                      onClick={() => {
+                        soundManager.playClick();
+                        onOpenModal('program', prog);
+                      }}
+                      className="p-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 hover:text-white transition-all border border-zinc-700 cursor-pointer"
                       title="View Details"
                     >
                       <ChevronRight className="w-4 h-4" />
@@ -169,71 +205,99 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onOpenModal }) =
         </div>
       </section>
 
-      {/* 5. TRANSFORMATION COMPARISON SECTION */}
+      {/* 5. COACHED BY EXPERTS: TRAINER DISCOVERY PREVIEW */}
+      <HomeTrainerSection 
+        onViewTrainerProfile={(trainer) => onOpenModal('trainer', trainer)}
+        onBookTrainer={handleTrainerBooking}
+        onViewAllTrainers={() => onNavigate('trainers')}
+      />
+
+      {/* 6. BUILT FOR RESULTS: TRANSFORMATION COMPARISON SECTION */}
       <TransformationSection 
         onStartTransformation={() => onNavigate('booking')} 
       />
 
-      {/* 6. FACILITIES SHOWCASE */}
+      {/* 7. CHOOSE YOUR MEMBERSHIP: HOMEPAGE PRICING & PLAN COMPARISON */}
+      <HomePricingSection 
+        onSelectPlan={(plan) => onOpenModal('payment', { plan, finalPrice: plan.price, billingCycle: 'monthly' })}
+        onOpenHelpMeChoose={() => onOpenModal('helpMeChoose')}
+      />
+
+      {/* 8. FACILITIES SHOWCASE: TAKE A LOOK INSIDE */}
       <FacilitiesSection 
         onOpenTour={() => onOpenModal('tour')}
         onBookPass={() => onNavigate('booking')}
       />
 
-      {/* 7. AI FITNESS COACH SECTION */}
+      {/* 9. AI FITNESS COACH & VIRTUAL CONCIERGE */}
       <AiFitnessCoachSection 
         onOpenBooking={() => onNavigate('booking')}
       />
 
-      {/* 8. TESTIMONIALS SLIDER */}
+      {/* 10. SOCIAL PROOF: WHAT OUR MEMBERS SAY (TESTIMONIALS SLIDER) */}
       <TestimonialsSection 
         onJoinClick={() => onOpenModal('join')}
       />
 
-      {/* 9. TRUST & CERTIFICATIONS */}
+      {/* 11. TRUST & CERTIFICATIONS */}
       <TrustCertificationsSection />
 
-      {/* 10. FINAL URGENT CALL TO ACTION */}
-      <section className="relative py-20 bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-500 text-black overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.25),transparent_70%)]" />
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/10 text-black font-black text-xs uppercase tracking-widest mb-4">
-              <Zap className="w-4 h-4 fill-black" /> Limited Capacity This Month
-            </div>
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight uppercase mb-4 leading-tight">
-              Your Fitness Journey <br className="hidden sm:block" />Starts Today
-            </h2>
-            <p className="text-black/85 text-base sm:text-xl max-w-2xl mx-auto font-medium mb-8">
-              Join KSG DEMO GYM today and access world-class Italian Panatta machinery, certified master coaches, and luxury recovery suites.
-            </p>
+      {/* 12. SECTION 7: READY TO START? (EXPERIENCE KSG DEMO GYM) */}
+      <section className="relative py-24 bg-gradient-to-b from-zinc-900 to-zinc-950 border-t border-zinc-800 text-center overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.08),transparent_70%)] pointer-events-none" />
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 font-extrabold text-xs tracking-widest uppercase mb-4 shadow-lg shadow-amber-500/10">
+            <Sparkles className="w-4 h-4" /> READY TO START?
+          </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button
-                id="final-cta-join-now"
-                onClick={() => onOpenModal('join')}
-                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-black text-white hover:bg-zinc-900 font-black text-sm tracking-wider uppercase shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2"
-              >
-                <span>JOIN NOW</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-              <button
-                id="final-cta-book-trial"
-                onClick={() => onNavigate('booking')}
-                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white/90 hover:bg-white text-black font-black text-sm tracking-wider uppercase shadow-xl hover:scale-105 active:scale-95 transition-all border border-black/10 flex items-center justify-center gap-2"
-              >
-                <Calendar className="w-4 h-4" />
-                <span>BOOK FREE TRIAL</span>
-              </button>
-            </div>
-          </motion.div>
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-white tracking-tight uppercase leading-tight">
+            EXPERIENCE <span className="text-amber-400">KSG DEMO GYM</span>
+          </h2>
+
+          <p className="text-zinc-300 text-base sm:text-xl max-w-xl mx-auto mt-4 font-light leading-relaxed">
+            Book your first trial session and discover the training experience.
+          </p>
+
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button
+              id="experience-trial-cta-btn"
+              onClick={() => {
+                soundManager.playClick();
+                onNavigate('booking');
+              }}
+              className="w-full sm:w-auto px-9 py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-sm tracking-wider uppercase shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2.5 cursor-pointer shadow-amber-500/20"
+            >
+              <Calendar className="w-4 h-4" />
+              <span>BOOK FREE TRIAL</span>
+            </button>
+
+            <button
+              id="experience-join-cta-btn"
+              onClick={() => {
+                soundManager.playClick();
+                onOpenModal('join');
+              }}
+              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-sm tracking-wider uppercase border border-zinc-700 transition-all cursor-pointer"
+            >
+              <span>EXPLORE MEMBERSHIP</span>
+            </button>
+          </div>
         </div>
       </section>
+
+      {/* 13. WHITE-LABEL SYSTEM: ROI & BUSINESS BENEFIT FUNNEL */}
+      {config.demoMode && !config.whiteLabelMode && (
+        <>
+          <RoiBusinessBenefitSection 
+            onOpenBooking={() => onNavigate('booking')}
+            onOpenJoin={() => onOpenModal('join')}
+            onOpenDemoInquiry={() => onOpenModal('demoInquiry')}
+          />
+          <DemoFeatureShowcase 
+            onOpenDemoInquiry={() => onOpenModal('demoInquiry')}
+          />
+        </>
+      )}
     </div>
   );
 };

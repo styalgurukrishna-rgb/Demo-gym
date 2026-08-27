@@ -19,11 +19,14 @@ import {
   Sliders,
   ShieldCheck,
   Zap,
-  LayoutTemplate
+  LayoutTemplate,
+  Search,
+  Tags
 } from 'lucide-react';
 import { gymConfigStore, GYM_PRESETS } from '../../services/gymConfigStore';
-import { GymConfig, PresetKey } from '../../types';
+import { GymConfig } from '../../types';
 import { soundManager } from '../common/SoundEffects';
+import { SeoKeywordsManagerSection } from './SeoKeywordsManagerSection';
 
 interface WebsiteCustomizerPanelProps {
   onNavigateToPreview?: () => void;
@@ -31,7 +34,7 @@ interface WebsiteCustomizerPanelProps {
 
 export const WebsiteCustomizerPanel: React.FC<WebsiteCustomizerPanelProps> = ({ onNavigateToPreview }) => {
   const [config, setConfig] = useState<GymConfig>(gymConfigStore.getConfig());
-  const [activeSubTab, setActiveSubTab] = useState<'branding' | 'presets' | 'colors' | 'hero' | 'contact' | 'whatsapp'>('branding');
+  const [activeSubTab, setActiveSubTab] = useState<'branding' | 'presets' | 'colors' | 'hero' | 'contact' | 'whatsapp' | 'seo'>('branding');
   const [saveSuccess, setSaveSuccess] = useState(false);
 
   useEffect(() => {
@@ -48,9 +51,9 @@ export const WebsiteCustomizerPanel: React.FC<WebsiteCustomizerPanelProps> = ({ 
     setTimeout(() => setSaveSuccess(false), 3000);
   };
 
-  const handleApplyPreset = (presetKey: PresetKey) => {
+  const handleApplyPreset = (presetName: string) => {
     soundManager.playSuccess();
-    gymConfigStore.loadPreset(presetKey);
+    gymConfigStore.loadPreset(presetName);
     setConfig(gymConfigStore.getConfig());
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 3000);
@@ -136,6 +139,7 @@ export const WebsiteCustomizerPanel: React.FC<WebsiteCustomizerPanelProps> = ({ 
           { id: 'hero', label: 'Hero Banner & Stats', icon: ImageIcon },
           { id: 'contact', label: 'Contact & Google Maps', icon: MapPin },
           { id: 'whatsapp', label: 'WhatsApp Automation', icon: MessageCircle },
+          { id: 'seo', label: 'SEO & Meta Keywords', icon: Tags },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeSubTab === tab.id;
@@ -310,12 +314,12 @@ export const WebsiteCustomizerPanel: React.FC<WebsiteCustomizerPanelProps> = ({ 
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {Object.entries(GYM_PRESETS).map(([key, preset]) => {
-              const isSelected = config.brand.name === preset.brand.name;
+            {GYM_PRESETS.map((preset, idx) => {
+              const isSelected = config.brand.gymName === preset.config.brand?.gymName;
               return (
                 <div
-                  key={key}
-                  id={`preset-card-${key}`}
+                  key={preset.name}
+                  id={`preset-card-${idx}`}
                   className={`p-5 rounded-2xl border transition-all ${
                     isSelected 
                       ? 'bg-zinc-950 border-amber-500 shadow-xl shadow-amber-500/10' 
@@ -325,30 +329,32 @@ export const WebsiteCustomizerPanel: React.FC<WebsiteCustomizerPanelProps> = ({ 
                   <div className="flex items-start justify-between">
                     <div>
                       <div className="text-xs font-mono uppercase text-amber-400 font-bold">
-                        {preset.brand.city}, {preset.brand.state}
+                        {preset.config.contact?.city || 'India'}
                       </div>
                       <h4 className="text-lg font-black text-white uppercase mt-0.5">
-                        {preset.brand.name}
+                        {preset.name}
                       </h4>
                       <p className="text-zinc-400 text-xs mt-1">
-                        {preset.brand.tagline}
+                        {preset.description}
                       </p>
                     </div>
 
                     {/* Color Dots */}
-                    <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-zinc-900 border border-zinc-800">
-                      <span className="w-3.5 h-3.5 rounded-full border border-black" style={{ backgroundColor: preset.theme.primary }} />
-                      <span className="w-3.5 h-3.5 rounded-full border border-black" style={{ backgroundColor: preset.theme.secondary }} />
-                    </div>
+                    {preset.config.colors && (
+                      <div className="flex items-center gap-1.5 p-1.5 rounded-lg bg-zinc-900 border border-zinc-800 shrink-0">
+                        <span className="w-3.5 h-3.5 rounded-full border border-black" style={{ backgroundColor: preset.config.colors.primaryColor }} />
+                        <span className="w-3.5 h-3.5 rounded-full border border-black" style={{ backgroundColor: preset.config.colors.secondaryColor }} />
+                      </div>
+                    )}
                   </div>
 
                   <div className="mt-4 pt-3 border-t border-zinc-900 flex items-center justify-between">
                     <span className="text-[11px] font-mono text-zinc-500">
-                      {preset.contact.phone}
+                      {preset.config.contact?.phone || 'Configured'}
                     </span>
                     <button
-                      id={`apply-preset-${key}-btn`}
-                      onClick={() => handleApplyPreset(key as PresetKey)}
+                      id={`apply-preset-${idx}-btn`}
+                      onClick={() => handleApplyPreset(preset.name)}
                       className={`px-3.5 py-1.5 rounded-xl text-xs font-black uppercase tracking-wider cursor-pointer transition-all ${
                         isSelected
                           ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
@@ -808,6 +814,14 @@ export const WebsiteCustomizerPanel: React.FC<WebsiteCustomizerPanelProps> = ({ 
             </div>
           </div>
         </div>
+      )}
+
+      {/* SUB TAB 7: SEO & META KEYWORDS */}
+      {activeSubTab === 'seo' && (
+        <SeoKeywordsManagerSection
+          config={config}
+          onChange={(updated) => setConfig(updated)}
+        />
       )}
 
       {/* Bottom Sticky Action Footer */}

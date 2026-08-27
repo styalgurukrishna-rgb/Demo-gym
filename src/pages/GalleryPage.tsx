@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Camera, 
@@ -12,8 +12,8 @@ import {
   Users,
   Dumbbell
 } from 'lucide-react';
-import { GALLERY_ITEMS } from '../data/gymData';
 import { PageType, ModalState, GalleryItem } from '../types';
+import { leadStore } from '../services/leadStore';
 
 interface GalleryPageProps {
   onNavigate: (page: PageType) => void;
@@ -23,6 +23,14 @@ interface GalleryPageProps {
 export const GalleryPage: React.FC<GalleryPageProps> = ({ onNavigate }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [lightboxItem, setLightboxItem] = useState<GalleryItem | null>(null);
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(leadStore.getGallery());
+
+  useEffect(() => {
+    const unsub = leadStore.subscribe(() => {
+      setGalleryItems(leadStore.getGallery());
+    });
+    return () => unsub();
+  }, []);
 
   const categories = [
     { id: 'all', label: 'All Photos', icon: Camera },
@@ -32,7 +40,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({ onNavigate }) => {
     { id: 'trainers', label: 'Trainers', icon: Users },
   ];
 
-  const filteredItems = GALLERY_ITEMS.filter((item: GalleryItem) => {
+  const filteredItems = galleryItems.filter((item: GalleryItem) => {
     if (selectedCategory === 'all') return true;
     return item.category === selectedCategory;
   });

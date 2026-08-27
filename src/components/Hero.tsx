@@ -15,17 +15,42 @@ import {
 } from 'lucide-react';
 import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { soundManager } from './common/SoundEffects';
+import { gymConfigStore } from '../services/gymConfigStore';
+import { GymConfig } from '../types';
 
 interface HeroProps {
-  onOpenJoin: () => void;
-  onOpenTour: () => void;
-  onOpenTrial: () => void;
+  onOpenJoin?: () => void;
+  onJoinNow?: () => void;
+  onOpenTour?: () => void;
+  onVirtualTour?: () => void;
+  onOpenTrial?: () => void;
+  onBookTrial?: () => void;
+  onExplorePrograms?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onOpenJoin, onOpenTour, onOpenTrial }) => {
+export const Hero: React.FC<HeroProps> = ({
+  onOpenJoin,
+  onJoinNow,
+  onOpenTour,
+  onVirtualTour,
+  onOpenTrial,
+  onBookTrial,
+  onExplorePrograms
+}) => {
+  const handleJoin = onOpenJoin || onJoinNow || (() => {});
+  const handleTour = onOpenTour || onVirtualTour || (() => {});
+  const handleTrial = onOpenTrial || onBookTrial || (() => {});
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const heroRef = useRef<HTMLDivElement | null>(null);
   const [isVideoBg, setIsVideoBg] = useState(false);
+  const [config, setConfig] = useState<GymConfig>(gymConfigStore.getConfig());
+
+  useEffect(() => {
+    const unsub = gymConfigStore.subscribe((newConfig) => {
+      setConfig(newConfig);
+    });
+    return () => unsub();
+  }, []);
 
   // Mouse parallax motion values
   const mouseX = useMotionValue(0);
@@ -168,8 +193,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenJoin, onOpenTour, onOpenTrial 
           </video>
         ) : (
           <img
-            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2000&q=85"
-            alt="KSG Demo Gym Luxury Architecture"
+            src={config.hero.heroImage || "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2000&q=85"}
+            alt={`${config.brand.gymName} Luxury Architecture`}
             className="w-full h-full object-cover object-center opacity-35 brightness-75 contrast-125 filter"
           />
         )}
@@ -242,7 +267,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenJoin, onOpenTour, onOpenTrial 
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#EF4444]"></span>
           </span>
           <span className="text-xs font-black uppercase tracking-widest text-[#D4AF37]">
-            TRANSFORM YOUR BODY. BUILD YOUR CONFIDENCE. BECOME YOUR BEST VERSION.
+            {config.brand.tagline || 'TRANSFORM YOUR BODY. BUILD YOUR CONFIDENCE. BECOME YOUR BEST VERSION.'}
           </span>
         </motion.div>
 
@@ -253,11 +278,17 @@ export const Hero: React.FC<HeroProps> = ({ onOpenJoin, onOpenTour, onOpenTrial 
           transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black font-['Syne',sans-serif] tracking-tight uppercase leading-[1.03] text-white max-w-4xl"
         >
-          BUILD THE <br className="hidden sm:inline" />
-          <span className="bg-gradient-to-r from-[#FFFFFF] via-[#FFF3C4] to-[#D4AF37] bg-clip-text text-transparent drop-shadow-sm">
-            STRONGEST VERSION
-          </span> <br className="hidden sm:inline" />
-          OF <span className="text-[#EF4444] drop-shadow-[0_0_35px_rgba(239,68,68,0.6)]">YOURSELF</span>
+          {config.hero.heroHeading ? (
+            <span>{config.hero.heroHeading}</span>
+          ) : (
+            <>
+              BUILD THE <br className="hidden sm:inline" />
+              <span className="bg-gradient-to-r from-[#FFFFFF] via-[#FFF3C4] to-[#D4AF37] bg-clip-text text-transparent drop-shadow-sm">
+                STRONGEST VERSION
+              </span> <br className="hidden sm:inline" />
+              OF <span className="text-[#EF4444] drop-shadow-[0_0_35px_rgba(239,68,68,0.6)]">YOURSELF</span>
+            </>
+          )}
         </motion.h1>
 
         {/* Subheading */}
@@ -267,7 +298,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenJoin, onOpenTour, onOpenTrial 
           transition={{ duration: 0.8, delay: 0.35, ease: 'easeOut' }}
           className="mt-6 text-base sm:text-xl text-neutral-300 max-w-2xl font-light leading-relaxed tracking-wide"
         >
-          Bangalore’s premier athletic sanctuary. Panatta biomechanical machinery, CSCS certified master coaches, and bespoke body recomposition protocols designed for high achievers.
+          {config.hero.heroSubtitle || 'Train smarter. Get stronger. Become your best version.'}
         </motion.p>
 
         {/* High-Conversion Action Buttons */}
@@ -282,13 +313,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenJoin, onOpenTour, onOpenTrial 
             id="hero-join-now-btn"
             onClick={() => {
               soundManager.playClick();
-              onOpenJoin();
+              handleJoin();
             }}
             onMouseEnter={() => soundManager.playHover()}
             className="w-full sm:w-auto relative group overflow-hidden px-9 py-4 rounded-full font-black text-sm uppercase tracking-widest text-white bg-gradient-to-r from-[#DC2626] via-[#EF4444] to-[#B91C1C] shadow-[0_0_35px_rgba(239,68,68,0.5)] hover:shadow-[0_0_60px_rgba(239,68,68,0.85)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2.5 border border-red-400/40"
           >
             <Sparkles className="w-4 h-4 text-[#FDE047] animate-spin" style={{ animationDuration: '6s' }} />
-            <span>JOIN NOW</span>
+            <span>{config.hero.ctaButtonText || 'JOIN NOW'}</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
           </button>
@@ -298,13 +329,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenJoin, onOpenTour, onOpenTrial 
             id="hero-free-trial-btn"
             onClick={() => {
               soundManager.playClick();
-              onOpenTrial();
+              handleTrial();
             }}
             onMouseEnter={() => soundManager.playHover()}
             className="w-full sm:w-auto group px-8 py-4 rounded-full font-black text-sm uppercase tracking-widest text-neutral-200 hover:text-white bg-white/[0.06] hover:bg-white/[0.12] border border-[#D4AF37]/50 hover:border-[#D4AF37] backdrop-blur-xl shadow-lg hover:shadow-[0_0_35px_rgba(212,175,55,0.35)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2.5"
           >
             <Flame className="w-4 h-4 text-[#D4AF37]" />
-            <span>BOOK FREE TRIAL</span>
+            <span>{config.hero.secondaryButtonText || 'BOOK FREE TRIAL'}</span>
           </button>
 
           {/* Button 3: WATCH TOUR */}
@@ -312,13 +343,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenJoin, onOpenTour, onOpenTrial 
             id="hero-watch-tour-btn"
             onClick={() => {
               soundManager.playClick();
-              onOpenTour();
+              handleTour();
             }}
             onMouseEnter={() => soundManager.playHover()}
             className="w-full sm:w-auto text-xs uppercase tracking-wider font-bold text-neutral-400 hover:text-white py-2 px-3 hover:underline underline-offset-4 transition-colors flex items-center justify-center gap-1.5"
           >
             <Play className="w-3.5 h-3.5 text-[#D4AF37] fill-current" />
-            <span>Watch 4K Tour</span>
+            <span>WATCH TOUR</span>
           </button>
         </motion.div>
 

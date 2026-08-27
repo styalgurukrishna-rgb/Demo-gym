@@ -1,4 +1,4 @@
-import { GymConfig, BrandConfig, ThemeColors, HeroConfig, ContactConfig, WhatsAppConfig } from '../types';
+import { GymConfig, BrandConfig, ThemeColors, HeroConfig, ContactConfig, WhatsAppConfig, SeoConfig } from '../types';
 
 const GYM_CONFIG_STORAGE_KEY = 'ksg_white_label_gym_config_v4';
 
@@ -46,6 +46,26 @@ export const DEFAULT_GYM_CONFIG: GymConfig = {
     defaultMessage: 'Hello, I would like to know more about your gym membership plans and free trial.',
     trainerDefaultMessage: 'Hello Coach, I would like to inquire about personal training schedules.'
   },
+  seo: {
+    metaTitle: 'KSG DEMO GYM | Transform Your Body. Upgrade Your Life.',
+    metaDescription: 'KSG DEMO GYM is a premier athletic performance sanctuary dedicated to progressive overload, certified coaching, and real human transformation.',
+    keywords: [
+      'gym in bangalore',
+      'luxury fitness sanctuary',
+      'olympic weightlifting',
+      'personal training bangalore',
+      'strength and conditioning',
+      'body transformation program',
+      '24/7 gym access',
+      'crossfit training studio',
+      'certified master coaches',
+      'free trial gym workout'
+    ],
+    ogImage: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80',
+    canonicalUrl: '',
+    author: 'KSG Athletic Performance Lab',
+    robots: 'index, follow'
+  },
   demoMode: true,
   whiteLabelMode: false,
   clientPreviewMode: false,
@@ -62,6 +82,22 @@ export const GYM_PRESETS: { name: string; description: string; config: Partial<G
         ...DEFAULT_GYM_CONFIG.brand,
         gymName: 'KSG DEMO GYM',
         tagline: 'Transform Your Body. Upgrade Your Life.',
+      },
+      seo: {
+        ...DEFAULT_GYM_CONFIG.seo,
+        metaTitle: 'KSG DEMO GYM | Transform Your Body. Upgrade Your Life.',
+        keywords: [
+          'gym in bangalore',
+          'luxury fitness sanctuary',
+          'olympic weightlifting',
+          'personal training bangalore',
+          'strength and conditioning',
+          'body transformation program',
+          '24/7 gym access',
+          'crossfit training studio',
+          'certified master coaches',
+          'free trial gym workout'
+        ]
       },
       whiteLabelMode: false,
       demoMode: true
@@ -108,6 +144,26 @@ export const GYM_PRESETS: { name: string; description: string; config: Partial<G
         facebook: 'https://facebook.com/titanpatna',
         youtube: 'https://youtube.com/@titanpatna'
       },
+      seo: {
+        metaTitle: 'Titan Athletic Club | Premier Gym in Boring Road, Patna',
+        metaDescription: 'Titan Athletic Club in Patna features Olympic barbells, powerlifting racks, CrossFit rigs, and certified transformation coaches.',
+        keywords: [
+          'gym in patna',
+          'boring road gym',
+          'best fitness club patna',
+          'powerlifting studio bihar',
+          'crossfit patna',
+          'personal trainer patna',
+          'bodybuilding gym bihar',
+          'weight loss program patna',
+          'titan athletic club',
+          'free gym trial patna'
+        ],
+        ogImage: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80',
+        canonicalUrl: '',
+        author: 'Titan Athletic Club Patna',
+        robots: 'index, follow'
+      },
       whiteLabelMode: true,
       demoMode: false
     }
@@ -153,6 +209,26 @@ export const GYM_PRESETS: { name: string; description: string; config: Partial<G
         facebook: 'https://facebook.com/vanguarddelhi',
         youtube: 'https://youtube.com/@vanguarddelhi'
       },
+      seo: {
+        metaTitle: 'Vanguard Fitness Club | Central Delhi 24/7 Biomechanics Gym',
+        metaDescription: 'Vanguard Fitness Club in Connaught Place, New Delhi offers luxury 24-hour gym access, Olympic lifting platforms, and elite personal conditioning.',
+        keywords: [
+          'gym in connaught place',
+          'delhi luxury gym',
+          '24/7 fitness club delhi',
+          'central delhi gym',
+          'biomechanics gym delhi',
+          'executive personal training',
+          'olympic lifting new delhi',
+          'vanguard fitness club',
+          'vip gym tour delhi',
+          'best gym in cp'
+        ],
+        ogImage: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1200&q=80',
+        canonicalUrl: '',
+        author: 'Vanguard Fitness Club Delhi',
+        robots: 'index, follow'
+      },
       whiteLabelMode: true,
       demoMode: false
     }
@@ -183,7 +259,12 @@ class GymConfigStore {
           colors: { ...DEFAULT_GYM_CONFIG.colors, ...(parsed.colors || {}) },
           hero: { ...DEFAULT_GYM_CONFIG.hero, ...(parsed.hero || {}) },
           contact: { ...DEFAULT_GYM_CONFIG.contact, ...(parsed.contact || {}) },
-          whatsapp: { ...DEFAULT_GYM_CONFIG.whatsapp, ...(parsed.whatsapp || {}) }
+          whatsapp: { ...DEFAULT_GYM_CONFIG.whatsapp, ...(parsed.whatsapp || {}) },
+          seo: {
+            ...DEFAULT_GYM_CONFIG.seo,
+            ...(parsed.seo || {}),
+            keywords: Array.isArray(parsed.seo?.keywords) ? parsed.seo.keywords : DEFAULT_GYM_CONFIG.seo.keywords
+          }
         };
       }
     } catch (e) {
@@ -219,11 +300,79 @@ class GymConfigStore {
     if (typeof document === 'undefined') return;
     const gymName = this.getGymName();
     const tagline = this.config.brand.tagline || 'Transform Your Body. Upgrade Your Life.';
-    document.title = `${gymName} | ${tagline}`;
+    const customTitle = this.config.seo?.metaTitle || `${gymName} | ${tagline}`;
+    document.title = customTitle;
     
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', `${gymName} - ${tagline}. World-class coaches, Olympic equipment, and personalized fitness programs.`);
+    const customDesc = this.config.seo?.metaDescription || `${gymName} - ${tagline}. World-class coaches, Olympic equipment, and personalized fitness programs.`;
+    let metaDesc = document.querySelector('meta[name="description"]');
+    if (!metaDesc) {
+      metaDesc = document.createElement('meta');
+      metaDesc.setAttribute('name', 'description');
+      document.head.appendChild(metaDesc);
+    }
+    metaDesc.setAttribute('content', customDesc);
+
+    // Meta keywords tag
+    const keywordsList = this.config.seo?.keywords || [];
+    const keywordsStr = keywordsList.join(', ');
+    let metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (!metaKeywords) {
+      metaKeywords = document.createElement('meta');
+      metaKeywords.setAttribute('name', 'keywords');
+      document.head.appendChild(metaKeywords);
+    }
+    metaKeywords.setAttribute('content', keywordsStr);
+
+    // Meta author
+    if (this.config.seo?.author) {
+      let metaAuthor = document.querySelector('meta[name="author"]');
+      if (!metaAuthor) {
+        metaAuthor = document.createElement('meta');
+        metaAuthor.setAttribute('name', 'author');
+        document.head.appendChild(metaAuthor);
+      }
+      metaAuthor.setAttribute('content', this.config.seo.author);
+    }
+
+    // Meta robots
+    if (this.config.seo?.robots) {
+      let metaRobots = document.querySelector('meta[name="robots"]');
+      if (!metaRobots) {
+        metaRobots = document.createElement('meta');
+        metaRobots.setAttribute('name', 'robots');
+        document.head.appendChild(metaRobots);
+      }
+      metaRobots.setAttribute('content', this.config.seo.robots);
+    }
+
+    // Open Graph Title
+    let ogTitle = document.querySelector('meta[property="og:title"]');
+    if (!ogTitle) {
+      ogTitle = document.createElement('meta');
+      ogTitle.setAttribute('property', 'og:title');
+      document.head.appendChild(ogTitle);
+    }
+    ogTitle.setAttribute('content', customTitle);
+
+    // Open Graph Description
+    let ogDesc = document.querySelector('meta[property="og:description"]');
+    if (!ogDesc) {
+      ogDesc = document.createElement('meta');
+      ogDesc.setAttribute('property', 'og:description');
+      document.head.appendChild(ogDesc);
+    }
+    ogDesc.setAttribute('content', customDesc);
+
+    // Open Graph Image
+    const ogImgSrc = this.config.seo?.ogImage || this.config.hero.heroImage;
+    if (ogImgSrc) {
+      let ogImg = document.querySelector('meta[property="og:image"]');
+      if (!ogImg) {
+        ogImg = document.createElement('meta');
+        ogImg.setAttribute('property', 'og:image');
+        document.head.appendChild(ogImg);
+      }
+      ogImg.setAttribute('content', ogImgSrc);
     }
   }
 
@@ -260,7 +409,14 @@ class GymConfigStore {
       colors: { ...this.config.colors, ...(partial.colors || {}) },
       hero: { ...this.config.hero, ...(partial.hero || {}) },
       contact: { ...this.config.contact, ...(partial.contact || {}) },
-      whatsapp: { ...this.config.whatsapp, ...(partial.whatsapp || {}) }
+      whatsapp: { ...this.config.whatsapp, ...(partial.whatsapp || {}) },
+      seo: {
+        ...this.config.seo,
+        ...(partial.seo || {}),
+        keywords: partial.seo?.keywords !== undefined 
+          ? partial.seo.keywords 
+          : (this.config.seo?.keywords || DEFAULT_GYM_CONFIG.seo.keywords)
+      }
     };
     this.saveConfig();
   }
@@ -288,6 +444,84 @@ class GymConfigStore {
   public updateWhatsApp(whatsapp: Partial<WhatsAppConfig>) {
     this.config.whatsapp = { ...this.config.whatsapp, ...whatsapp };
     this.saveConfig();
+  }
+
+  public updateSeo(seo: Partial<SeoConfig>) {
+    this.config.seo = {
+      ...this.config.seo,
+      ...seo,
+      keywords: seo.keywords !== undefined ? seo.keywords : this.config.seo.keywords
+    };
+    this.saveConfig();
+  }
+
+  public addKeyword(keyword: string): boolean {
+    const trimmed = keyword.trim();
+    if (!trimmed) return false;
+    const currentKeywords = this.config.seo?.keywords || [];
+    if (currentKeywords.some(k => k.toLowerCase() === trimmed.toLowerCase())) {
+      return false; // Already exists
+    }
+    this.config.seo = {
+      ...this.config.seo,
+      keywords: [...currentKeywords, trimmed]
+    };
+    this.saveConfig();
+    return true;
+  }
+
+  public editKeyword(index: number, newKeyword: string): boolean {
+    const trimmed = newKeyword.trim();
+    if (!trimmed) return false;
+    const currentKeywords = [...(this.config.seo?.keywords || [])];
+    if (index < 0 || index >= currentKeywords.length) return false;
+    currentKeywords[index] = trimmed;
+    this.config.seo = {
+      ...this.config.seo,
+      keywords: currentKeywords
+    };
+    this.saveConfig();
+    return true;
+  }
+
+  public deleteKeyword(index: number): boolean {
+    const currentKeywords = [...(this.config.seo?.keywords || [])];
+    if (index < 0 || index >= currentKeywords.length) return false;
+    currentKeywords.splice(index, 1);
+    this.config.seo = {
+      ...this.config.seo,
+      keywords: currentKeywords
+    };
+    this.saveConfig();
+    return true;
+  }
+
+  public reorderKeywords(keywords: string[]) {
+    this.config.seo = {
+      ...this.config.seo,
+      keywords
+    };
+    this.saveConfig();
+  }
+
+  public bulkAddKeywords(keywordsList: string[]): number {
+    const currentKeywords = [...(this.config.seo?.keywords || [])];
+    let addedCount = 0;
+    for (const kw of keywordsList) {
+      const trimmed = kw.trim();
+      if (trimmed && !currentKeywords.some(k => k.toLowerCase() === trimmed.toLowerCase())) {
+        currentKeywords.push(trimmed);
+        addedCount++;
+      }
+    }
+    if (addedCount > 0) {
+      this.config.seo = {
+        ...this.config.seo,
+        keywords: currentKeywords
+      };
+      this.saveConfig();
+    }
+    return addedCount;
   }
 
   public setDemoMode(enabled: boolean) {

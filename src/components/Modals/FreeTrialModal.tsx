@@ -5,6 +5,7 @@ import confetti from 'canvas-confetti';
 import { leadStore } from '../../services/leadStore';
 import { soundManager } from '../common/SoundEffects';
 import { GYM_INFO, AUTOMATED_FOLLOWUPS } from '../../data/gymData';
+import { downloadIcsFile } from '../../utils/calendarIcs';
 
 interface FreeTrialModalProps {
   isOpen: boolean;
@@ -371,15 +372,35 @@ export const FreeTrialModal: React.FC<FreeTrialModalProps> = ({ isOpen, onClose,
             </div>
 
             {/* Quick Action Buttons */}
-            <div className="mt-6 flex flex-col sm:flex-row gap-3">
+            <div className="mt-6 flex flex-col sm:flex-row gap-2.5">
+              <button
+                id="trial-download-ics-btn"
+                type="button"
+                onClick={() => {
+                  soundManager.playClick();
+                  downloadIcsFile({
+                    title: `KSG DEMO GYM - Free 1-Day Trial Pass`,
+                    description: `VIP Trial Session for ${formData.fullName}. Preferred slot: ${formData.preferredDate} (${formData.preferredTime}). Goal: ${formData.fitnessGoal}. Pass ID: ${bookedPassId}. Location: ${GYM_INFO.address}.`,
+                    location: GYM_INFO.address,
+                    startDate: formData.preferredDate,
+                    timeSlot: formData.preferredTime,
+                    bookingRef: bookedPassId,
+                    organizerName: 'KSG DEMO GYM'
+                  });
+                }}
+                className="flex-1 py-3 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <span>Add to Calendar (.ics)</span>
+              </button>
+
               <a
                 id="trial-whatsapp-confirm-btn"
                 href={`https://wa.me/${GYM_INFO.whatsapp.replace('+', '')}?text=Hi%20KSG%20DEMO%20GYM%2C%20I%20just%20booked%20my%20Free%201-Day%20Trial%20Pass%20(${bookedPassId})%20for%20${formData.fullName}.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2"
+                className="flex-1 py-3 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-1.5"
               >
-                <span>Confirm on WhatsApp</span>
+                <span>WhatsApp</span>
               </a>
 
               {onProceedToJoin && (
@@ -389,9 +410,9 @@ export const FreeTrialModal: React.FC<FreeTrialModalProps> = ({ isOpen, onClose,
                     handleClose();
                     onProceedToJoin();
                   }}
-                  className="flex-1 py-3 px-4 rounded-xl bg-[#D4AF37] hover:bg-[#AA8012] text-black font-bold text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2"
+                  className="flex-1 py-3 px-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs uppercase tracking-wider shadow-lg border border-zinc-700 flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <span>Get Full Membership</span>
+                  <span>Membership</span>
                 </button>
               )}
             </div>
