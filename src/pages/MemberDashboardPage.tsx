@@ -328,7 +328,7 @@ export const MemberDashboardPage: React.FC<MemberDashboardPageProps> = ({ onNavi
 
                 <div className="mt-6 pt-4 border-t border-zinc-800 flex gap-3">
                   <a
-                    href="https://wa.me/919876543210"
+                    href="https://wa.me/917549929102"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 py-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 hover:bg-emerald-500 text-emerald-400 hover:text-black font-bold text-xs uppercase flex items-center justify-center gap-2 transition-all"

@@ -26,6 +26,7 @@ import { TrustCertificationsSection } from '../components/TrustCertificationsSec
 import { AiFitnessCoachSection } from '../components/AiFitnessCoachSection';
 import { DemoFeatureShowcase } from '../components/DemoFeatureShowcase';
 import { RoiBusinessBenefitSection } from '../components/RoiBusinessBenefitSection';
+import { FindOurGymSection } from '../components/FindOurGymSection';
 import { gymConfigStore } from '../services/gymConfigStore';
 import { soundManager } from '../components/common/SoundEffects';
 
@@ -242,7 +243,10 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* 11. TRUST & CERTIFICATIONS */}
       <TrustCertificationsSection />
 
-      {/* 12. SECTION 7: READY TO START? (EXPERIENCE KSG DEMO GYM) */}
+      {/* 12. FIND OUR GYM: LOCATION & GOOGLE MAPS */}
+      <FindOurGymSection onBookTour={() => onOpenModal('tour')} />
+
+      {/* 13. READY TO START? (EXPERIENCE KSG DEMO GYM) */}
       <section className="relative py-24 bg-gradient-to-b from-zinc-900 to-zinc-950 border-t border-zinc-800 text-center overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.08),transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">

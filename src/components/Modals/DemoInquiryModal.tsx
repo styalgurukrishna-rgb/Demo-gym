@@ -177,7 +177,7 @@ export const DemoInquiryModal: React.FC<DemoInquiryModalProps> = ({ isOpen, onCl
                       <input
                         id="inquiry-phone-input"
                         type="tel"
-                        placeholder="e.g. +91 98765 43210"
+                        placeholder="e.g. +91 75499 29102"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         className={`w-full pl-10 pr-4 py-2.5 rounded-xl bg-zinc-900 border ${

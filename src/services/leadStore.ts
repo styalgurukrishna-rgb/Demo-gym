@@ -43,7 +43,7 @@ const INITIAL_USERS: (User & { passwordHash: string })[] = [
     id: 'USER-MEM-8894',
     name: 'Karan Malhotra',
     email: 'karan.malhotra@gmail.com',
-    phone: '+91 98765 43210',
+    phone: '+91 75499 29102',
     role: 'member',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80',
     createdAt: '15 Jan 2024',
@@ -175,7 +175,7 @@ const INITIAL_PAYMENTS: PaymentReceipt[] = [
 export const DEMO_MEMBER: MemberProfile = {
   id: 'KSG-MEM-8894',
   name: 'Karan Malhotra',
-  phone: '+91 98765 43210',
+  phone: '+91 75499 29102',
   email: 'karan.malhotra@gmail.com',
   planName: 'VIP PLAN',
   status: 'Active',
@@ -291,7 +291,7 @@ const INITIAL_NOTIFICATIONS: NotificationItem[] = [
   {
     id: 'NOTIF-1',
     userName: 'Karan Malhotra',
-    phone: '+91 98765 43210',
+    phone: '+91 75499 29102',
     title: 'Trial Booking Confirmed',
     message: 'Your KSG DEMO GYM VIP orientation is scheduled for Tomorrow at 07:00 AM with Master Coach Vikram.',
     channel: 'WhatsApp',

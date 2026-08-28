@@ -294,7 +294,7 @@ export const BookingPage: React.FC<BookingPageProps> = ({ onNavigate, initialTra
                         id="booking-phone-input"
                         type="tel"
                         required
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 75499 29102"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         className="w-full pl-11 pr-4 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-white text-sm focus:outline-none focus:border-amber-500 transition-colors"

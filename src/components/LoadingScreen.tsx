@@ -11,8 +11,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
   const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
-    const duration = 1800; // 1.8s
-    const stepTime = 20;
+    // Fast, cinematic luxury loading sequence (500ms)
+    const duration = 500;
+    const stepTime = 16;
     const steps = duration / stepTime;
     let currentStep = 0;
 
@@ -23,10 +24,12 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
 
       if (currentStep >= steps) {
         clearInterval(interval);
+        setIsFinished(true);
+        window.scrollTo(0, 0);
         setTimeout(() => {
-          setIsFinished(true);
-          setTimeout(onComplete, 600); // Allow curtain reveal animation
-        }, 200);
+          window.scrollTo(0, 0);
+          onComplete();
+        }, 300);
       }
     }, stepTime);
 

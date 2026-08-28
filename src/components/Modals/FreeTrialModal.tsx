@@ -169,7 +169,7 @@ export const FreeTrialModal: React.FC<FreeTrialModalProps> = ({ isOpen, onClose,
                     id="trial-form-phone"
                     type="tel"
                     required
-                    placeholder="e.g. +91 98765 43210"
+                    placeholder="e.g. +91 75499 29102"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-neutral-500 focus:outline-none focus:border-[#EF4444] transition-colors"

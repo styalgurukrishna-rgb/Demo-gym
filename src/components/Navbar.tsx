@@ -61,6 +61,17 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => unsub();
   }, []);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   const toggleSound = () => {
     const newMuted = soundManager.toggleMute();
     setIsMuted(newMuted);
@@ -96,13 +107,13 @@ export const Navbar: React.FC<NavbarProps> = ({
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Brand Logo */}
+          {/* Brand Logo - Fixed to Left */}
           <button
             id="brand-logo-btn"
             onClick={() => handleNavClick('home')}
-            className="flex items-center gap-2.5 group focus:outline-none shrink-0 cursor-pointer text-left"
+            className="flex items-center gap-2 sm:gap-2.5 group focus:outline-none shrink-0 cursor-pointer text-left select-none min-w-0"
           >
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 p-[1.5px] shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform duration-300">
+            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 p-[1.5px] shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform duration-300 shrink-0">
               <div className="w-full h-full bg-zinc-950 rounded-[10px] flex items-center justify-center overflow-hidden">
                 {config.brand.logoUrl ? (
                   <img src={config.brand.logoUrl} alt={config.brand.gymName} className="w-full h-full object-cover" />
@@ -111,11 +122,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 )}
               </div>
             </div>
-            <div className="flex flex-col">
-              <span className="font-sans font-black tracking-wider text-base sm:text-lg text-white flex items-center gap-1 uppercase">
+            <div className="flex flex-col min-w-0">
+              <span className="font-sans font-black tracking-wider text-sm sm:text-base md:text-lg text-white flex items-center gap-1 uppercase truncate">
                 {config.brand.gymName}
               </span>
-              <span className="text-[9px] tracking-[0.22em] text-zinc-400 font-bold uppercase -mt-0.5 truncate max-w-[180px]">
+              <span className="text-[8px] sm:text-[9px] tracking-[0.18em] text-zinc-400 font-bold uppercase -mt-0.5 truncate max-w-[130px] sm:max-w-[180px]">
                 {config.brand.tagline || 'Luxury Fitness Platform'}
               </span>
             </div>
@@ -229,24 +240,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          {/* Mobile Header Badges & Hamburger */}
+          {/* Mobile Header: Hamburger Menu strictly on the RIGHT */}
           <div className="flex items-center gap-2 lg:hidden">
-            <button
-              id="nav-trial-mobile-badge"
-              onClick={() => handleNavClick('booking')}
-              className="px-2.5 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/20 border border-amber-500/40 text-amber-400"
-            >
-              Free Trial
-            </button>
-
-            <button
-              id="nav-join-mobile-badge"
-              onClick={() => onOpenModal('join')}
-              className="px-3 py-1.5 rounded-lg text-[11px] font-black uppercase tracking-wider bg-amber-500 text-black shadow-md"
-            >
-              Join
-            </button>
-
             <button
               id="hamburger-menu-btn"
               aria-label="Toggle navigation menu"
@@ -254,7 +249,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 soundManager.playClick();
                 setMobileMenuOpen(!mobileMenuOpen);
               }}
-              className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-white transition-colors cursor-pointer focus:outline-none"
+              className="w-10 h-10 flex items-center justify-center rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 text-white transition-all cursor-pointer focus:outline-none active:scale-95 shrink-0"
             >
               {mobileMenuOpen ? (
                 <X className="w-5 h-5 text-amber-400" />
@@ -298,12 +293,21 @@ export const Navbar: React.FC<NavbarProps> = ({
                     </span>
                   </div>
 
-                  <button
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="p-2 rounded-lg bg-zinc-900 text-zinc-400 hover:text-white"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={toggleSound}
+                      title={isMuted ? "Enable Sound" : "Mute Sound"}
+                      className="p-2 rounded-lg bg-zinc-900 text-zinc-400 hover:text-white"
+                    >
+                      {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-400" />}
+                    </button>
+                    <button
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="p-2 rounded-lg bg-zinc-900 text-zinc-400 hover:text-white"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
 
                 <div className="space-y-1">

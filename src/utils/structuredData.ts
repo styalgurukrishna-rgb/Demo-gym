@@ -11,7 +11,7 @@ export function updateStructuredData(config: GymConfig) {
   const tagline = config.brand.tagline || 'Transform Your Body. Upgrade Your Life.';
   const city = config.contact.city || 'Bangalore';
   const address = config.contact.address || 'Indiranagar, Bangalore';
-  const phone = config.contact.phone || '+91 98765 00000';
+  const phone = config.contact.phone || '+91 75499 29102';
   const email = config.contact.email || 'contact@demogym.com';
   const image = config.seo?.ogImage || config.hero.heroImage || 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80';
   const websiteUrl = getCanonicalUrl('/');

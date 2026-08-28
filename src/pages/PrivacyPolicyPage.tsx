@@ -18,8 +18,8 @@ export const PrivacyPolicyPage: React.FC<PrivacyPolicyPageProps> = ({ onNavigate
   }, []);
 
   const gymName = config.brand.gymName || 'KSG DEMO GYM';
-  const email = config.contact.email || 'concierge@demogym.com';
-  const phone = config.contact.phone || '+91 98765 00000';
+  const email = config.contact.email || 'contact@ksgdemogym.com';
+  const phone = config.contact.phone || '+91 75499 29102';
   const address = config.contact.address || 'Bangalore, India';
 
   return (

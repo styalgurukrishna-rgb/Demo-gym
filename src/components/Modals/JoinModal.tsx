@@ -139,7 +139,7 @@ export const JoinModal: React.FC<JoinModalProps> = ({ isOpen, onClose, selectedP
                     type="tel"
                     required
                     id="join-input-phone"
-                    placeholder="e.g. +91 98765 43210"
+                    placeholder="e.g. +91 75499 29102"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] transition-all"

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Phone, MessageCircle, Sparkles, X, UserPlus, Flame, Calendar, ArrowRight } from 'lucide-react';
 import { GYM_INFO } from '../data/gymData';
 import { soundManager } from './common/SoundEffects';
+import { CONTACT_CONFIG } from '../config/contactConfig';
 
 interface FloatingActionsProps {
   onOpenJoin?: () => void;
@@ -77,17 +78,17 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
         {/* Floating Call Now Button */}
         <a
           id="floating-call-btn"
-          href={`tel:${GYM_INFO.phone}`}
+          href={CONTACT_CONFIG.getTelUrl()}
           onClick={() => soundManager.playClick()}
           onMouseEnter={() => soundManager.playHover()}
           aria-label="Call Gym Now"
-          className="group relative flex items-center gap-2 px-4 py-3 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-amber-500 text-white shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
+          className="group relative flex items-center gap-2 px-4 py-3 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-amber-500 text-white shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
         >
           <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-black transition-colors">
             <Phone className="w-4 h-4" />
           </div>
           <span className="text-xs font-bold uppercase tracking-wider text-zinc-200 group-hover:text-white">
-            Call Now
+            Call Now ({CONTACT_CONFIG.displayPhone})
           </span>
         </a>
 
@@ -113,7 +114,7 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
           {/* WhatsApp Action Button with Pulse Animation */}
           <a
             id="floating-whatsapp-btn"
-            href={`https://wa.me/${GYM_INFO.whatsapp.replace(/[^0-9]/g, '')}?text=Hello%20KSG%20DEMO%20GYM%2C%20I%20want%20to%20know%20about%20membership%20plans%20and%20free%20trials.`}
+            href={CONTACT_CONFIG.getWhatsAppUrl("Hello KSG DEMO GYM, I want to know about membership plans and book a free trial.")}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => soundManager.playClick()}
@@ -133,27 +134,27 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
       </div>
 
       {/* MOBILE NATIVE STICKY BOTTOM QUICK-ACTION BAR (CALL, WHATSAPP, BOOK) */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-zinc-950/95 backdrop-blur-xl border-t border-zinc-800 px-3 py-2.5 shadow-2xl">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-zinc-950/95 backdrop-blur-xl border-t border-zinc-800 px-3 py-2.5 shadow-2xl pointer-events-auto">
         <div className="grid grid-cols-3 gap-2 max-w-md mx-auto">
           {/* 1. CALL NOW */}
           <a
             id="mobile-sticky-call-btn"
-            href={`tel:${GYM_INFO.phone}`}
+            href={CONTACT_CONFIG.getTelUrl()}
             onClick={() => soundManager.playClick()}
-            className="flex flex-col items-center justify-center py-2 rounded-xl bg-zinc-900 border border-zinc-800 active:scale-95 transition-all text-zinc-300 hover:text-white"
+            className="flex flex-col items-center justify-center py-2.5 rounded-xl bg-zinc-900 border border-zinc-800 active:scale-95 transition-all text-zinc-300 hover:text-white cursor-pointer min-h-[44px]"
           >
             <Phone className="w-4 h-4 text-amber-400 mb-0.5" />
-            <span className="text-[10px] font-bold uppercase tracking-wider">Call</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider">Call Now</span>
           </a>
 
           {/* 2. WHATSAPP */}
           <a
             id="mobile-sticky-whatsapp-btn"
-            href={`https://wa.me/${GYM_INFO.whatsapp.replace(/[^0-9]/g, '')}?text=Hello%20KSG%20DEMO%20GYM%2C%20I%20want%20to%20know%20about%20membership%20plans.`}
+            href={CONTACT_CONFIG.getWhatsAppUrl("Hello KSG DEMO GYM, I want to know about membership plans.")}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => soundManager.playClick()}
-            className="flex flex-col items-center justify-center py-2 rounded-xl bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 active:scale-95 transition-all"
+            className="flex flex-col items-center justify-center py-2.5 rounded-xl bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 active:scale-95 transition-all cursor-pointer min-h-[44px]"
           >
             <MessageCircle className="w-4 h-4 text-emerald-400 mb-0.5 fill-current" />
             <span className="text-[10px] font-bold uppercase tracking-wider">WhatsApp</span>
@@ -166,7 +167,7 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
               soundManager.playClick();
               handleBooking();
             }}
-            className="flex flex-col items-center justify-center py-2 rounded-xl bg-amber-500 text-black font-black shadow-lg shadow-amber-500/20 active:scale-95 transition-all"
+            className="flex flex-col items-center justify-center py-2.5 rounded-xl bg-amber-500 text-black font-black shadow-lg shadow-amber-500/20 active:scale-95 transition-all cursor-pointer min-h-[44px]"
           >
             <Calendar className="w-4 h-4 text-black mb-0.5" />
             <span className="text-[10px] font-black uppercase tracking-wider">Book Trial</span>

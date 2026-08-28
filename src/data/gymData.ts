@@ -3,10 +3,10 @@ import { Program, Trainer, Facility, GalleryItem, PricingPlan, Testimonial, Memb
 export const GYM_INFO = {
   name: "KSG DEMO GYM",
   tagline: "Transform Your Body. Build Your Confidence. Become Your Best Version.",
-  phone: "+91 98765 43210",
-  whatsapp: "+919876543210",
+  phone: "+91 75499 29102",
+  whatsapp: "+917549929102",
   email: "contact@ksgdemogym.com",
-  address: "Tower 4, Platinum Avenue, Cyber City, Bangalore, Karnataka 560100, India",
+  address: "Level 4, Zenith Pinnacle Tower, 100 Feet Road, Indiranagar, Bangalore, Karnataka 560038, India",
   hours: "Open 24/7 (Staffed 05:00 AM - 11:00 PM)",
 };
 
@@ -601,7 +601,7 @@ export const INITIAL_MEMBERS_DATA: MemberRecord[] = [
   {
     id: "KSG-MEM-8894",
     name: "Karan Malhotra",
-    phone: "+91 98765 43210",
+    phone: "+91 75499 29102",
     email: "karan.malhotra@gmail.com",
     planName: "VIP PLAN",
     status: "Active",

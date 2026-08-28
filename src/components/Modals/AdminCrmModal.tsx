@@ -504,7 +504,7 @@ export const AdminCrmModal: React.FC<AdminCrmModalProps> = ({ isOpen, onClose })
                     <input
                       type="tel"
                       required
-                      placeholder="+91 98765 43210"
+                      placeholder="+91 75499 29102"
                       value={newLeadForm.phone}
                       onChange={(e) => setNewLeadForm({ ...newLeadForm, phone: e.target.value })}
                       className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-[#D4AF37]"

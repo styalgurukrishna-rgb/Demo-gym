@@ -14,7 +14,7 @@ export const MemberLoginModal: React.FC<MemberLoginModalProps> = ({
   onClose,
   onLoginSuccess,
 }) => {
-  const [phone, setPhone] = useState('9876543210');
+  const [phone, setPhone] = useState('7549929102');
   const [password, setPassword] = useState('••••••••');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -98,7 +98,7 @@ export const MemberLoginModal: React.FC<MemberLoginModalProps> = ({
               required
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              placeholder="+91 98765 43210"
+              placeholder="+91 75499 29102"
               className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-[#D4AF37]"
             />
           </div>

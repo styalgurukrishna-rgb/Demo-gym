@@ -71,6 +71,25 @@ export default function App() {
   const [selectedTrainer, setSelectedTrainer] = useState<Trainer | null>(null);
   const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
 
+  // Configure manual scroll restoration and guarantee initial top position
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+
+    // Handle browser forward/back buttons
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state && event.state.page) {
+        setCurrentPage(event.state.page);
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   // Apply dynamic SEO and structured data whenever page or config changes
   useEffect(() => {
     const config = gymConfigStore.getConfig();
@@ -110,7 +129,12 @@ export default function App() {
   const handleNavigate = (page: PageType) => {
     soundManager.playClick();
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      window.history.pushState({ page }, '', window.location.pathname);
+    } catch {
+      // safe fallback
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
   };
 
   // Generic modal opener
@@ -120,14 +144,14 @@ export default function App() {
       setSelectedPlanForJoin(data || null);
     } else if (type === 'payment') {
       setSelectedPlanForPayment(data?.plan || data || null);
-    } else if (type === 'programDetail') {
+    } else if (type === 'programDetail' || type === 'program') {
       setSelectedProgram(data?.program || data || null);
       setProgramActionType(data?.actionType || 'learnMore');
-    } else if (type === 'trainerProfile') {
-      setSelectedTrainer(data || null);
-    } else if (type === 'facilityLightbox') {
-      setSelectedFacility(data || null);
-    } else if (type === 'login') {
+    } else if (type === 'trainerProfile' || type === 'trainer') {
+      setSelectedTrainer(data?.trainer || data || null);
+    } else if (type === 'facilityLightbox' || type === 'facility') {
+      setSelectedFacility(data?.facility || data || null);
+    } else if (type === 'login' || type === 'memberLogin') {
       const existing = leadStore.getCurrentMember();
       if (existing) {
         setActiveMember(existing);
@@ -231,8 +255,11 @@ export default function App() {
       {/* 4. Footer */}
       <Footer onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
 
-      {/* 5. Floating Action Buttons (WhatsApp & Quick Call) */}
-      <FloatingActions onOpenJoin={() => handleOpenModal('join')} />
+      {/* 5. Floating Action Buttons (WhatsApp, Quick Call, Booking) */}
+      <FloatingActions 
+        onOpenJoin={() => handleOpenModal('join')} 
+        onOpenBooking={() => handleNavigate('booking')}
+      />
 
       {/* 6. Gym Owner CRM Pitch / Demo Highlights Floating Trigger Button */}
       <div className="fixed bottom-20 left-4 z-40 hidden sm:block">

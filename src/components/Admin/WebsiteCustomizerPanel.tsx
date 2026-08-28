@@ -784,7 +784,7 @@ export const WebsiteCustomizerPanel: React.FC<WebsiteCustomizerPanelProps> = ({ 
               <input
                 id="whatsapp-number-input"
                 type="text"
-                placeholder="e.g. 919876543210"
+                placeholder="e.g. 917549929102"
                 value={config.whatsapp.number}
                 onChange={(e) => setConfig({
                   ...config,

@@ -18,8 +18,8 @@ export const TermsPage: React.FC<TermsPageProps> = ({ onNavigate }) => {
   }, []);
 
   const gymName = config.brand.gymName || 'KSG DEMO GYM';
-  const email = config.contact.email || 'concierge@demogym.com';
-  const phone = config.contact.phone || '+91 98765 00000';
+  const email = config.contact.email || 'contact@ksgdemogym.com';
+  const phone = config.contact.phone || '+91 75499 29102';
 
   return (
     <div className="w-full min-h-screen bg-zinc-950 text-zinc-100 selection:bg-amber-500 selection:text-black pt-24 pb-20">

@@ -16,6 +16,7 @@ import {
 import { PageType, ModalState, GymConfig } from '../types';
 import { leadStore } from '../services/leadStore';
 import { gymConfigStore } from '../services/gymConfigStore';
+import { CONTACT_CONFIG } from '../config/contactConfig';
 
 interface ContactPageProps {
   onNavigate: (page: PageType) => void;
@@ -68,9 +69,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
   };
 
   const handleWhatsAppDirect = () => {
-    const text = `Hi ${config.brand.gymName}! I would like to inquire about membership and training packages.`;
-    const num = (config.whatsapp.number || '+919876543210').replace(/[^0-9]/g, '');
-    window.open(`https://wa.me/${num}?text=${encodeURIComponent(text)}`, '_blank');
+    const url = CONTACT_CONFIG.getWhatsAppUrl(`Hi ${config.brand.gymName}! I would like to inquire about membership and training packages.`);
+    window.open(url, '_blank');
   };
 
   return (
@@ -93,17 +93,17 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
           <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
             <button
               onClick={handleWhatsAppDirect}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-black text-xs uppercase tracking-wider shadow-lg transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-black text-xs uppercase tracking-wider shadow-lg transition-all cursor-pointer"
             >
               <MessageCircle className="w-4 h-4 fill-black" />
               <span>CHAT ON WHATSAPP</span>
             </button>
             <a
-              href={`tel:${config.contact.phone || '+91 98765 43210'}`}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-bold text-xs uppercase tracking-wider border border-zinc-800 transition-all"
+              href={CONTACT_CONFIG.getTelUrl()}
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-bold text-xs uppercase tracking-wider border border-zinc-800 transition-all cursor-pointer"
             >
               <Phone className="w-4 h-4 text-amber-400" />
-              <span>CALL: {config.contact.phone || '+91 98765 43210'}</span>
+              <span>CALL: {config.contact.phone || CONTACT_CONFIG.displayPhone}</span>
             </a>
           </div>
         </div>
@@ -163,7 +163,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                       <input
                         type="tel"
                         required
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 75499 29102"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-amber-500"
@@ -254,7 +254,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                   <Clock className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-zinc-200 block">Operating Hours</span>
-                    <span className="text-zinc-400">{config.contact.hours || '5:00 AM - 11:00 PM'}</span>
+                    <span className="text-zinc-400">{config.contact.openingHours || CONTACT_CONFIG.hours}</span>
                   </div>
                 </div>
 
@@ -262,7 +262,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                   <Phone className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-zinc-200 block">Phone</span>
-                    <span className="text-zinc-400">{config.contact.phone || '+91 98765 43210'}</span>
+                    <a href={CONTACT_CONFIG.getTelUrl()} className="text-amber-400 font-mono hover:underline">
+                      {config.contact.phone || CONTACT_CONFIG.displayPhone}
+                    </a>
                   </div>
                 </div>
 
@@ -270,7 +272,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                   <Mail className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-zinc-200 block">Email</span>
-                    <span className="text-zinc-400">{config.contact.email || 'contact@ksggym.com'}</span>
+                    <a href={CONTACT_CONFIG.getMailtoUrl()} className="text-zinc-400 hover:text-white transition-colors">
+                      {config.contact.email || CONTACT_CONFIG.email}
+                    </a>
                   </div>
                 </div>
               </div>
@@ -285,19 +289,19 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                 />
                 <div className="relative z-10">
                   <MapPin className="w-8 h-8 text-amber-400 mx-auto mb-2 animate-bounce" />
-                  <h4 className="text-sm font-bold text-white uppercase">Platinum Avenue, Cyber City</h4>
-                  <p className="text-[11px] text-zinc-400 mt-0.5">Valet Parking Available for VIP Members</p>
+                  <h4 className="text-sm font-bold text-white uppercase">{config.brand.gymName}</h4>
+                  <p className="text-[11px] text-zinc-400 mt-0.5">{config.contact.address || 'Cyber City, Bangalore'}</p>
                 </div>
               </div>
               <div className="p-4 bg-zinc-950/80 flex items-center justify-between">
-                <span className="text-xs text-zinc-400">5 Mins from Metro Station</span>
+                <span className="text-xs text-zinc-400">Valet Parking & EV Charging</span>
                 <a
-                  href="https://maps.google.com"
+                  href={config.contact.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${config.brand.gymName} ${config.contact.address || 'Bangalore'}`)}`}
                   target="_blank"
-                  rel="noreferrer"
-                  className="text-xs font-bold text-amber-400 hover:underline flex items-center gap-1"
+                  rel="noopener noreferrer"
+                  className="text-xs font-bold text-amber-400 hover:underline flex items-center gap-1.5 cursor-pointer"
                 >
-                  <span>Open Directions</span>
+                  <span>Get Directions</span>
                   <Navigation className="w-3.5 h-3.5" />
                 </a>
               </div>

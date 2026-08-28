@@ -142,7 +142,7 @@ export const FreeTrialSection: React.FC<FreeTrialSectionProps> = ({ onDirectPass
                         type="tel"
                         required
                         id="trial-input-phone"
-                        placeholder="e.g. +91 98765 43210"
+                        placeholder="e.g. +91 75499 29102"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] transition-all"
@@ -267,7 +267,7 @@ export const FreeTrialSection: React.FC<FreeTrialSectionProps> = ({ onDirectPass
                   Book for a Friend
                 </button>
                 <a
-                  href={`https://wa.me/919876543210?text=Hi%20KSG%20Gym%2C%20I%20have%20booked%20my%20free%20trial%20pass%20${passCode}`}
+                  href={`https://wa.me/917549929102?text=Hi%20KSG%20Gym%2C%20I%20have%20booked%20my%20free%20trial%20pass%20${passCode}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg transition-all cursor-pointer inline-flex items-center gap-1.5"

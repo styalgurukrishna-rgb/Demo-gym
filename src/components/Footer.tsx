@@ -19,6 +19,7 @@ import {
 import { soundManager } from './common/SoundEffects';
 import { PageType, ModalState, GymConfig } from '../types';
 import { gymConfigStore } from '../services/gymConfigStore';
+import { CONTACT_CONFIG } from '../config/contactConfig';
 
 interface FooterProps {
   onNavigate: (page: PageType) => void;
@@ -290,10 +291,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenModal }) => {
                 <span className="block text-[11px] text-zinc-300">{config.contact.address || 'Indiranagar 100ft Road, Bangalore'}</span>
               </li>
               <li>
-                <span className="block text-[11px] text-amber-400 font-mono">{config.contact.phone || '+91 98765 43210'}</span>
+                <a href={CONTACT_CONFIG.getTelUrl()} className="block text-[11px] text-amber-400 font-mono hover:underline">
+                  {config.contact.phone || CONTACT_CONFIG.displayPhone}
+                </a>
               </li>
               <li>
-                <span className="block text-[11px] text-zinc-400">{config.contact.email || 'support@ksggym.com'}</span>
+                <a href={CONTACT_CONFIG.getMailtoUrl()} className="block text-[11px] text-zinc-400 hover:text-white transition-colors">
+                  {config.contact.email || CONTACT_CONFIG.email}
+                </a>
               </li>
               <li className="pt-2">
                 <button

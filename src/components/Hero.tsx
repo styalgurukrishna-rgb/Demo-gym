@@ -170,12 +170,12 @@ export const Hero: React.FC<HeroProps> = ({
       ref={heroRef}
       id="home"
       onMouseMove={handleMouseMove}
-      className="relative min-h-[95vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden pt-28 pb-20 bg-[#080808]"
+      className="relative min-h-[90vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden pt-24 sm:pt-28 pb-16 sm:pb-20 bg-[#080808]"
     >
       {/* 3D Depth Layer 1: Background Luxury Gym Video/Photo with Ambient Parallax */}
       <motion.div
         style={{ x: bgX, y: bgY }}
-        className="absolute -inset-10 z-0 overflow-hidden pointer-events-none scale-105"
+        className="absolute -inset-6 sm:-inset-10 z-0 overflow-hidden pointer-events-none scale-105"
       >
         {isVideoBg ? (
           <video
@@ -209,15 +209,15 @@ export const Hero: React.FC<HeroProps> = ({
         style={{ x: midX, y: midY }}
         className="absolute inset-0 z-0 pointer-events-none"
       >
-        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-[#EF4444]/15 rounded-full blur-[160px]" />
-        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[600px] h-[600px] bg-[#D4AF37]/15 rounded-full blur-[160px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-white/[0.03] rounded-full blur-[90px]" />
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[650px] h-[350px] sm:h-[650px] bg-[#EF4444]/15 rounded-full blur-[100px] sm:blur-[160px]" />
+        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-[#D4AF37]/15 rounded-full blur-[100px] sm:blur-[160px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] sm:w-[350px] h-[250px] sm:h-[350px] bg-white/[0.03] rounded-full blur-[70px] sm:blur-[90px]" />
       </motion.div>
 
       {/* 3D Depth Layer 3: Floating Dynamic Light Streaks */}
       <motion.div
         style={{ x: fgX, y: fgY }}
-        className="absolute inset-0 z-0 pointer-events-none opacity-40"
+        className="absolute inset-0 z-0 pointer-events-none opacity-40 hidden sm:block"
       >
         <div className="absolute top-1/3 right-10 w-96 h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent rotate-45 blur-sm" />
         <div className="absolute bottom-1/3 left-10 w-96 h-1 bg-gradient-to-r from-transparent via-[#EF4444] to-transparent -rotate-45 blur-sm" />
@@ -230,7 +230,7 @@ export const Hero: React.FC<HeroProps> = ({
       />
 
       {/* Background Toggle Button (Photo / Video Mode) */}
-      <div className="absolute top-28 right-6 z-20 hidden md:block">
+      <div className="absolute top-24 sm:top-28 right-4 sm:right-6 z-20 hidden md:block">
         <button
           onClick={() => {
             soundManager.playClick();
@@ -253,21 +253,21 @@ export const Hero: React.FC<HeroProps> = ({
       </div>
 
       {/* Main Content Container */}
-      <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+      <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center w-full">
         
         {/* Top Eyebrow Badge - Brand Message */}
         <motion.div
           initial={{ opacity: 0, y: -20, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-[#D4AF37]/40 backdrop-blur-md mb-6 shadow-2xl shadow-black/60"
+          className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-white/[0.06] border border-[#D4AF37]/40 backdrop-blur-md mb-4 sm:mb-6 shadow-2xl shadow-black/60 max-w-full"
         >
-          <span className="flex h-2 w-2 relative">
+          <span className="flex h-2 w-2 relative shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#EF4444] opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#EF4444]"></span>
           </span>
-          <span className="text-xs font-black uppercase tracking-widest text-[#D4AF37]">
-            {config.brand.tagline || 'TRANSFORM YOUR BODY. BUILD YOUR CONFIDENCE. BECOME YOUR BEST VERSION.'}
+          <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider sm:tracking-widest text-[#D4AF37] truncate">
+            {config.brand.tagline || 'TRANSFORM YOUR BODY. BUILD YOUR CONFIDENCE.'}
           </span>
         </motion.div>
 
@@ -276,7 +276,7 @@ export const Hero: React.FC<HeroProps> = ({
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black font-['Syne',sans-serif] tracking-tight uppercase leading-[1.03] text-white max-w-4xl"
+          className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-['Syne',sans-serif] tracking-tight uppercase leading-[1.08] text-white max-w-4xl w-full break-words"
         >
           {config.hero.heroHeading ? (
             <span>{config.hero.heroHeading}</span>
@@ -296,7 +296,7 @@ export const Hero: React.FC<HeroProps> = ({
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.35, ease: 'easeOut' }}
-          className="mt-6 text-base sm:text-xl text-neutral-300 max-w-2xl font-light leading-relaxed tracking-wide"
+          className="mt-4 sm:mt-6 text-sm sm:text-lg md:text-xl text-neutral-300 max-w-2xl font-light leading-relaxed tracking-wide px-2"
         >
           {config.hero.heroSubtitle || 'Train smarter. Get stronger. Become your best version.'}
         </motion.p>
@@ -306,7 +306,7 @@ export const Hero: React.FC<HeroProps> = ({
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-10 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto"
+          className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-5 w-full max-w-sm sm:max-w-none"
         >
           {/* Button 1: JOIN NOW (Primary Glow Button) */}
           <button
@@ -316,7 +316,7 @@ export const Hero: React.FC<HeroProps> = ({
               handleJoin();
             }}
             onMouseEnter={() => soundManager.playHover()}
-            className="w-full sm:w-auto relative group overflow-hidden px-9 py-4 rounded-full font-black text-sm uppercase tracking-widest text-white bg-gradient-to-r from-[#DC2626] via-[#EF4444] to-[#B91C1C] shadow-[0_0_35px_rgba(239,68,68,0.5)] hover:shadow-[0_0_60px_rgba(239,68,68,0.85)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2.5 border border-red-400/40"
+            className="w-full sm:w-auto relative group overflow-hidden px-8 sm:px-9 py-3.5 sm:py-4 rounded-full font-black text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest text-white bg-gradient-to-r from-[#DC2626] via-[#EF4444] to-[#B91C1C] shadow-[0_0_35px_rgba(239,68,68,0.5)] hover:shadow-[0_0_60px_rgba(239,68,68,0.85)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2.5 border border-red-400/40"
           >
             <Sparkles className="w-4 h-4 text-[#FDE047] animate-spin" style={{ animationDuration: '6s' }} />
             <span>{config.hero.ctaButtonText || 'JOIN NOW'}</span>
@@ -332,7 +332,7 @@ export const Hero: React.FC<HeroProps> = ({
               handleTrial();
             }}
             onMouseEnter={() => soundManager.playHover()}
-            className="w-full sm:w-auto group px-8 py-4 rounded-full font-black text-sm uppercase tracking-widest text-neutral-200 hover:text-white bg-white/[0.06] hover:bg-white/[0.12] border border-[#D4AF37]/50 hover:border-[#D4AF37] backdrop-blur-xl shadow-lg hover:shadow-[0_0_35px_rgba(212,175,55,0.35)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2.5"
+            className="w-full sm:w-auto group px-7 sm:px-8 py-3.5 sm:py-4 rounded-full font-black text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest text-neutral-200 hover:text-white bg-white/[0.06] hover:bg-white/[0.12] border border-[#D4AF37]/50 hover:border-[#D4AF37] backdrop-blur-xl shadow-lg hover:shadow-[0_0_35px_rgba(212,175,55,0.35)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2.5"
           >
             <Flame className="w-4 h-4 text-[#D4AF37]" />
             <span>{config.hero.secondaryButtonText || 'BOOK FREE TRIAL'}</span>
@@ -346,7 +346,7 @@ export const Hero: React.FC<HeroProps> = ({
               handleTour();
             }}
             onMouseEnter={() => soundManager.playHover()}
-            className="w-full sm:w-auto text-xs uppercase tracking-wider font-bold text-neutral-400 hover:text-white py-2 px-3 hover:underline underline-offset-4 transition-colors flex items-center justify-center gap-1.5"
+            className="w-full sm:w-auto text-xs uppercase tracking-wider font-bold text-neutral-400 hover:text-white py-2 px-3 hover:underline underline-offset-4 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <Play className="w-3.5 h-3.5 text-[#D4AF37] fill-current" />
             <span>WATCH TOUR</span>
@@ -358,56 +358,56 @@ export const Hero: React.FC<HeroProps> = ({
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.65 }}
-          className="mt-14 pt-8 border-t border-white/10 w-full grid grid-cols-2 md:grid-cols-4 gap-4 text-left"
+          className="mt-10 sm:mt-14 pt-6 sm:pt-8 border-t border-white/10 w-full grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-left"
         >
           {/* Card 1: 500+ Members */}
-          <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-[#121217]/90 border border-white/10 hover:border-[#D4AF37]/40 transition-all">
-            <div className="p-3 rounded-xl bg-emerald-500/15 text-emerald-400">
-              <Users className="w-5 h-5" />
+          <div className="flex items-center gap-3 p-3 sm:p-3.5 rounded-2xl bg-[#121217]/90 border border-white/10 hover:border-[#D4AF37]/40 transition-all">
+            <div className="p-2.5 sm:p-3 rounded-xl bg-emerald-500/15 text-emerald-400 shrink-0">
+              <Users className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <p className="text-sm sm:text-base font-black text-white font-mono">500+ Active</p>
-              <p className="text-[11px] uppercase tracking-wider text-neutral-400 font-medium">Dedicated Members</p>
+            <div className="min-w-0">
+              <p className="text-sm sm:text-base font-black text-white font-mono truncate">500+ Active</p>
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutral-400 font-medium truncate">Dedicated Members</p>
             </div>
           </div>
 
           {/* Card 2: 10+ Trainers */}
-          <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-[#121217]/90 border border-white/10 hover:border-[#D4AF37]/40 transition-all">
-            <div className="p-3 rounded-xl bg-[#D4AF37]/15 text-[#D4AF37]">
-              <Award className="w-5 h-5" />
+          <div className="flex items-center gap-3 p-3 sm:p-3.5 rounded-2xl bg-[#121217]/90 border border-white/10 hover:border-[#D4AF37]/40 transition-all">
+            <div className="p-2.5 sm:p-3 rounded-xl bg-[#D4AF37]/15 text-[#D4AF37] shrink-0">
+              <Award className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <p className="text-sm sm:text-base font-black text-white font-mono">10+ Coaches</p>
-              <p className="text-[11px] uppercase tracking-wider text-neutral-400 font-medium">CSCS & ACE Certified</p>
+            <div className="min-w-0">
+              <p className="text-sm sm:text-base font-black text-white font-mono truncate">10+ Coaches</p>
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutral-400 font-medium truncate">CSCS & ACE Certified</p>
             </div>
           </div>
 
           {/* Card 3: 24/7 Support & RFID */}
-          <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-[#121217]/90 border border-white/10 hover:border-[#D4AF37]/40 transition-all">
-            <div className="p-3 rounded-xl bg-[#EF4444]/15 text-[#EF4444]">
-              <Clock className="w-5 h-5" />
+          <div className="flex items-center gap-3 p-3 sm:p-3.5 rounded-2xl bg-[#121217]/90 border border-white/10 hover:border-[#D4AF37]/40 transition-all">
+            <div className="p-2.5 sm:p-3 rounded-xl bg-[#EF4444]/15 text-[#EF4444] shrink-0">
+              <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <p className="text-sm sm:text-base font-black text-white font-mono">24/7 Access</p>
-              <p className="text-[11px] uppercase tracking-wider text-neutral-400 font-medium">Biometric Support</p>
+            <div className="min-w-0">
+              <p className="text-sm sm:text-base font-black text-white font-mono truncate">24/7 Access</p>
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutral-400 font-medium truncate">Biometric Support</p>
             </div>
           </div>
 
           {/* Card 4: Infrared Spa & Panatta */}
-          <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-[#121217]/90 border border-white/10 hover:border-[#D4AF37]/40 transition-all">
-            <div className="p-3 rounded-xl bg-purple-500/15 text-purple-400">
-              <ShieldCheck className="w-5 h-5" />
+          <div className="flex items-center gap-3 p-3 sm:p-3.5 rounded-2xl bg-[#121217]/90 border border-white/10 hover:border-[#D4AF37]/40 transition-all">
+            <div className="p-2.5 sm:p-3 rounded-xl bg-purple-500/15 text-purple-400 shrink-0">
+              <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <p className="text-sm sm:text-base font-black text-white font-mono">Panatta Rigs</p>
-              <p className="text-[11px] uppercase tracking-wider text-neutral-400 font-medium">Italian Biomechanics</p>
+            <div className="min-w-0">
+              <p className="text-sm sm:text-base font-black text-white font-mono truncate">Panatta Rigs</p>
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutral-400 font-medium truncate">Italian Biomechanics</p>
             </div>
           </div>
         </motion.div>
       </div>
 
       {/* Scroll Down Indicator */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none opacity-60">
+      <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none opacity-60">
         <span className="text-[9px] uppercase tracking-[0.2em] text-neutral-400 mb-1">Scroll to Explore</span>
         <ChevronDown className="w-4 h-4 text-[#D4AF37] animate-bounce" />
       </div>

@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, MessageSquare, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { GYM_INFO } from '../data/gymData';
+import { gymConfigStore } from '../services/gymConfigStore';
+import { GymConfig } from '../types';
 import { leadStore } from '../services/leadStore';
 import { soundManager } from './common/SoundEffects';
+import { analytics } from '../utils/analytics';
+import { CONTACT_CONFIG } from '../config/contactConfig';
 
 export const ContactSection: React.FC = () => {
+  const [config, setConfig] = useState<GymConfig>(gymConfigStore.getConfig());
+
+  useEffect(() => {
+    const unsub = gymConfigStore.subscribe((newConfig) => {
+      setConfig(newConfig);
+    });
+    return () => unsub();
+  }, []);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -31,6 +43,11 @@ export const ContactSection: React.FC = () => {
       type: 'contact',
       status: 'New',
       notes: formData.message || 'Direct inquiry via contact section form',
+    });
+
+    analytics.trackEvent('contact_submitted', {
+      name: formData.name,
+      email: formData.email,
     });
 
     setTimeout(() => {
@@ -60,6 +77,12 @@ export const ContactSection: React.FC = () => {
     });
   };
 
+  const whatsappUrl = CONTACT_CONFIG.getWhatsAppUrl(
+    config.whatsapp.defaultMessage || `Hi ${config.brand.gymName}, I would like to inquire about memberships.`
+  );
+  const telUrl = CONTACT_CONFIG.getTelUrl();
+  const phoneDisplay = config.contact.phone || CONTACT_CONFIG.displayPhone;
+
   return (
     <section id="contact" className="relative py-28 bg-[#0A0A0C] border-t border-white/5 overflow-hidden">
       {/* Background glow */}
@@ -78,7 +101,7 @@ export const ContactSection: React.FC = () => {
           </h2>
 
           <p className="mt-4 text-base text-neutral-400 font-light">
-            Have questions about private personal training, corporate memberships, or scheduling a facility visit? We are at your service.
+            Have questions about private personal training, corporate memberships, or scheduling a facility visit with {config.brand.gymName}? We are at your service.
           </p>
         </div>
 
@@ -90,7 +113,7 @@ export const ContactSection: React.FC = () => {
             <div className="p-8 rounded-3xl bg-[#111114] border border-white/10 shadow-2xl space-y-6">
               <h3 className="text-xl font-black font-['Syne',sans-serif] uppercase tracking-wide text-white flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-                <span>Headquarters & Club</span>
+                <span>{config.brand.gymName} Headquarters</span>
               </h3>
 
               <div className="space-y-5">
@@ -101,7 +124,7 @@ export const ContactSection: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-xs uppercase font-bold text-neutral-400 tracking-wider">Location</p>
-                    <p className="text-sm font-medium text-white mt-0.5">{GYM_INFO.address}</p>
+                    <p className="text-sm font-medium text-white mt-0.5">{config.contact.address || 'Indiranagar 100ft Road, Bangalore'}</p>
                     <span className="text-[11px] text-[#D4AF37] font-semibold">Valet Parking Available</span>
                   </div>
                 </div>
@@ -112,14 +135,15 @@ export const ContactSection: React.FC = () => {
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-xs uppercase font-bold text-neutral-400 tracking-wider">Phone / WhatsApp</p>
+                    <p className="text-xs uppercase font-bold text-neutral-400 tracking-wider">Phone / Helpline</p>
                     <a
-                      href={`tel:${GYM_INFO.phone}`}
+                      href={telUrl}
+                      onClick={() => analytics.trackEvent('call_click', { phone: phoneDisplay })}
                       className="text-sm font-medium text-white hover:text-[#EF4444] transition-colors mt-0.5 block"
                     >
-                      {GYM_INFO.phone}
+                      {phoneDisplay}
                     </a>
-                    <span className="text-[11px] text-neutral-500">24/7 Member Helpline</span>
+                    <span className="text-[11px] text-neutral-500">Member Concierge Support</span>
                   </div>
                 </div>
 
@@ -131,10 +155,10 @@ export const ContactSection: React.FC = () => {
                   <div>
                     <p className="text-xs uppercase font-bold text-neutral-400 tracking-wider">Email Inquiry</p>
                     <a
-                      href={`mailto:${GYM_INFO.email}`}
+                      href={`mailto:${config.contact.email || CONTACT_CONFIG.email}`}
                       className="text-sm font-medium text-white hover:text-[#D4AF37] transition-colors mt-0.5 block"
                     >
-                      {GYM_INFO.email}
+                      {config.contact.email || CONTACT_CONFIG.email}
                     </a>
                   </div>
                 </div>
@@ -146,7 +170,7 @@ export const ContactSection: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-xs uppercase font-bold text-neutral-400 tracking-wider">Operating Hours</p>
-                    <p className="text-sm font-medium text-white mt-0.5">{GYM_INFO.hours}</p>
+                    <p className="text-sm font-medium text-white mt-0.5">{config.contact.openingHours || CONTACT_CONFIG.hours}</p>
                     <span className="text-[11px] text-emerald-400 font-semibold">Open 365 Days / Year</span>
                   </div>
                 </div>
@@ -155,9 +179,10 @@ export const ContactSection: React.FC = () => {
               {/* Direct Quick WhatsApp Action */}
               <div className="pt-4 border-t border-white/10">
                 <a
-                  href={`https://wa.me/${GYM_INFO.whatsapp.replace('+', '')}?text=Hi%20KSG%20Gym%2C%20I%20would%20like%20to%20inquire%20about%20membership`}
+                  href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => analytics.trackEvent('whatsapp_click', { action: 'contact_section' })}
                   className="w-full py-3 rounded-xl bg-emerald-600/20 hover:bg-emerald-600 border border-emerald-500/40 text-emerald-300 hover:text-white transition-all text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <MessageSquare className="w-4 h-4" />
@@ -222,7 +247,7 @@ export const ContactSection: React.FC = () => {
                       type="tel"
                       required
                       id="contact-input-phone"
-                      placeholder="+91 98765 43210"
+                      placeholder="+91 75499 29102"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="w-full px-4 py-3 rounded-xl bg-white/[0.05] border border-white/10 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] transition-all"

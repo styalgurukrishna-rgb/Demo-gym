@@ -30,20 +30,20 @@ export const DEFAULT_GYM_CONFIG: GymConfig = {
     heroVideo: ''
   },
   contact: {
-    phone: '+91 98765 00000 (Demo Phone)',
-    email: 'contact@demogym.com',
-    address: 'Tower 4, Platinum Avenue, Cyber City, Bangalore, Karnataka 560100',
+    phone: '+91 75499 29102',
+    email: 'contact@ksgdemogym.com',
+    address: 'Level 4, Zenith Pinnacle Tower, 100 Feet Road, Indiranagar, Bangalore, Karnataka 560038',
     city: 'Bangalore',
-    area: 'Cyber City',
-    googleMapsUrl: 'https://maps.google.com/?q=Cyber+City+Bangalore',
+    area: 'Indiranagar',
+    googleMapsUrl: 'https://maps.google.com/?q=Indiranagar+Bangalore',
     openingHours: 'Open 24/7 (Staffed 05:00 AM - 11:00 PM)',
     instagram: 'https://instagram.com/ksgdemogym',
     facebook: 'https://facebook.com/ksgdemogym',
     youtube: 'https://youtube.com/@ksgdemogym'
   },
   whatsapp: {
-    whatsappNumber: '+919876500000',
-    defaultMessage: 'Hello, I would like to know more about your gym membership plans and free trial.',
+    whatsappNumber: '+917549929102',
+    defaultMessage: 'Hello KSG DEMO GYM, I would like to know more about your gym membership plans and free trial.',
     trainerDefaultMessage: 'Hello Coach, I would like to inquire about personal training schedules.'
   },
   seo: {
@@ -385,13 +385,19 @@ class GymConfigStore {
   }
 
   public getWhatsAppUrl(customMessage?: string): string {
-    const rawNumber = this.config.whatsapp.whatsappNumber.replace(/[^0-9]/g, '');
+    let rawNumber = (this.config.whatsapp.whatsappNumber || '917549929102').replace(/[^0-9]/g, '');
+    if (rawNumber.length === 10) {
+      rawNumber = `91${rawNumber}`;
+    }
     const message = encodeURIComponent(customMessage || this.config.whatsapp.defaultMessage);
     return `https://wa.me/${rawNumber}?text=${message}`;
   }
 
   public getTrainerWhatsAppUrl(trainerName: string): string {
-    const rawNumber = this.config.whatsapp.whatsappNumber.replace(/[^0-9]/g, '');
+    let rawNumber = (this.config.whatsapp.whatsappNumber || '917549929102').replace(/[^0-9]/g, '');
+    if (rawNumber.length === 10) {
+      rawNumber = `91${rawNumber}`;
+    }
     const message = encodeURIComponent(`Hello! I would like to train with Coach ${trainerName} at ${this.getGymName()}. Please share their availability.`);
     return `https://wa.me/${rawNumber}?text=${message}`;
   }

@@ -32,7 +32,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
   const [selectedRole, setSelectedRole] = useState<UserRole>('member');
   
   // Login Form
-  const [identifier, setIdentifier] = useState('+91 98765 43210');
+  const [identifier, setIdentifier] = useState('+91 75499 29102');
   const [password, setPassword] = useState('pass123');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
@@ -59,7 +59,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
     setErrorMsg('');
     setSuccessMsg('');
     if (role === 'member') {
-      setIdentifier('+91 98765 43210');
+      setIdentifier('+91 75499 29102');
       setPassword('pass123');
     } else if (role === 'trainer') {
       setIdentifier('vikram.trainer@ksg.com');
@@ -133,7 +133,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
     
     setTimeout(() => {
       if (role === 'member') {
-        leadStore.login('+91 98765 43210', 'pass123');
+        leadStore.login('+91 75499 29102', 'pass123');
         setIsLoading(false);
         soundManager.playSuccess();
         onNavigate('member-dashboard');
@@ -287,7 +287,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                       required
                       value={identifier}
                       onChange={(e) => setIdentifier(e.target.value)}
-                      placeholder={selectedRole === 'member' ? '+91 98765 43210' : 'admin@ksgdemogym.com'}
+                      placeholder={selectedRole === 'member' ? '+91 75499 29102' : 'admin@ksgdemogym.com'}
                       className="w-full pl-10 pr-4 py-3 rounded-xl bg-zinc-950 border border-zinc-800 text-white text-xs placeholder-zinc-500 focus:border-amber-500 focus:outline-none"
                     />
                   </div>
@@ -446,7 +446,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                   <input
                     type="tel"
                     required
-                    placeholder="+91 98765 00000"
+                    placeholder="+91 75499 29102"
                     value={regPhone}
                     onChange={(e) => setRegPhone(e.target.value)}
                     className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-white text-xs placeholder-zinc-500 focus:border-amber-500 focus:outline-none"

@@ -10,6 +10,7 @@ export type AnalyticsEventName =
   | 'booking_completed'
   | 'whatsapp_click'
   | 'call_click'
+  | 'directions_click'
   | 'contact_submitted'
   | 'demo_inquiry_submitted'
   | 'conversion_funnel_step';

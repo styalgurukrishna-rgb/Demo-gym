@@ -99,14 +99,21 @@ export const AiFitnessCoachSection: React.FC<AiFitnessCoachSectionProps> = ({
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesFeedRef = useRef<HTMLDivElement>(null);
+  const isInitialMount = useRef(true);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const scrollChatToBottom = () => {
+    if (messagesFeedRef.current) {
+      messagesFeedRef.current.scrollTop = messagesFeedRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
-    scrollToBottom();
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    scrollChatToBottom();
   }, [messages, isTyping]);
 
   const handleSendMessage = (textToSend?: string) => {
@@ -241,7 +248,7 @@ export const AiFitnessCoachSection: React.FC<AiFitnessCoachSectionProps> = ({
           </div>
 
           {/* Chat Messages Feed Area */}
-          <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4 bg-[#0E0E14]/80">
+          <div ref={messagesFeedRef} className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4 bg-[#0E0E14]/80 scroll-smooth">
             {messages.map((msg) => (
               <motion.div
                 key={msg.id}
@@ -314,8 +321,6 @@ export const AiFitnessCoachSection: React.FC<AiFitnessCoachSectionProps> = ({
                 </div>
               </motion.div>
             )}
-
-            <div ref={messagesEndRef} />
           </div>
 
           {/* Preset Question Pills Bar */}
