@@ -18,15 +18,17 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
   const [isDismissed, setIsDismissed] = useState(false);
 
   useEffect(() => {
+    if (isDismissed) {
+      setShowDesktopBar(false);
+      return;
+    }
+
     const handleScroll = () => {
-      // Show desktop floating CTA after scrolling past 450px
-      if (window.scrollY > 450 && !isDismissed) {
-        setShowDesktopBar(true);
-      } else {
-        setShowDesktopBar(false);
-      }
+      const shouldShow = window.scrollY > 450;
+      setShowDesktopBar((prev) => (prev !== shouldShow ? shouldShow : prev));
     };
 
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isDismissed]);

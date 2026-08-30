@@ -17,6 +17,7 @@ import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { soundManager } from './common/SoundEffects';
 import { gymConfigStore } from '../services/gymConfigStore';
 import { GymConfig } from '../types';
+import { handleImageError, optimizeImageUrl } from '../utils/imageFallback';
 
 interface HeroProps {
   onOpenJoin?: () => void;
@@ -217,13 +218,13 @@ export const Hero: React.FC<HeroProps> = ({
           </video>
         ) : (
           <img
-            src={config.hero.heroImage ? `${config.hero.heroImage}?auto=format&fit=crop&w=1280&q=75&fm=webp` : "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1280&q=75&fm=webp"}
-            srcSet={`https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=640&q=75&fm=webp 640w, https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1080&q=75&fm=webp 1080w, https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1920&q=75&fm=webp 1920w`}
-            sizes="100vw"
+            src={optimizeImageUrl(config.hero.heroImage || "https://images.unsplash.com/photo-1534438327276-14e5300c3a48", 1920, 80)}
             alt={`${config.brand.gymName} Luxury Architecture`}
             loading="eager"
             decoding="async"
             fetchPriority="high"
+            referrerPolicy="no-referrer"
+            onError={handleImageError}
             className="w-full h-full object-cover object-center opacity-35 brightness-75 contrast-125 filter transition-opacity duration-300"
           />
         )}
