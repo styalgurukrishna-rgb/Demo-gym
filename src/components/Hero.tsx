@@ -221,7 +221,7 @@ export const Hero: React.FC<HeroProps> = ({
             alt={`${config.brand.gymName} Luxury Architecture`}
             loading="eager"
             decoding="async"
-            {...({ fetchpriority: 'high' } as Record<string, string>)}
+            fetchPriority="high"
             className="w-full h-full object-cover object-center opacity-35 brightness-75 contrast-125 filter transition-opacity duration-300"
           />
         )}
