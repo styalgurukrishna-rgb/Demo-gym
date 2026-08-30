@@ -157,7 +157,7 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
     soundManager.playSuccess();
     leadStore.sendNotification({
       userName: 'Aarav Patel',
-      phone: '+91 98234 56789',
+      phone: '+91 75499 29102',
       title: `${eventType} Notification`,
       message: `[Automated KSG Cloud Engine] Your request for ${eventType} has been verified and processed.`,
       channel: 'WhatsApp',
@@ -953,7 +953,7 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
                     <input
                       type="tel"
                       required
-                      placeholder="+91 98..."
+                      placeholder="+91 75499 29102"
                       value={newMemberForm.phone}
                       onChange={(e) => setNewMemberForm({ ...newMemberForm, phone: e.target.value })}
                       className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-white text-xs focus:border-amber-500 focus:outline-none"

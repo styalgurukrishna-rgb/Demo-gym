@@ -642,7 +642,7 @@ export const INITIAL_MEMBERS_DATA: MemberRecord[] = [
   {
     id: "KSG-MEM-8895",
     name: "Natasha Menon",
-    phone: "+91 96543 21098",
+    phone: "+91 75499 29102",
     email: "natasha.m@designstudio.com",
     planName: "VIP PLAN",
     status: "Active",
@@ -655,7 +655,7 @@ export const INITIAL_MEMBERS_DATA: MemberRecord[] = [
   {
     id: "KSG-MEM-8896",
     name: "Rohan Kapoor",
-    phone: "+91 98111 22334",
+    phone: "+91 75499 29102",
     email: "rohan.k@techgrowth.io",
     planName: "PREMIUM PLAN",
     status: "Active",
@@ -668,7 +668,7 @@ export const INITIAL_MEMBERS_DATA: MemberRecord[] = [
   {
     id: "KSG-MEM-8897",
     name: "Pooja Sharma",
-    phone: "+91 97123 45678",
+    phone: "+91 75499 29102",
     email: "pooja.sharma@outlook.com",
     planName: "BASIC PLAN",
     status: "Expiring Soon",
@@ -681,7 +681,7 @@ export const INITIAL_MEMBERS_DATA: MemberRecord[] = [
   {
     id: "KSG-MEM-8898",
     name: "Devendra Verma",
-    phone: "+91 98888 77665",
+    phone: "+91 75499 29102",
     email: "dev.verma@fintech.co",
     planName: "PREMIUM PLAN",
     status: "Expired",
@@ -697,7 +697,7 @@ export const INITIAL_BOOKINGS_DATA = [
   {
     id: "BKG-901",
     name: "Siddharth Nambiar",
-    phone: "+91 98333 44556",
+    phone: "+91 75499 29102",
     email: "siddharth.n@gmail.com",
     fitnessGoal: "Weight Loss & Muscle Tone",
     trainerName: "Vikram Singhania",
@@ -710,7 +710,7 @@ export const INITIAL_BOOKINGS_DATA = [
   {
     id: "BKG-902",
     name: "Meera Krishnan",
-    phone: "+91 97444 55667",
+    phone: "+91 75499 29102",
     email: "meera.k@biotech.res.in",
     fitnessGoal: "Mobility & Joint Health",
     trainerName: "Aria Thorne",
@@ -723,7 +723,7 @@ export const INITIAL_BOOKINGS_DATA = [
   {
     id: "BKG-903",
     name: "Akash Singhal",
-    phone: "+91 98222 11009",
+    phone: "+91 75499 29102",
     email: "akash.s@venture.vc",
     fitnessGoal: "Strength & Powerlifting",
     trainerName: "Marcus Vance",
@@ -736,7 +736,7 @@ export const INITIAL_BOOKINGS_DATA = [
   {
     id: "BKG-904",
     name: "Tanvi Roy",
-    phone: "+91 99111 88223",
+    phone: "+91 75499 29102",
     email: "tanvi.roy@agency.in",
     fitnessGoal: "HIIT & Cardio Shred",
     trainerName: "Elena Rostova",
