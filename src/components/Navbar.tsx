@@ -83,9 +83,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     { name: 'Programs', page: 'programs' },
     { name: 'Trainers', page: 'trainers' },
     { name: 'Facilities', page: 'facilities' },
-    { name: 'Gallery', page: 'gallery' },
     { name: 'Pricing', page: 'pricing' },
-    { name: 'Book Trial', page: 'booking' },
+    { name: 'Booking', page: 'booking' },
     { name: 'Contact', page: 'contact' },
   ];
 
@@ -93,7 +92,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     soundManager.playClick();
     onNavigate(page);
     setMobileMenuOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
   };
 
   return (
@@ -162,7 +161,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Right Action Controls - Desktop */}
-          <div className="hidden lg:flex items-center gap-2.5">
+          <div className="hidden xl:flex items-center gap-2.5">
             {/* Gym Owner Admin CRM Trigger */}
             <button
               id="nav-crm-demo-btn"
@@ -240,8 +239,28 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          {/* Mobile Header: Hamburger Menu strictly on the RIGHT */}
-          <div className="flex items-center gap-2 lg:hidden">
+          {/* Tablet & Mobile Header Action Controls */}
+          <div className="flex items-center gap-2 xl:hidden">
+            {/* Tablet-only quick sound toggle */}
+            <button
+              id="tablet-sound-toggle-btn"
+              onClick={toggleSound}
+              title={isMuted ? "Enable Sound Effects" : "Mute Sound Effects"}
+              className="hidden sm:flex p-2.5 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+            >
+              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-400" />}
+            </button>
+
+            {/* Tablet-only quick Join button */}
+            <button
+              id="tablet-join-now-btn"
+              onClick={() => onOpenModal('join')}
+              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-black text-xs uppercase tracking-wider text-black bg-amber-500 hover:bg-amber-400 shadow-md shadow-amber-500/20 active:scale-95 transition-all cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 fill-black" />
+              <span>JOIN NOW</span>
+            </button>
+
             <button
               id="hamburger-menu-btn"
               aria-label="Toggle navigation menu"
@@ -249,19 +268,23 @@ export const Navbar: React.FC<NavbarProps> = ({
                 soundManager.playClick();
                 setMobileMenuOpen(!mobileMenuOpen);
               }}
-              className="w-10 h-10 flex items-center justify-center rounded-xl bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 text-white transition-all cursor-pointer focus:outline-none active:scale-95 shrink-0"
+              className="min-w-[44px] min-h-[44px] w-11 h-11 flex items-center justify-center rounded-xl bg-zinc-900/90 hover:bg-zinc-800 active:bg-zinc-700 border border-zinc-800 text-white transition-all cursor-pointer focus:outline-none shrink-0 shadow-md"
             >
               {mobileMenuOpen ? (
-                <X className="w-5 h-5 text-amber-400" />
+                <X className="w-6 h-6 text-amber-400" />
               ) : (
-                <Menu className="w-5 h-5 text-white" />
+                <div className="flex flex-col gap-1.5 items-center justify-center w-6">
+                  <span className="w-5 h-0.5 bg-white rounded-full transition-all" />
+                  <span className="w-5 h-0.5 bg-amber-400 rounded-full transition-all" />
+                  <span className="w-5 h-0.5 bg-white rounded-full transition-all" />
+                </div>
               )}
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile Drawer Navigation (12 Pages Menu) */}
+      {/* Mobile Drawer Navigation */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
@@ -270,70 +293,83 @@ export const Navbar: React.FC<NavbarProps> = ({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md xl:hidden"
             />
 
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 bottom-0 w-[85%] max-w-sm z-50 bg-zinc-950 border-l border-zinc-800 p-6 flex flex-col justify-between overflow-y-auto lg:hidden shadow-2xl"
+              transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+              className="fixed top-0 right-0 bottom-0 w-[88%] max-w-sm z-50 bg-zinc-950 border-l border-zinc-800/90 p-5 sm:p-6 flex flex-col justify-between overflow-y-auto xl:hidden shadow-2xl"
             >
               <div>
-                <div className="flex items-center justify-between pb-4 border-b border-zinc-800 mb-5">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center p-[1px]">
-                      <div className="w-full h-full bg-zinc-950 rounded-[7px] flex items-center justify-center">
+                <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80 mb-4">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center p-[1.5px] shrink-0">
+                      <div className="w-full h-full bg-zinc-950 rounded-[9px] flex items-center justify-center">
                         <Dumbbell className="w-4 h-4 text-amber-400" />
                       </div>
                     </div>
-                    <span className="font-black text-sm text-white uppercase">
-                      KSG <span className="text-amber-400">DEMO</span> GYM
-                    </span>
+                    <div className="flex flex-col min-w-0">
+                      <span className="font-sans font-black text-sm text-white uppercase tracking-wider truncate">
+                        KSG <span className="text-amber-400">DEMO</span> GYM
+                      </span>
+                      <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest truncate">
+                        Navigation Menu
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5">
                     <button
                       onClick={toggleSound}
                       title={isMuted ? "Enable Sound" : "Mute Sound"}
-                      className="p-2 rounded-lg bg-zinc-900 text-zinc-400 hover:text-white"
+                      className="min-w-[40px] min-h-[40px] p-2 rounded-xl bg-zinc-900 text-zinc-400 hover:text-white flex items-center justify-center border border-zinc-800"
                     >
                       {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-400" />}
                     </button>
                     <button
+                      id="close-mobile-menu-btn"
+                      aria-label="Close menu"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="p-2 rounded-lg bg-zinc-900 text-zinc-400 hover:text-white"
+                      className="min-w-[40px] min-h-[40px] p-2 rounded-xl bg-zinc-900 text-zinc-300 hover:text-white flex items-center justify-center border border-zinc-800"
                     >
-                      <X className="w-5 h-5" />
+                      <X className="w-5 h-5 text-zinc-300 hover:text-white" />
                     </button>
                   </div>
                 </div>
 
+                {/* Primary Menu Navigation Items */}
                 <div className="space-y-1">
-                  {navLinks.map((link) => (
-                    <button
-                      key={link.name}
-                      onClick={() => handleNavClick(link.page)}
-                      className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors ${
-                        currentPage === link.page
-                          ? 'bg-amber-500 text-black font-black'
-                          : 'text-zinc-300 hover:text-white hover:bg-zinc-900'
-                      }`}
-                    >
-                      {link.name}
-                    </button>
-                  ))}
+                  {navLinks.map((link) => {
+                    const isActive = currentPage === link.page;
+                    return (
+                      <button
+                        key={link.name}
+                        id={`mobile-nav-${link.page}`}
+                        onClick={() => handleNavClick(link.page)}
+                        className={`w-full text-left px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider transition-all flex items-center justify-between cursor-pointer ${
+                          isActive
+                            ? 'bg-amber-500 text-black shadow-md shadow-amber-500/20'
+                            : 'text-zinc-200 hover:text-white hover:bg-zinc-900/80 active:bg-zinc-800'
+                        }`}
+                      >
+                        <span>{link.name}</span>
+                        {isActive && <span className="w-2 h-2 rounded-full bg-black" />}
+                      </button>
+                    );
+                  })}
                 </div>
 
                 {/* Portals in Mobile Drawer */}
-                <div className="mt-4 pt-4 border-t border-zinc-800 space-y-2">
+                <div className="mt-4 pt-4 border-t border-zinc-800/80 space-y-2">
                   <button
                     onClick={() => handleNavClick('member-dashboard')}
-                    className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold uppercase flex items-center justify-center gap-2 border ${
+                    className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold uppercase flex items-center justify-center gap-2 border transition-all ${
                       currentPage === 'member-dashboard'
                         ? 'bg-amber-500 text-black border-amber-400 font-black'
-                        : 'bg-zinc-900 text-white border-zinc-800'
+                        : 'bg-zinc-900 text-white border-zinc-800 hover:bg-zinc-850'
                     }`}
                   >
                     <User className="w-4 h-4 text-amber-400" />
@@ -342,10 +378,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
                   <button
                     onClick={() => handleNavClick('trainer-dashboard')}
-                    className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold uppercase flex items-center justify-center gap-2 border ${
+                    className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold uppercase flex items-center justify-center gap-2 border transition-all ${
                       currentPage === 'trainer-dashboard'
                         ? 'bg-amber-500 text-black border-amber-400 font-black'
-                        : 'bg-zinc-900 text-white border-zinc-800'
+                        : 'bg-zinc-900 text-white border-zinc-800 hover:bg-zinc-850'
                     }`}
                   >
                     <Award className="w-4 h-4 text-amber-400" />
@@ -354,10 +390,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
                   <button
                     onClick={() => handleNavClick('admin-dashboard')}
-                    className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold uppercase flex items-center justify-center gap-2 border ${
+                    className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold uppercase flex items-center justify-center gap-2 border transition-all ${
                       currentPage === 'admin-dashboard'
                         ? 'bg-emerald-500 text-black border-emerald-400 font-black'
-                        : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                        : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20'
                     }`}
                   >
                     <LayoutDashboard className="w-4 h-4" />
@@ -366,23 +402,26 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </div>
               </div>
 
-              {/* Drawer Footer Actions */}
-              <div className="pt-6 border-t border-zinc-800 space-y-3">
+              {/* Drawer Footer Actions - JOIN NOW & Book Trial */}
+              <div className="pt-4 mt-4 border-t border-zinc-800 space-y-2.5">
                 <button
-                  onClick={() => handleNavClick('booking')}
-                  className="w-full py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white font-bold text-xs uppercase tracking-wider border border-zinc-800"
-                >
-                  Book Free Trial Pass
-                </button>
-
-                <button
+                  id="drawer-join-now-btn"
                   onClick={() => {
                     setMobileMenuOpen(false);
                     onOpenModal('join');
                   }}
-                  className="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-red-600 via-red-500 to-amber-500 hover:brightness-110 text-white font-black text-xs uppercase tracking-widest shadow-lg shadow-red-600/30 flex items-center justify-center gap-2 active:scale-98 transition-transform cursor-pointer"
                 >
-                  <span>JOIN KSG GYM</span>
+                  <Sparkles className="w-4 h-4 fill-white" />
+                  <span>JOIN NOW</span>
+                </button>
+
+                <button
+                  id="drawer-free-trial-btn"
+                  onClick={() => handleNavClick('booking')}
+                  className="w-full py-3 rounded-xl bg-zinc-900 hover:bg-zinc-850 text-neutral-200 font-bold text-xs uppercase tracking-wider border border-zinc-700/80 active:scale-98 transition-transform cursor-pointer"
+                >
+                  Book Free 1-Day Trial Pass
                 </button>
               </div>
             </motion.div>

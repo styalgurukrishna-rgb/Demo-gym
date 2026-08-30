@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
+import { motion, useMotionValue, useSpring, useTransform, useMotionTemplate } from 'motion/react';
 import { soundManager } from './SoundEffects';
 
 interface TiltCardProps {
@@ -15,9 +15,9 @@ interface TiltCardProps {
 export const TiltCard: React.FC<TiltCardProps> = ({
   children,
   className = '',
-  maxTilt = 12,
+  maxTilt = 10,
   scaleHover = 1.02,
-  glareEffect = true,
+  glareEffect = false,
   onClick,
   id,
 }) => {
@@ -28,14 +28,15 @@ export const TiltCard: React.FC<TiltCardProps> = ({
   const y = useMotionValue(0);
 
   // Springs for silky smooth return
-  const mouseXSpring = useSpring(x, { stiffness: 350, damping: 25 });
-  const mouseYSpring = useSpring(y, { stiffness: 350, damping: 25 });
+  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
+  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
 
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [maxTilt, -maxTilt]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [-maxTilt, maxTilt]);
 
   const glareX = useTransform(mouseXSpring, [-0.5, 0.5], ['0%', '100%']);
   const glareY = useTransform(mouseYSpring, [-0.5, 0.5], ['0%', '100%']);
+  const glareBg = useMotionTemplate`radial-gradient(circle at ${glareX} ${glareY}, rgba(255,255,255,0.15), transparent 70%)`;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
@@ -78,7 +79,7 @@ export const TiltCard: React.FC<TiltCardProps> = ({
       style={{
         rotateX,
         rotateY,
-        transformStyle: 'preserve-3d',
+        transformPerspective: 1000,
       }}
       animate={{
         scale: isHovered ? scaleHover : 1,
@@ -88,13 +89,13 @@ export const TiltCard: React.FC<TiltCardProps> = ({
     >
       {children}
 
-      {/* Dynamic 3D Glare reflection */}
+      {/* Dynamic Glare reflection with proper CSS template */}
       {glareEffect && (
         <motion.div
-          className="absolute inset-0 pointer-events-none rounded-inherit overflow-hidden transition-opacity duration-300"
+          className="absolute inset-0 pointer-events-none rounded-[inherit] overflow-hidden transition-opacity duration-300"
           style={{
-            opacity: isHovered ? 0.15 : 0,
-            background: `radial-gradient(circle at ${glareX} ${glareY}, rgba(255,255,255,0.8), transparent 70%)`,
+            opacity: isHovered ? 1 : 0,
+            background: glareBg,
           }}
         />
       )}

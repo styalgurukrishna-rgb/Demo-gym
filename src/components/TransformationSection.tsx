@@ -129,22 +129,25 @@ export const TransformationSection: React.FC<TransformationSectionProps> = ({
               <img
                 src={current.afterImage}
                 alt={`${current.name} After Transformation`}
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover"
               />
               <div className="absolute top-4 right-4 z-10 px-3 py-1 rounded-full bg-emerald-500/90 backdrop-blur-md text-white text-xs font-black uppercase tracking-wider shadow-lg">
                 AFTER ({current.timeframe})
               </div>
 
-              {/* Before Image (Clipped Overlay) */}
+              {/* Before Image (Clipped Overlay with CSS clip-path) */}
               <div
                 className="absolute inset-0 overflow-hidden"
-                style={{ width: `${sliderPosition}%` }}
+                style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
               >
                 <img
                   src={current.beforeImage}
                   alt={`${current.name} Before Transformation`}
-                  className="absolute inset-0 w-full h-full object-cover max-w-none"
-                  style={{ width: '100%', minWidth: '100%' }}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
                 <div className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-neutral-900/90 backdrop-blur-md text-neutral-300 text-xs font-black uppercase tracking-wider border border-white/20 shadow-lg">
                   BEFORE

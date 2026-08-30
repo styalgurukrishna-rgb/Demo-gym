@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { X, Sparkles, User, Phone, Mail, Target, Clock, CheckCircle2, ShieldCheck, ArrowRight } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { PricingPlan } from '../../types';
+import { leadStore } from '../../services/leadStore';
 
 interface JoinModalProps {
   isOpen: boolean;
@@ -34,6 +35,18 @@ export const JoinModal: React.FC<JoinModalProps> = ({ isOpen, onClose, selectedP
     if (!formData.name || !formData.phone || !formData.email) return;
 
     setIsSubmitting(true);
+
+    // Save lead in CRM
+    leadStore.addLead({
+      name: formData.name,
+      phone: formData.phone,
+      email: formData.email,
+      goal: formData.fitnessGoal,
+      preferredTime: formData.preferredTime,
+      type: 'membership',
+      status: 'New',
+      notes: `Membership registration for ${formData.plan}. Preferred time: ${formData.preferredTime}.`
+    });
 
     setTimeout(() => {
       setIsSubmitting(false);

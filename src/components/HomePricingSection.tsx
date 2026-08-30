@@ -43,7 +43,7 @@ export const HomePricingSection: React.FC<HomePricingSectionProps> = ({
   ];
 
   return (
-    <section id="pricing-section" className="py-24 bg-zinc-950 border-t border-zinc-800/80 relative overflow-hidden">
+    <section id="pricing" className="py-24 bg-zinc-950 border-t border-zinc-800/80 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[200px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -70,10 +70,10 @@ export const HomePricingSection: React.FC<HomePricingSectionProps> = ({
                 soundManager.playClick();
                 onOpenHelpMeChoose();
               }}
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl bg-zinc-900 hover:bg-zinc-800 border-2 border-amber-500/60 text-amber-400 font-extrabold text-xs uppercase tracking-wider shadow-lg hover:border-amber-400 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-2xl bg-zinc-900 hover:bg-zinc-800 border-2 border-amber-500/60 text-amber-400 font-extrabold text-[10px] sm:text-xs uppercase tracking-wider shadow-lg hover:border-amber-400 active:scale-95 transition-all cursor-pointer max-w-full text-center"
             >
-              <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
-              <span>NOT SURE WHICH PLAN IS RIGHT FOR YOU? • HELP ME CHOOSE</span>
+              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0 animate-pulse" />
+              <span className="truncate sm:whitespace-normal">NOT SURE WHICH PLAN IS RIGHT? • HELP ME CHOOSE</span>
             </button>
           </div>
         </div>
@@ -93,7 +93,7 @@ export const HomePricingSection: React.FC<HomePricingSectionProps> = ({
                 transition={{ duration: 0.5, delay: idx * 0.15 }}
                 className={`relative rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 ${
                   isPopular
-                    ? 'bg-zinc-900 border-2 border-amber-500 shadow-2xl shadow-amber-500/10 scale-105 z-10'
+                    ? 'bg-zinc-900 border-2 border-amber-500 shadow-2xl shadow-amber-500/10 md:scale-105 z-10'
                     : isVip
                     ? 'bg-gradient-to-b from-zinc-900 via-zinc-900 to-zinc-950 border-2 border-amber-400/40 shadow-xl'
                     : 'bg-zinc-900/80 border border-zinc-800 hover:border-zinc-700'

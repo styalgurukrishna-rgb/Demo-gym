@@ -52,22 +52,13 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) 
                   id={`pricing-card-${plan.id}`}
                   className={`h-full relative rounded-3xl flex flex-col justify-between transition-all duration-300 p-8 shadow-2xl ${
                     isPopular
-                      ? 'bg-gradient-to-b from-[#1C1810] via-[#14120C] to-[#0D0D0D] border-2 border-[#D4AF37] shadow-[0_0_55px_rgba(212,175,55,0.3)] lg:-translate-y-4'
+                      ? 'bg-gradient-to-b from-[#1C1810] via-[#14120C] to-[#0D0D0D] border-2 border-[#D4AF37] shadow-[0_0_55px_rgba(212,175,55,0.25)] lg:-translate-y-4'
                       : isVIP
                       ? 'bg-gradient-to-b from-[#1E1113] via-[#150D0E] to-[#0D0D0D] border-2 border-[#EF4444]/70 shadow-[0_0_50px_rgba(239,68,68,0.25)]'
                       : 'bg-[#101013] border border-white/10 hover:border-white/20'
                   }`}
                   onClick={() => onSelectPlan(plan)}
                 >
-                  {/* Rotating Shimmering Golden Border for Most Popular */}
-                  {isPopular && (
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 12, repeat: Infinity, ease: 'linear' }}
-                      className="absolute -inset-[2px] rounded-3xl bg-gradient-to-r from-[#D4AF37] via-transparent to-[#F59E0B] -z-10 opacity-70 blur-[2px]"
-                    />
-                  )}
-
                   {/* Popular / VIP Badges */}
                   {isPopular && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#F59E0B] text-black font-extrabold text-[11px] uppercase tracking-widest shadow-lg flex items-center gap-1.5">

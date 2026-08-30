@@ -5,6 +5,7 @@ import { gymConfigStore } from '../services/gymConfigStore';
 import { GymConfig } from '../types';
 import { soundManager } from './common/SoundEffects';
 import { analytics } from '../utils/analytics';
+import { CONTACT_CONFIG } from '../config/contactConfig';
 
 interface FindOurGymSectionProps {
   onBookTour?: () => void;
@@ -119,11 +120,11 @@ export const FindOurGymSection: React.FC<FindOurGymSectionProps> = ({ onBookTour
                 <div>
                   <p className="text-[11px] uppercase font-bold text-zinc-400 tracking-wider">Direct Concierge Helpline</p>
                   <a
-                    href={`tel:${config.contact.phone}`}
+                    href={CONTACT_CONFIG.getTelUrl()}
                     onClick={handleCallClick}
                     className="text-sm font-bold text-white hover:text-amber-400 transition-colors mt-1 block"
                   >
-                    {config.contact.phone}
+                    {config.contact.phone || CONTACT_CONFIG.displayPhone}
                   </a>
                   <p className="text-[11px] text-zinc-400 mt-0.5">
                     Call anytime for guest passes & scheduling

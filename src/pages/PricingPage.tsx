@@ -65,10 +65,10 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenModa
           </p>
 
           {/* Billing Cycle Switcher */}
-          <div className="inline-flex items-center p-1.5 rounded-2xl bg-zinc-900 border border-zinc-800 mt-10">
+          <div className="flex flex-wrap sm:inline-flex items-center justify-center p-1 sm:p-1.5 gap-1 rounded-2xl bg-zinc-900 border border-zinc-800 mt-8 max-w-full mx-auto">
             <button
               onClick={() => setBillingCycle('monthly')}
-              className={`px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all ${
+              className={`px-3.5 sm:px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                 billingCycle === 'monthly'
                   ? 'bg-amber-500 text-black shadow-md font-black'
                   : 'text-zinc-400 hover:text-white'
@@ -78,25 +78,25 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenModa
             </button>
             <button
               onClick={() => setBillingCycle('quarterly')}
-              className={`px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 sm:px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1 sm:gap-1.5 cursor-pointer ${
                 billingCycle === 'quarterly'
                   ? 'bg-amber-500 text-black shadow-md font-black'
                   : 'text-zinc-400 hover:text-white'
               }`}
             >
               <span>Quarterly</span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 font-extrabold">Save 12%</span>
+              <span className="text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-400 font-extrabold">Save 12%</span>
             </button>
             <button
               onClick={() => setBillingCycle('annual')}
-              className={`px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 sm:px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1 sm:gap-1.5 cursor-pointer ${
                 billingCycle === 'annual'
                   ? 'bg-amber-500 text-black shadow-md font-black'
                   : 'text-zinc-400 hover:text-white'
               }`}
             >
               <span>Annual</span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-emerald-500 text-black font-extrabold">Save 25%</span>
+              <span className="text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-md bg-emerald-500 text-black font-extrabold">Save 25%</span>
             </button>
           </div>
 
@@ -130,7 +130,7 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenModa
                 transition={{ duration: 0.5, delay: idx * 0.15 }}
                 className={`relative rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 ${
                   plan.isPopular
-                    ? 'bg-zinc-900 border-2 border-amber-500 shadow-2xl shadow-amber-500/10 scale-105 z-10'
+                    ? 'bg-zinc-900 border-2 border-amber-500 shadow-2xl shadow-amber-500/10 md:scale-105 z-10'
                     : plan.isVIP
                     ? 'bg-gradient-to-b from-zinc-900 via-zinc-900 to-zinc-950 border-2 border-amber-400/40 shadow-2xl'
                     : 'bg-zinc-900/80 border border-zinc-800 hover:border-zinc-700'

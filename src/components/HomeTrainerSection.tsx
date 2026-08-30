@@ -17,7 +17,7 @@ export const HomeTrainerSection: React.FC<HomeTrainerSectionProps> = ({
   onViewAllTrainers,
 }) => {
   return (
-    <section id="coached-by-experts" className="py-24 bg-zinc-950 border-t border-zinc-800/80 relative overflow-hidden">
+    <section id="trainers" className="py-24 bg-zinc-950 border-t border-zinc-800/80 relative overflow-hidden">
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -64,6 +64,8 @@ export const HomeTrainerSection: React.FC<HomeTrainerSectionProps> = ({
                   <img
                     src={trainer.image}
                     alt={trainer.name}
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                   />

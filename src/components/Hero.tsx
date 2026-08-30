@@ -79,16 +79,33 @@ export const Hero: React.FC<HeroProps> = ({
     mouseY.set(y);
   };
 
-  // Subtle floating luxury dust/sparkle particles effect
+  // Subtle floating luxury dust/sparkle particles effect - lightweight & efficient
   useEffect(() => {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
     let animationFrameId: number;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
+    let isVisible = true;
+
+    // Observe hero visibility to stop canvas calculations when scrolled away
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+      },
+      { threshold: 0.1 }
+    );
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
 
     const handleResize = () => {
       if (!canvas) return;
@@ -96,9 +113,10 @@ export const Hero: React.FC<HeroProps> = ({
       height = canvas.height = window.innerHeight;
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
 
-    const particlesCount = 50;
+    // Lightweight particle set (16 particles)
+    const particlesCount = 16;
     const particles: Array<{
       x: number;
       y: number;
@@ -112,24 +130,29 @@ export const Hero: React.FC<HeroProps> = ({
 
     const colors = [
       'rgba(212, 175, 55, ', // Gold
-      'rgba(239, 68, 68, ',  // Red
-      'rgba(255, 255, 255, ' // Light
+      'rgba(245, 158, 11, ', // Amber
+      'rgba(255, 255, 255, ' // Soft White
     ];
 
     for (let i = 0; i < particlesCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        radius: Math.random() * 2.2 + 0.8,
-        speedY: -(Math.random() * 0.45 + 0.15),
-        speedX: (Math.random() - 0.5) * 0.25,
+        radius: Math.random() * 1.5 + 0.6,
+        speedY: -(Math.random() * 0.35 + 0.1),
+        speedX: (Math.random() - 0.5) * 0.2,
         color: colors[Math.floor(Math.random() * colors.length)],
-        alpha: Math.random() * 0.6 + 0.2,
-        pulse: Math.random() * 0.02,
+        alpha: Math.random() * 0.5 + 0.2,
+        pulse: Math.random() * 0.015,
       });
     }
 
     const render = () => {
+      if (!isVisible || document.hidden) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
+
       ctx.clearRect(0, 0, width, height);
 
       particles.forEach((p) => {
@@ -137,7 +160,7 @@ export const Hero: React.FC<HeroProps> = ({
         p.x += p.speedX;
         p.alpha += p.pulse;
 
-        if (p.alpha > 0.8 || p.alpha < 0.2) {
+        if (p.alpha > 0.7 || p.alpha < 0.2) {
           p.pulse = -p.pulse;
         }
 
@@ -161,6 +184,7 @@ export const Hero: React.FC<HeroProps> = ({
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      observer.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -175,7 +199,7 @@ export const Hero: React.FC<HeroProps> = ({
       {/* 3D Depth Layer 1: Background Luxury Gym Video/Photo with Ambient Parallax */}
       <motion.div
         style={{ x: bgX, y: bgY }}
-        className="absolute -inset-6 sm:-inset-10 z-0 overflow-hidden pointer-events-none scale-105"
+        className="absolute -inset-4 sm:-inset-8 z-0 overflow-hidden pointer-events-none scale-105"
       >
         {isVideoBg ? (
           <video
@@ -184,7 +208,7 @@ export const Hero: React.FC<HeroProps> = ({
             muted
             playsInline
             className="w-full h-full object-cover object-center opacity-30 brightness-75 contrast-125 filter"
-            poster="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2000&q=85"
+            poster="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1920&q=75&fm=webp"
           >
             <source
               src="https://assets.mixkit.co/videos/preview/mixkit-athlete-working-out-with-heavy-ropes-in-a-gym-44163-large.mp4"
@@ -193,25 +217,28 @@ export const Hero: React.FC<HeroProps> = ({
           </video>
         ) : (
           <img
-            src={config.hero.heroImage || "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2000&q=85"}
+            src={config.hero.heroImage ? `${config.hero.heroImage}?auto=format&fit=crop&w=1920&q=75&fm=webp` : "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1920&q=75&fm=webp"}
             alt={`${config.brand.gymName} Luxury Architecture`}
-            className="w-full h-full object-cover object-center opacity-35 brightness-75 contrast-125 filter"
+            loading="eager"
+            decoding="async"
+            {...({ fetchpriority: 'high' } as Record<string, string>)}
+            className="w-full h-full object-cover object-center opacity-35 brightness-75 contrast-125 filter transition-opacity duration-300"
           />
         )}
 
         {/* Cinematic Vignette Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/75 to-[#080808]/90" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-[#080808]/60 to-[#080808]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/75 to-[#080808]/90 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-[#080808]/60 to-[#080808] pointer-events-none" />
       </motion.div>
 
       {/* 3D Depth Layer 2: Moving Light Reflections & Glow Spheres */}
       <motion.div
         style={{ x: midX, y: midY }}
-        className="absolute inset-0 z-0 pointer-events-none"
+        className="absolute inset-0 z-0 pointer-events-none will-change-transform"
       >
-        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[650px] h-[350px] sm:h-[650px] bg-[#EF4444]/15 rounded-full blur-[100px] sm:blur-[160px]" />
-        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-[#D4AF37]/15 rounded-full blur-[100px] sm:blur-[160px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] sm:w-[350px] h-[250px] sm:h-[350px] bg-white/[0.03] rounded-full blur-[70px] sm:blur-[90px]" />
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[280px] sm:w-[500px] h-[280px] sm:h-[500px] bg-[#EF4444]/12 rounded-full blur-[60px] sm:blur-[90px]" />
+        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[240px] sm:w-[450px] h-[240px] sm:h-[450px] bg-[#D4AF37]/12 rounded-full blur-[60px] sm:blur-[90px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] bg-white/[0.02] rounded-full blur-[50px]" />
       </motion.div>
 
       {/* 3D Depth Layer 3: Floating Dynamic Light Streaks */}
@@ -257,48 +284,48 @@ export const Hero: React.FC<HeroProps> = ({
         
         {/* Top Eyebrow Badge - Brand Message */}
         <motion.div
-          initial={{ opacity: 0, y: -20, scale: 0.9 }}
+          initial={{ opacity: 0, y: -20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-white/[0.06] border border-[#D4AF37]/40 backdrop-blur-md mb-4 sm:mb-6 shadow-2xl shadow-black/60 max-w-full"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-amber-500/40 backdrop-blur-md mb-5 sm:mb-7 shadow-xl shadow-black/80 max-w-full"
         >
           <span className="flex h-2 w-2 relative shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#EF4444] opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#EF4444]"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
           </span>
-          <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider sm:tracking-widest text-[#D4AF37] truncate">
-            {config.brand.tagline || 'TRANSFORM YOUR BODY. BUILD YOUR CONFIDENCE.'}
+          <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-amber-400 truncate">
+            {config.brand.tagline || 'TRANSFORM YOUR BODY. UPGRADE YOUR LIFE.'}
           </span>
         </motion.div>
 
-        {/* Cinematic Main Heading with Luxury Typography */}
+        {/* Cinematic Main Heading with Fluid Luxury Typography */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-['Syne',sans-serif] tracking-tight uppercase leading-[1.08] text-white max-w-4xl w-full break-words"
+          className="text-[clamp(2rem,7.5vw,5.5rem)] font-black font-['Syne',sans-serif] tracking-tight uppercase leading-[1.04] text-white max-w-4xl w-full break-words mx-auto text-balance"
         >
           {config.hero.heroHeading ? (
             <span>{config.hero.heroHeading}</span>
           ) : (
             <>
               BUILD THE <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-[#FFFFFF] via-[#FFF3C4] to-[#D4AF37] bg-clip-text text-transparent drop-shadow-sm">
+              <span className="bg-gradient-to-r from-white via-zinc-100 to-amber-300 bg-clip-text text-transparent drop-shadow-sm inline-block max-w-full">
                 STRONGEST VERSION
               </span> <br className="hidden sm:inline" />
-              OF <span className="text-[#EF4444] drop-shadow-[0_0_35px_rgba(239,68,68,0.6)]">YOURSELF</span>
+              OF <span className="text-amber-500 drop-shadow-[0_0_35px_rgba(245,158,11,0.4)] inline-block">YOURSELF</span>
             </>
           )}
         </motion.h1>
 
-        {/* Subheading */}
+        {/* Subheading with Fluid Constraint */}
         <motion.p
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.35, ease: 'easeOut' }}
-          className="mt-4 sm:mt-6 text-sm sm:text-lg md:text-xl text-neutral-300 max-w-2xl font-light leading-relaxed tracking-wide px-2"
+          className="mt-4 sm:mt-6 text-[clamp(0.95rem,2.2vw,1.3rem)] text-zinc-300 max-w-2xl font-light leading-relaxed tracking-wide px-2 text-pretty"
         >
-          {config.hero.heroSubtitle || 'Train smarter. Get stronger. Become your best version.'}
+          {config.hero.heroSubtitle || 'Transform Your Body. Upgrade Your Life.'}
         </motion.p>
 
         {/* High-Conversion Action Buttons */}
@@ -308,7 +335,7 @@ export const Hero: React.FC<HeroProps> = ({
           transition={{ duration: 0.8, delay: 0.5 }}
           className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-5 w-full max-w-sm sm:max-w-none"
         >
-          {/* Button 1: JOIN NOW (Primary Glow Button) */}
+          {/* Button 1: JOIN NOW (Primary Warm Gold / Amber Accent) */}
           <button
             id="hero-join-now-btn"
             onClick={() => {
@@ -316,15 +343,15 @@ export const Hero: React.FC<HeroProps> = ({
               handleJoin();
             }}
             onMouseEnter={() => soundManager.playHover()}
-            className="w-full sm:w-auto relative group overflow-hidden px-8 sm:px-9 py-3.5 sm:py-4 rounded-full font-black text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest text-white bg-gradient-to-r from-[#DC2626] via-[#EF4444] to-[#B91C1C] shadow-[0_0_35px_rgba(239,68,68,0.5)] hover:shadow-[0_0_60px_rgba(239,68,68,0.85)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2.5 border border-red-400/40"
+            className="w-full sm:w-auto relative group overflow-hidden px-8 sm:px-10 py-3.5 sm:py-4 rounded-full font-black text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest text-black bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-500 shadow-[0_0_35px_rgba(245,158,11,0.4)] hover:shadow-[0_0_50px_rgba(245,158,11,0.7)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2.5 border border-amber-300/60"
           >
-            <Sparkles className="w-4 h-4 text-[#FDE047] animate-spin" style={{ animationDuration: '6s' }} />
+            <Sparkles className="w-4 h-4 fill-black text-black animate-spin" style={{ animationDuration: '6s' }} />
             <span>{config.hero.ctaButtonText || 'JOIN NOW'}</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/50 to-transparent" />
           </button>
 
-          {/* Button 2: BOOK FREE TRIAL (Attention Grabber) */}
+          {/* Button 2: BOOK FREE TRIAL (Dark Charcoal Glass) */}
           <button
             id="hero-free-trial-btn"
             onClick={() => {
@@ -332,9 +359,9 @@ export const Hero: React.FC<HeroProps> = ({
               handleTrial();
             }}
             onMouseEnter={() => soundManager.playHover()}
-            className="w-full sm:w-auto group px-7 sm:px-8 py-3.5 sm:py-4 rounded-full font-black text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest text-neutral-200 hover:text-white bg-white/[0.06] hover:bg-white/[0.12] border border-[#D4AF37]/50 hover:border-[#D4AF37] backdrop-blur-xl shadow-lg hover:shadow-[0_0_35px_rgba(212,175,55,0.35)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2.5"
+            className="w-full sm:w-auto group px-7 sm:px-9 py-3.5 sm:py-4 rounded-full font-black text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest text-zinc-100 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700 hover:border-amber-500/60 backdrop-blur-xl shadow-lg hover:shadow-[0_0_30px_rgba(245,158,11,0.25)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2.5"
           >
-            <Flame className="w-4 h-4 text-[#D4AF37]" />
+            <Flame className="w-4 h-4 text-amber-400" />
             <span>{config.hero.secondaryButtonText || 'BOOK FREE TRIAL'}</span>
           </button>
 
@@ -346,61 +373,63 @@ export const Hero: React.FC<HeroProps> = ({
               handleTour();
             }}
             onMouseEnter={() => soundManager.playHover()}
-            className="w-full sm:w-auto text-xs uppercase tracking-wider font-bold text-neutral-400 hover:text-white py-2 px-3 hover:underline underline-offset-4 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+            className="w-full sm:w-auto text-xs uppercase tracking-wider font-bold text-zinc-400 hover:text-white py-2.5 px-4 hover:underline underline-offset-4 transition-colors flex items-center justify-center gap-2 cursor-pointer"
           >
-            <Play className="w-3.5 h-3.5 text-[#D4AF37] fill-current" />
+            <div className="w-6 h-6 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center">
+              <Play className="w-2.5 h-2.5 text-amber-400 fill-amber-400 translate-x-0.5" />
+            </div>
             <span>WATCH TOUR</span>
           </button>
         </motion.div>
 
-        {/* Floating High-Impact Trust Info Bar (500+ Members, 10+ Trainers, 24/7 Support) */}
+        {/* High-Impact Trust Info Bar */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.65 }}
-          className="mt-10 sm:mt-14 pt-6 sm:pt-8 border-t border-white/10 w-full grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-left"
+          className="mt-10 sm:mt-14 pt-6 sm:pt-8 border-t border-zinc-800/80 w-full grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-left"
         >
           {/* Card 1: 500+ Members */}
-          <div className="flex items-center gap-3 p-3 sm:p-3.5 rounded-2xl bg-[#121217]/90 border border-white/10 hover:border-[#D4AF37]/40 transition-all">
-            <div className="p-2.5 sm:p-3 rounded-xl bg-emerald-500/15 text-emerald-400 shrink-0">
+          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-zinc-900/80 border border-zinc-800 hover:border-amber-500/40 transition-all">
+            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 shrink-0">
               <Users className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div className="min-w-0">
               <p className="text-sm sm:text-base font-black text-white font-mono truncate">500+ Active</p>
-              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutral-400 font-medium truncate">Dedicated Members</p>
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-zinc-400 font-medium truncate">Dedicated Members</p>
             </div>
           </div>
 
-          {/* Card 2: 10+ Trainers */}
-          <div className="flex items-center gap-3 p-3 sm:p-3.5 rounded-2xl bg-[#121217]/90 border border-white/10 hover:border-[#D4AF37]/40 transition-all">
-            <div className="p-2.5 sm:p-3 rounded-xl bg-[#D4AF37]/15 text-[#D4AF37] shrink-0">
+          {/* Card 2: 10+ Coaches */}
+          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-zinc-900/80 border border-zinc-800 hover:border-amber-500/40 transition-all">
+            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 shrink-0">
               <Award className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div className="min-w-0">
               <p className="text-sm sm:text-base font-black text-white font-mono truncate">10+ Coaches</p>
-              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutral-400 font-medium truncate">CSCS & ACE Certified</p>
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-zinc-400 font-medium truncate">CSCS & ACE Certified</p>
             </div>
           </div>
 
-          {/* Card 3: 24/7 Support & RFID */}
-          <div className="flex items-center gap-3 p-3 sm:p-3.5 rounded-2xl bg-[#121217]/90 border border-white/10 hover:border-[#D4AF37]/40 transition-all">
-            <div className="p-2.5 sm:p-3 rounded-xl bg-[#EF4444]/15 text-[#EF4444] shrink-0">
+          {/* Card 3: 24/7 Access */}
+          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-zinc-900/80 border border-zinc-800 hover:border-amber-500/40 transition-all">
+            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 shrink-0">
               <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div className="min-w-0">
               <p className="text-sm sm:text-base font-black text-white font-mono truncate">24/7 Access</p>
-              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutral-400 font-medium truncate">Biometric Support</p>
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-zinc-400 font-medium truncate">Biometric Support</p>
             </div>
           </div>
 
-          {/* Card 4: Infrared Spa & Panatta */}
-          <div className="flex items-center gap-3 p-3 sm:p-3.5 rounded-2xl bg-[#121217]/90 border border-white/10 hover:border-[#D4AF37]/40 transition-all">
-            <div className="p-2.5 sm:p-3 rounded-xl bg-purple-500/15 text-purple-400 shrink-0">
+          {/* Card 4: Italian Biomechanics */}
+          <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-zinc-900/80 border border-zinc-800 hover:border-amber-500/40 transition-all">
+            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 shrink-0">
               <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div className="min-w-0">
               <p className="text-sm sm:text-base font-black text-white font-mono truncate">Panatta Rigs</p>
-              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-neutral-400 font-medium truncate">Italian Biomechanics</p>
+              <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-zinc-400 font-medium truncate">Italian Biomechanics</p>
             </div>
           </div>
         </motion.div>

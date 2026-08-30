@@ -194,6 +194,8 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onOpenLightbox }
                   <img
                     src={currentT.afterImg}
                     alt="After Transformation"
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-center pointer-events-none"
                   />
                   <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-emerald-500/80 backdrop-blur-md text-white text-[11px] font-black uppercase tracking-wider shadow">
@@ -208,6 +210,8 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onOpenLightbox }
                     <img
                       src={currentT.beforeImg}
                       alt="Before Transformation"
+                      loading="lazy"
+                      decoding="async"
                       className="absolute inset-0 w-full h-full object-cover object-center max-w-none pointer-events-none"
                       style={{
                         width: containerRef.current ? `${containerRef.current.clientWidth}px` : '100%',
@@ -340,6 +344,8 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onOpenLightbox }
                         <img
                           src={photo.image}
                           alt={photo.title}
+                          loading="lazy"
+                          decoding="async"
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 brightness-90"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />

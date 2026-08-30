@@ -51,12 +51,59 @@ import { analytics } from './utils/analytics';
 import { Sparkles } from 'lucide-react';
 import { soundManager } from './components/common/SoundEffects';
 
+// Helper to resolve route from URL pathname and hash on initial load or refresh
+const getInitialRoute = (): { page: PageType; sectionId?: string } => {
+  if (typeof window === 'undefined') return { page: 'home' };
+  
+  const rawPath = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
+  const rawHash = window.location.hash.replace(/^#+/, '').toLowerCase();
+
+  const validPages: Record<string, PageType> = {
+    '': 'home',
+    'home': 'home',
+    'about': 'about',
+    'programs': 'programs',
+    'trainers': 'trainers',
+    'facilities': 'facilities',
+    'gallery': 'gallery',
+    'pricing': 'pricing',
+    'booking': 'booking',
+    'contact': 'contact',
+    'privacy': 'privacy',
+    'terms': 'terms',
+    'login': 'login',
+    'member-dashboard': 'member-dashboard',
+    'trainer-dashboard': 'trainer-dashboard',
+    'admin-dashboard': 'admin-dashboard',
+    'not-found': 'not-found'
+  };
+
+  if (validPages[rawPath]) {
+    return { page: validPages[rawPath], sectionId: rawHash || undefined };
+  }
+
+  // If hash corresponds to a dedicated page
+  if (rawHash && validPages[rawHash]) {
+    return { page: validPages[rawHash] };
+  }
+
+  // If unrecognized route on direct refresh, check if path exists or fallback
+  if (rawPath) {
+    return { page: 'not-found' };
+  }
+
+  return { page: 'home', sectionId: rawHash || undefined };
+};
+
 export default function App() {
+  const initialRoute = getInitialRoute();
+
   // Loading screen state
   const [isLoading, setIsLoading] = useState(true);
 
-  // Dynamic Routing State
-  const [currentPage, setCurrentPage] = useState<PageType>('home');
+  // Dynamic Routing State initialized from URL pathname/hash
+  const [currentPage, setCurrentPage] = useState<PageType>(initialRoute.page);
+  const [initialSectionId, setInitialSectionId] = useState<string | undefined>(initialRoute.sectionId);
 
   // Modal states
   const [modalState, setModalState] = useState<ModalState>({ type: null, data: null });
@@ -71,17 +118,31 @@ export default function App() {
   const [selectedTrainer, setSelectedTrainer] = useState<Trainer | null>(null);
   const [selectedFacility, setSelectedFacility] = useState<Facility | null>(null);
 
-  // Configure manual scroll restoration and guarantee initial top position
+  // Configure manual scroll restoration and guarantee initial (0, 0) top position
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
 
-    // Handle browser forward/back buttons
+    // Handle browser forward/back buttons thoughtfully
     const handlePopState = (event: PopStateEvent) => {
-      if (event.state && event.state.page) {
-        setCurrentPage(event.state.page);
+      const currentRoute = getInitialRoute();
+      const targetPage = (event.state && event.state.page) || currentRoute.page;
+      const targetSection = (event.state && event.state.sectionId) || currentRoute.sectionId;
+
+      setCurrentPage(targetPage);
+
+      if (targetSection) {
+        setTimeout(() => {
+          const element = document.getElementById(targetSection);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+          }
+        }, 80);
+      } else {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
       }
     };
@@ -89,6 +150,24 @@ export default function App() {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
+
+  // Handle post-loading scroll or anchor jump
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+    if (initialSectionId) {
+      setTimeout(() => {
+        const element = document.getElementById(initialSectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+        }
+        setInitialSectionId(undefined);
+      }, 100);
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    }
+  };
 
   // Apply dynamic SEO and structured data whenever page or config changes
   useEffect(() => {
@@ -125,16 +204,33 @@ export default function App() {
     return () => document.removeEventListener('mouseleave', handleMouseLeave);
   }, []);
 
-  // Navigation handler
-  const handleNavigate = (page: PageType) => {
+  // Comprehensive navigation handler supporting both full page transitions and section anchors
+  const handleNavigate = (page: PageType, sectionId?: string) => {
     soundManager.playClick();
     setCurrentPage(page);
+
+    const path = page === 'home'
+      ? (sectionId ? `/#${sectionId}` : '/')
+      : `/${page}${sectionId ? `#${sectionId}` : ''}`;
+
     try {
-      window.history.pushState({ page }, '', window.location.pathname);
+      window.history.pushState({ page, sectionId }, '', path);
     } catch {
-      // safe fallback
+      // fallback
     }
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+
+    if (sectionId) {
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+        }
+      }, 80);
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    }
   };
 
   // Generic modal opener
@@ -185,7 +281,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col selection:bg-amber-500 selection:text-black font-sans">
       {/* 1. Initial Cinematic Luxury Loading Screen */}
-      {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+      {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
 
       {/* 2. Top Sticky Navigation Bar */}
       <Navbar

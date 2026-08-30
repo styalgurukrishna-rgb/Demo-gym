@@ -149,7 +149,7 @@ export const TrainerProfileModal: React.FC<TrainerProfileModalProps> = ({
               }}
               className="w-full py-4 rounded-2xl font-black text-xs uppercase tracking-widest bg-gradient-to-r from-[#DC2626] to-[#EF4444] text-white shadow-lg shadow-red-600/40 hover:shadow-red-600/70 hover:scale-[1.01] active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
             >
-              <span>Book 1-on-1 Consultation with {trainer.name.split(' ')[0]}</span>
+              <span>BOOK TRAINER • 1-ON-1 WITH {trainer.name.split(' ')[0].toUpperCase()}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

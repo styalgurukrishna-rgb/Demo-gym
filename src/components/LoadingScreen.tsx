@@ -11,10 +11,19 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
   const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
-    // Fast, cinematic luxury loading sequence (500ms)
-    const duration = 500;
+    // If user prefers reduced motion, finish immediately
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      setIsFinished(true);
+      window.scrollTo(0, 0);
+      onComplete();
+      return;
+    }
+
+    // Ultra-fast, snappy luxury intro (200ms)
+    const duration = 200;
     const stepTime = 16;
-    const steps = duration / stepTime;
+    const steps = Math.max(1, duration / stepTime);
     let currentStep = 0;
 
     const interval = setInterval(() => {
@@ -29,7 +38,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         setTimeout(() => {
           window.scrollTo(0, 0);
           onComplete();
-        }, 300);
+        }, 120);
       }
     }, stepTime);
 

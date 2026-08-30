@@ -9,7 +9,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { soundManager } from './common/SoundEffects';
-import { GYM_INFO } from '../data/gymData';
+import { CONTACT_CONFIG } from '../config/contactConfig';
 
 interface MobileBottomNavProps {
   onOpenTrial: () => void;
@@ -30,8 +30,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
 
   const handleWhatsApp = () => {
     soundManager.playClick();
-    const cleanPhone = GYM_INFO.whatsapp.replace('+', '');
-    window.open(`https://wa.me/${cleanPhone}?text=Hi%20KSG%20Gym%2C%20I%20would%20like%20to%20know%20more%20about%20memberships`, '_blank');
+    window.open(CONTACT_CONFIG.getWhatsAppUrl("Hi KSG DEMO GYM, I would like to know more about memberships."), '_blank');
   };
 
   return (

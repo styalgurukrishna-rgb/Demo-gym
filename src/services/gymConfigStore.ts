@@ -133,7 +133,7 @@ export const GYM_PRESETS: { name: string; description: string; config: Partial<G
         heroVideo: ''
       },
       contact: {
-        phone: '+91 91234 56789 (Demo Patna)',
+        phone: '+91 75499 29102',
         email: 'info@titanathleticclub.com',
         address: 'Plot 14, 3rd Floor, Boring Road, Near Pantaloons, Patna, Bihar 800001',
         city: 'Patna',
@@ -198,7 +198,7 @@ export const GYM_PRESETS: { name: string; description: string; config: Partial<G
         heroVideo: ''
       },
       contact: {
-        phone: '+91 98111 00222 (Demo Delhi)',
+        phone: '+91 75499 29102',
         email: 'delhi@vanguardfitness.com',
         address: 'B-Block, Outer Circle, Connaught Place, New Delhi 110001',
         city: 'New Delhi',

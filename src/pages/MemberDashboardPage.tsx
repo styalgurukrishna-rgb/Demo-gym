@@ -29,6 +29,7 @@ import {
 import { PageType, ModalState, MemberProfile, WorkoutPlan, ProgressLog, PaymentReceipt } from '../types';
 import { leadStore, DEMO_MEMBER } from '../services/leadStore';
 import { soundManager } from '../components/common/SoundEffects';
+import { BmiBodyFatCalculator } from '../components/Member/BmiBodyFatCalculator';
 
 interface MemberDashboardPageProps {
   onNavigate: (page: PageType) => void;
@@ -214,9 +215,9 @@ export const MemberDashboardPage: React.FC<MemberDashboardPageProps> = ({ onNavi
         <div className="flex overflow-x-auto no-scrollbar gap-2 border-b border-zinc-800 pb-3">
           {[
             { id: 'overview', label: 'Overview & Pass', icon: User },
+            { id: 'progress', label: 'BMI & Body Fat Calculator', icon: Activity },
             { id: 'workout', label: 'Today\'s Workout Split', icon: Dumbbell },
             { id: 'schedule', label: 'Coaching Sessions', icon: Calendar },
-            { id: 'progress', label: 'InBody & Progress Tracker', icon: TrendingUp },
             { id: 'payments', label: 'Invoices & Receipts', icon: Receipt },
           ].map((tab) => {
             const Icon = tab.icon;
@@ -261,13 +262,48 @@ export const MemberDashboardPage: React.FC<MemberDashboardPageProps> = ({ onNavi
               <div className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800">
                 <span className="text-zinc-500 text-[10px] uppercase font-bold">Body Fat Percentage</span>
                 <div className="text-2xl font-black text-white mt-1 font-mono">{member.bodyFatPct}%</div>
-                <span className="text-[10px] text-emerald-400 font-semibold">-2.4% last 60 days</span>
+                <span className="text-[10px] text-emerald-400 font-semibold">US Navy Method</span>
               </div>
               <div className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800">
                 <span className="text-zinc-500 text-[10px] uppercase font-bold">Muscle Mass (SMM)</span>
                 <div className="text-2xl font-black text-white mt-1 font-mono">{member.muscleMassKg} kg</div>
                 <span className="text-[10px] text-amber-400 font-semibold">+1.8 kg lean gain</span>
               </div>
+            </div>
+
+            {/* Quick BMI & Body Fat Snapshot Banner */}
+            <div className="p-6 rounded-3xl bg-gradient-to-r from-zinc-900 via-zinc-900 to-amber-950/20 border border-zinc-800 flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div className="flex items-start sm:items-center gap-4">
+                <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 shrink-0">
+                  <Activity className="w-6 h-6" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-black uppercase text-amber-400 tracking-wider">Fitness Progress Tool</span>
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">
+                      Live Clinical Sync
+                    </span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-black text-white uppercase mt-0.5">
+                    BMI: {member.bmi || (member.currentWeight / ((member.heightCm || 180)/100)**2).toFixed(1)} • Body Fat: {member.bodyFatPct}% ({member.bodyFatPct <= 13 ? 'Athletic / Six-Pack' : member.bodyFatPct <= 17 ? 'Fitness' : 'Average'})
+                  </h3>
+                  <p className="text-xs text-zinc-400 mt-1 max-w-xl">
+                    Calculate real-time BMI index, US Navy circumference-based body fat percentage, lean body mass (LBM), metabolic TDEE, and set custom target timelines.
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  soundManager.playClick();
+                  setActiveTab('progress');
+                }}
+                className="px-5 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shrink-0 transition-all shadow-lg cursor-pointer"
+              >
+                <span>OPEN CALCULATOR &amp; TRACKER</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -494,42 +530,25 @@ export const MemberDashboardPage: React.FC<MemberDashboardPageProps> = ({ onNavi
           </div>
         )}
 
-        {/* TAB 4: PROGRESS & INBODY */}
+        {/* TAB 4: PROGRESS & BMI / BODY FAT CALCULATOR */}
         {activeTab === 'progress' && (
           <div className="space-y-8">
-            {/* Live BMI & Stats Calculator Bar */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center gap-4">
-                <Scale className="w-8 h-8 text-amber-400" />
-                <div>
-                  <span className="text-[10px] font-bold uppercase text-zinc-500">Weight</span>
-                  <div className="text-xl font-black text-white font-mono">{member.currentWeight} kg</div>
-                </div>
-              </div>
-              <div className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center gap-4">
-                <Activity className="w-8 h-8 text-emerald-400" />
-                <div>
-                  <span className="text-[10px] font-bold uppercase text-zinc-500">BMI Metric</span>
-                  <div className="text-xl font-black text-emerald-400 font-mono">
-                    {((member.currentWeight / ((member.heightCm || 180) / 100) ** 2)).toFixed(1)} (Optimal)
-                  </div>
-                </div>
-              </div>
-              <div className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center gap-4">
-                <Flame className="w-8 h-8 text-amber-500" />
-                <div>
-                  <span className="text-[10px] font-bold uppercase text-zinc-500">Body Fat %</span>
-                  <div className="text-xl font-black text-white font-mono">{member.bodyFatPct}%</div>
-                </div>
-              </div>
-            </div>
+            {/* 1. Precision BMI & US Navy Body Fat Calculator Component */}
+            <BmiBodyFatCalculator
+              member={member}
+              onSavedProgress={() => {
+                const refreshed = leadStore.getCurrentMember();
+                setMember(refreshed);
+                setProgressLogs(leadStore.getProgressLogs(refreshed.id));
+              }}
+            />
 
-            {/* Add New Progress Log Form */}
+            {/* 2. Fast Manual Log Form */}
             <div className="p-6 sm:p-8 rounded-3xl bg-zinc-900 border border-zinc-800 space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-amber-400">
                   <Plus className="w-5 h-5" />
-                  <h3 className="text-base font-black text-white uppercase">Log New Weigh-In / InBody Scan</h3>
+                  <h3 className="text-base font-black text-white uppercase">Quick InBody 770 Entry</h3>
                 </div>
                 {logSuccess && (
                   <span className="text-xs text-emerald-400 font-bold flex items-center gap-1">
@@ -598,7 +617,7 @@ export const MemberDashboardPage: React.FC<MemberDashboardPageProps> = ({ onNavi
                     type="submit"
                     className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-xs uppercase tracking-wider transition-colors cursor-pointer"
                   >
-                    SAVE PROGRESS
+                    SAVE ENTRY
                   </button>
                 </div>
               </form>

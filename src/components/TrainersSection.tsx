@@ -54,6 +54,8 @@ export const TrainersSection: React.FC<TrainersSectionProps> = ({ onSelectTraine
                   <img
                     src={trainer.image}
                     alt={trainer.name}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-top group-hover:scale-108 transition-transform duration-700 brightness-95 contrast-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0E] via-black/30 to-transparent" />

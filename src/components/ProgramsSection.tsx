@@ -89,10 +89,16 @@ const AnimatedCoachIcon: React.FC = () => (
 export const ProgramsSection: React.FC<ProgramsSectionProps> = ({ onSelectProgram }) => {
   const getAnimatedIcon = (id: string) => {
     switch (id) {
+      case 'strength-training':
       case 'weight-training':
         return <AnimatedDumbbellIcon />;
+      case 'fat-loss':
       case 'cardio-training':
         return <AnimatedCardioIcon />;
+      case 'muscle-building':
+      case 'athletic-performance':
+        return <AnimatedDumbbellIcon />;
+      case 'functional-training':
       case 'yoga-mobility':
         return <AnimatedYogaIcon />;
       case 'personal-training':
@@ -102,45 +108,51 @@ export const ProgramsSection: React.FC<ProgramsSectionProps> = ({ onSelectProgra
   };
 
   return (
-    <section id="programs" className="relative py-28 bg-[#0A0A0C] border-y border-white/5 overflow-hidden">
+    <section id="programs" className="relative py-28 bg-[#09090b] border-y border-zinc-800/80 overflow-hidden">
       {/* Background radial highlight */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#EF4444]/5 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-amber-500/5 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EF4444]/10 border border-[#EF4444]/30 text-[#EF4444] text-xs font-bold uppercase tracking-widest mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-widest mb-4">
             <Flame className="w-3.5 h-3.5" />
             <span>High-Performance Disciplines</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black font-['Syne',sans-serif] tracking-tight uppercase text-white">
-            CHOOSE YOUR <span className="bg-gradient-to-r from-white via-[#FFF2B2] to-[#D4AF37] bg-clip-text text-transparent">BATTLEGROUND</span>
+            CHOOSE YOUR <span className="bg-gradient-to-r from-white via-zinc-100 to-amber-300 bg-clip-text text-transparent">BATTLEGROUND</span>
           </h2>
 
-          <p className="mt-4 text-base text-neutral-400 font-light">
+          <p className="mt-4 text-base text-zinc-400 font-light">
             Engineered training protocols calibrated to incinerate body fat, construct dense lean muscle, and bulletproof joint mobility.
           </p>
         </div>
 
         {/* Programs Grid with 3D Tilt Cards */}
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
           {PROGRAMS.map((program, idx) => {
             let buttonLabel = "Learn More";
             let actionType: 'learnMore' | 'bookTrainer' | 'explore' | 'start' = 'learnMore';
 
-            if (program.id === 'weight-training') {
-              buttonLabel = "Learn More";
-              actionType = 'learnMore';
+            if (program.id === 'strength-training' || program.id === 'weight-training') {
+              buttonLabel = "Explore Strength";
+              actionType = 'explore';
             } else if (program.id === 'personal-training') {
               buttonLabel = "Book Trainer";
               actionType = 'bookTrainer';
-            } else if (program.id === 'cardio-training') {
-              buttonLabel = "Explore Program";
+            } else if (program.id === 'fat-loss' || program.id === 'cardio-training') {
+              buttonLabel = "Explore Fat Loss";
               actionType = 'explore';
-            } else if (program.id === 'yoga-mobility') {
-              buttonLabel = "Start Program";
+            } else if (program.id === 'muscle-building') {
+              buttonLabel = "Build Muscle";
               actionType = 'start';
+            } else if (program.id === 'functional-training') {
+              buttonLabel = "Start Functional";
+              actionType = 'start';
+            } else if (program.id === 'athletic-performance') {
+              buttonLabel = "Powerlifting Prep";
+              actionType = 'learnMore';
             }
 
             return (
@@ -149,25 +161,27 @@ export const ProgramsSection: React.FC<ProgramsSectionProps> = ({ onSelectProgra
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.12 }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
                 className="h-full"
               >
                 <TiltCard
                   id={`program-card-${program.id}`}
-                  className="h-full rounded-2xl bg-gradient-to-b from-white/[0.07] via-[#101013] to-[#0A0A0C] border border-white/10 hover:border-[#EF4444]/60 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-2xl hover:shadow-[0_20px_45px_rgba(239,68,68,0.2)] group"
+                  className="h-full rounded-2xl bg-zinc-900/90 border border-zinc-800 hover:border-amber-500/50 transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-2xl hover:shadow-[0_20px_45px_rgba(245,158,11,0.15)] group"
                 >
                   {/* Top Image Banner with Floating 3D Animated Icon */}
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <img
                       src={program.image}
                       alt={program.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 brightness-90"
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0E] via-black/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-black/40 to-transparent" />
 
                     {/* Badge */}
                     {program.badge && (
-                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/75 backdrop-blur-md border border-[#D4AF37]/50 text-[#D4AF37] text-[10px] font-bold uppercase tracking-wider">
+                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-amber-500/50 text-amber-300 text-[10px] font-bold uppercase tracking-wider">
                         {program.badge}
                       </div>
                     )}
@@ -177,41 +191,43 @@ export const ProgramsSection: React.FC<ProgramsSectionProps> = ({ onSelectProgra
                       {getAnimatedIcon(program.id)}
                     </div>
 
-                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-neutral-300">
-                      <span className="flex items-center gap-1 bg-black/70 px-2.5 py-1 rounded-md border border-white/10 backdrop-blur-sm">
-                        <Clock className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-zinc-300">
+                      <span className="flex items-center gap-1 bg-black/75 px-2.5 py-1 rounded-md border border-white/10 backdrop-blur-sm">
+                        <Clock className="w-3.5 h-3.5 text-amber-400" />
                         {program.duration}
                       </span>
-                      <span className="flex items-center gap-1 bg-black/70 px-2.5 py-1 rounded-md border border-white/10 backdrop-blur-sm">
-                        <Flame className="w-3.5 h-3.5 text-[#EF4444]" />
+                      <span className="flex items-center gap-1 bg-black/75 px-2.5 py-1 rounded-md border border-white/10 backdrop-blur-sm">
+                        <Flame className="w-3.5 h-3.5 text-amber-500" />
                         {program.caloriesBurn}
                       </span>
                     </div>
                   </div>
 
                   {/* Body Content */}
-                  <div className="p-5 flex-1 flex flex-col justify-between">
+                  <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
                     <div>
-                      <h3 className="text-xl font-black font-['Syne',sans-serif] uppercase tracking-wide text-white group-hover:text-[#D4AF37] transition-colors">
+                      <h3 className="text-xl font-black font-['Syne',sans-serif] uppercase tracking-wide text-white group-hover:text-amber-400 transition-colors">
                         {program.title}
                       </h3>
-                      <p className="text-xs text-[#EF4444] font-semibold tracking-wider uppercase mt-1">
+                      <p className="text-xs text-amber-500 font-semibold tracking-wider uppercase mt-1">
                         {program.subtitle}
                       </p>
-                      <p className="text-xs text-neutral-400 font-light mt-2.5 line-clamp-2 leading-relaxed">
+                      <p className="text-xs text-zinc-400 font-light mt-2.5 line-clamp-2 leading-relaxed">
                         {program.tagline}
                       </p>
 
                       {/* Trainer Lead */}
-                      <div className="mt-4 pt-3 border-t border-white/10 flex items-center gap-2.5">
+                      <div className="mt-4 pt-3 border-t border-zinc-800 flex items-center gap-2.5">
                         <img
                           src={program.trainer.avatar}
                           alt={program.trainer.name}
-                          className="w-7 h-7 rounded-full object-cover border border-[#D4AF37]/40"
+                          loading="lazy"
+                          decoding="async"
+                          className="w-7 h-7 rounded-full object-cover border border-amber-500/40"
                         />
                         <div className="text-left">
                           <p className="text-[11px] font-bold text-white leading-tight">{program.trainer.name}</p>
-                          <p className="text-[10px] text-neutral-400">{program.trainer.role}</p>
+                          <p className="text-[10px] text-zinc-400">{program.trainer.role}</p>
                         </div>
                       </div>
                     </div>
@@ -226,10 +242,10 @@ export const ProgramsSection: React.FC<ProgramsSectionProps> = ({ onSelectProgra
                           onSelectProgram(program, actionType);
                         }}
                         onMouseEnter={() => soundManager.playHover()}
-                        className="w-full py-3 px-4 rounded-xl font-bold text-xs uppercase tracking-wider bg-white/5 hover:bg-gradient-to-r hover:from-[#DC2626] hover:to-[#EF4444] text-white border border-white/10 hover:border-transparent transition-all duration-300 shadow-md group/btn flex items-center justify-center gap-2 cursor-pointer"
+                        className="w-full py-3 px-4 rounded-xl font-bold text-xs uppercase tracking-wider bg-zinc-800 hover:bg-gradient-to-r hover:from-amber-500 hover:to-amber-600 text-white hover:text-black border border-zinc-700 hover:border-transparent transition-all duration-300 shadow-md group/btn flex items-center justify-center gap-2 cursor-pointer"
                       >
                         <span>{buttonLabel}</span>
-                        <ArrowRight className="w-3.5 h-3.5 text-neutral-400 group-hover/btn:text-white group-hover/btn:translate-x-1 transition-all" />
+                        <ArrowRight className="w-3.5 h-3.5 text-zinc-400 group-hover/btn:text-black group-hover/btn:translate-x-1 transition-all" />
                       </button>
                     </div>
                   </div>

@@ -28,7 +28,7 @@ const LEADS_STORAGE_KEY = 'ksg_gym_leads_v3';
 const BOOKINGS_STORAGE_KEY = 'ksg_gym_bookings_v3';
 const MEMBERS_STORAGE_KEY = 'ksg_gym_members_v3';
 const PAYMENTS_STORAGE_KEY = 'ksg_gym_payments_v3';
-const PLANS_STORAGE_KEY = 'ksg_gym_plans_v3';
+const PLANS_STORAGE_KEY = 'ksg_gym_plans_v4';
 const TRAINERS_STORAGE_KEY = 'ksg_gym_trainers_v3';
 const GALLERY_STORAGE_KEY = 'ksg_gym_gallery_v4';
 const TESTIMONIALS_STORAGE_KEY = 'ksg_gym_testimonials_v4';
@@ -36,6 +36,7 @@ const INQUIRIES_STORAGE_KEY = 'ksg_gym_inquiries_v4';
 const WORKOUTS_STORAGE_KEY = 'ksg_gym_workouts_v3';
 const PROGRESS_STORAGE_KEY = 'ksg_gym_progress_v3';
 const NOTIFICATIONS_STORAGE_KEY = 'ksg_gym_notifications_v3';
+const MEMBER_PROFILE_KEY = 'ksg_gym_member_profile_v4';
 
 // Default Seed Users (Member, Trainer, Admin)
 const INITIAL_USERS: (User & { passwordHash: string })[] = [
@@ -352,6 +353,14 @@ export const leadStore = {
 
   getCurrentMember(): MemberProfile {
     const user = this.getCurrentUser();
+    let savedMetrics: Partial<MemberProfile> = {};
+    try {
+      const saved = localStorage.getItem(MEMBER_PROFILE_KEY);
+      if (saved) savedMetrics = JSON.parse(saved);
+    } catch {
+      // fallback
+    }
+
     if (user && user.role === 'member') {
       return {
         id: user.id,
@@ -367,14 +376,34 @@ export const leadStore = {
         assignedTrainer: user.assignedTrainerName || 'Vikram Singhania',
         trainerRole: 'Master Strength Specialist',
         trainerImage: 'https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=400&q=80',
-        currentWeight: user.currentWeight || 78.4,
-        targetWeight: user.targetWeight || 75.0,
-        bodyFatPct: user.bodyFatPct || 11.8,
-        muscleMassKg: user.muscleMassKg || 42.6,
-        heightCm: user.heightCm || 180,
+        currentWeight: savedMetrics.currentWeight ?? user.currentWeight ?? 78.4,
+        targetWeight: savedMetrics.targetWeight ?? user.targetWeight ?? 75.0,
+        bodyFatPct: savedMetrics.bodyFatPct ?? user.bodyFatPct ?? 11.8,
+        muscleMassKg: savedMetrics.muscleMassKg ?? user.muscleMassKg ?? 42.6,
+        heightCm: savedMetrics.heightCm ?? user.heightCm ?? 180,
+        bmi: savedMetrics.bmi ?? 24.2,
       };
     }
-    return DEMO_MEMBER;
+
+    return {
+      ...DEMO_MEMBER,
+      ...savedMetrics
+    };
+  },
+
+  updateCurrentMemberMetrics(updates: Partial<MemberProfile>): MemberProfile {
+    const current = this.getCurrentMember();
+    const updated: MemberProfile = {
+      ...current,
+      ...updates
+    };
+    try {
+      localStorage.setItem(MEMBER_PROFILE_KEY, JSON.stringify(updated));
+    } catch {
+      // ignore
+    }
+    notify();
+    return updated;
   },
 
   logoutMember() {
