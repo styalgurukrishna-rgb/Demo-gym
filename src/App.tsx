@@ -1,46 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { FloatingActions } from './components/FloatingActions';
-import { LoadingScreen } from './components/LoadingScreen';
 import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { OfflineNotice } from './components/OfflineNotice';
-
-// Production Pages
-import { HomePage } from './pages/HomePage';
-import { AboutPage } from './pages/AboutPage';
-import { ProgramsPage } from './pages/ProgramsPage';
-import { TrainersPage } from './pages/TrainersPage';
-import { FacilitiesPage } from './pages/FacilitiesPage';
-import { GalleryPage } from './pages/GalleryPage';
-import { PricingPage } from './pages/PricingPage';
-import { BookingPage } from './pages/BookingPage';
-import { ContactPage } from './pages/ContactPage';
-import { LoginPage } from './pages/LoginPage';
-import { MemberDashboardPage } from './pages/MemberDashboardPage';
-import { TrainerDashboardPage } from './pages/TrainerDashboardPage';
-import { AdminDashboardPage } from './pages/AdminDashboardPage';
-import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
-import { TermsPage } from './pages/TermsPage';
-import { NotFoundPage } from './pages/NotFoundPage';
-
-// Modals
-import { JoinModal } from './components/Modals/JoinModal';
-import { VirtualTourModal } from './components/Modals/VirtualTourModal';
-import { ProgramDetailModal } from './components/Modals/ProgramDetailModal';
-import { TrainerProfileModal } from './components/Modals/TrainerProfileModal';
-import { FacilityLightboxModal } from './components/Modals/FacilityLightboxModal';
-import { FreeTrialModal } from './components/Modals/FreeTrialModal';
-import { PaymentModal } from './components/Modals/PaymentModal';
-import { MemberLoginModal } from './components/Modals/MemberLoginModal';
-import { MemberDashboardModal } from './components/Modals/MemberDashboardModal';
-import { AdminCrmModal } from './components/Modals/AdminCrmModal';
-import { ExitIntentModal } from './components/Modals/ExitIntentModal';
-import { ConsultationModal } from './components/Modals/ConsultationModal';
-import { DemoHighlightsModal } from './components/Modals/DemoHighlightsModal';
-import { DemoInquiryModal } from './components/Modals/DemoInquiryModal';
-import { SmartPlanAdvisorModal } from './components/Modals/SmartPlanAdvisorModal';
 import { DemoWebsiteBadge } from './components/DemoWebsiteBadge';
+
+// Critical First-Screen Page (Direct Import)
+import { HomePage } from './pages/HomePage';
+
+// Code-Split Secondary Pages (Lazy Loaded)
+const AboutPage = lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })));
+const ProgramsPage = lazy(() => import('./pages/ProgramsPage').then(m => ({ default: m.ProgramsPage })));
+const TrainersPage = lazy(() => import('./pages/TrainersPage').then(m => ({ default: m.TrainersPage })));
+const FacilitiesPage = lazy(() => import('./pages/FacilitiesPage').then(m => ({ default: m.FacilitiesPage })));
+const GalleryPage = lazy(() => import('./pages/GalleryPage').then(m => ({ default: m.GalleryPage })));
+const PricingPage = lazy(() => import('./pages/PricingPage').then(m => ({ default: m.PricingPage })));
+const BookingPage = lazy(() => import('./pages/BookingPage').then(m => ({ default: m.BookingPage })));
+const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
+const LoginPage = lazy(() => import('./pages/LoginPage').then(m => ({ default: m.LoginPage })));
+const MemberDashboardPage = lazy(() => import('./pages/MemberDashboardPage').then(m => ({ default: m.MemberDashboardPage })));
+const TrainerDashboardPage = lazy(() => import('./pages/TrainerDashboardPage').then(m => ({ default: m.TrainerDashboardPage })));
+const AdminDashboardPage = lazy(() => import('./pages/AdminDashboardPage').then(m => ({ default: m.AdminDashboardPage })));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage').then(m => ({ default: m.PrivacyPolicyPage })));
+const TermsPage = lazy(() => import('./pages/TermsPage').then(m => ({ default: m.TermsPage })));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
+
+// Code-Split Modals (Lazy Loaded on User Demand)
+const JoinModal = lazy(() => import('./components/Modals/JoinModal').then(m => ({ default: m.JoinModal })));
+const VirtualTourModal = lazy(() => import('./components/Modals/VirtualTourModal').then(m => ({ default: m.VirtualTourModal })));
+const ProgramDetailModal = lazy(() => import('./components/Modals/ProgramDetailModal').then(m => ({ default: m.ProgramDetailModal })));
+const TrainerProfileModal = lazy(() => import('./components/Modals/TrainerProfileModal').then(m => ({ default: m.TrainerProfileModal })));
+const FacilityLightboxModal = lazy(() => import('./components/Modals/FacilityLightboxModal').then(m => ({ default: m.FacilityLightboxModal })));
+const FreeTrialModal = lazy(() => import('./components/Modals/FreeTrialModal').then(m => ({ default: m.FreeTrialModal })));
+const PaymentModal = lazy(() => import('./components/Modals/PaymentModal').then(m => ({ default: m.PaymentModal })));
+const MemberLoginModal = lazy(() => import('./components/Modals/MemberLoginModal').then(m => ({ default: m.MemberLoginModal })));
+const MemberDashboardModal = lazy(() => import('./components/Modals/MemberDashboardModal').then(m => ({ default: m.MemberDashboardModal })));
+const AdminCrmModal = lazy(() => import('./components/Modals/AdminCrmModal').then(m => ({ default: m.AdminCrmModal })));
+const ExitIntentModal = lazy(() => import('./components/Modals/ExitIntentModal').then(m => ({ default: m.ExitIntentModal })));
+const ConsultationModal = lazy(() => import('./components/Modals/ConsultationModal').then(m => ({ default: m.ConsultationModal })));
+const DemoHighlightsModal = lazy(() => import('./components/Modals/DemoHighlightsModal').then(m => ({ default: m.DemoHighlightsModal })));
+const DemoInquiryModal = lazy(() => import('./components/Modals/DemoInquiryModal').then(m => ({ default: m.DemoInquiryModal })));
+const SmartPlanAdvisorModal = lazy(() => import('./components/Modals/SmartPlanAdvisorModal').then(m => ({ default: m.SmartPlanAdvisorModal })));
 
 import { PageType, ModalState, Program, Trainer, Facility, PricingPlan, MemberProfile } from './types';
 import { leadStore } from './services/leadStore';
@@ -98,9 +99,6 @@ const getInitialRoute = (): { page: PageType; sectionId?: string } => {
 export default function App() {
   const initialRoute = getInitialRoute();
 
-  // Loading screen state
-  const [isLoading, setIsLoading] = useState(true);
-
   // Dynamic Routing State initialized from URL pathname/hash
   const [currentPage, setCurrentPage] = useState<PageType>(initialRoute.page);
   const [initialSectionId, setInitialSectionId] = useState<string | undefined>(initialRoute.sectionId);
@@ -123,7 +121,15 @@ export default function App() {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    
+    if (initialSectionId) {
+      setTimeout(() => {
+        const el = document.getElementById(initialSectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 50);
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    }
 
     // Handle browser forward/back buttons thoughtfully
     const handlePopState = (event: PopStateEvent) => {
@@ -141,7 +147,7 @@ export default function App() {
           } else {
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
           }
-        }, 80);
+        }, 50);
       } else {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
       }
@@ -150,24 +156,6 @@ export default function App() {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
-
-  // Handle post-loading scroll or anchor jump
-  const handleLoadingComplete = () => {
-    setIsLoading(false);
-    if (initialSectionId) {
-      setTimeout(() => {
-        const element = document.getElementById(initialSectionId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        } else {
-          window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
-        }
-        setInitialSectionId(undefined);
-      }, 100);
-    } else {
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
-    }
-  };
 
   // Apply dynamic SEO and structured data whenever page or config changes
   useEffect(() => {
@@ -280,65 +268,65 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col selection:bg-amber-500 selection:text-black font-sans">
-      {/* 1. Initial Cinematic Luxury Loading Screen */}
-      {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
-
-      {/* 2. Top Sticky Navigation Bar */}
+      {/* 1. Top Sticky Navigation Bar */}
       <Navbar
         currentPage={currentPage}
         onNavigate={handleNavigate}
         onOpenModal={handleOpenModal}
       />
 
-      {/* 3. Dynamic Page View Renderer */}
+      {/* 2. Dynamic Page View Renderer */}
       <main className="flex-1 pt-16">
-        {currentPage === 'home' && (
+        {currentPage === 'home' ? (
           <HomePage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-        )}
-        {currentPage === 'about' && (
-          <AboutPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-        )}
-        {currentPage === 'programs' && (
-          <ProgramsPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-        )}
-        {currentPage === 'trainers' && (
-          <TrainersPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-        )}
-        {currentPage === 'facilities' && (
-          <FacilitiesPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-        )}
-        {currentPage === 'gallery' && (
-          <GalleryPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-        )}
-        {currentPage === 'pricing' && (
-          <PricingPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-        )}
-        {currentPage === 'booking' && (
-          <BookingPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-        )}
-        {currentPage === 'contact' && (
-          <ContactPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-        )}
-        {currentPage === 'privacy' && (
-          <PrivacyPolicyPage onNavigate={handleNavigate} />
-        )}
-        {currentPage === 'terms' && (
-          <TermsPage onNavigate={handleNavigate} />
-        )}
-        {currentPage === 'not-found' && (
-          <NotFoundPage onNavigate={handleNavigate} />
-        )}
-        {currentPage === 'login' && (
-          <LoginPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-        )}
-        {currentPage === 'member-dashboard' && (
-          <MemberDashboardPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-        )}
-        {currentPage === 'trainer-dashboard' && (
-          <TrainerDashboardPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-        )}
-        {currentPage === 'admin-dashboard' && (
-          <AdminDashboardPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+        ) : (
+          <Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center"><div className="w-8 h-8 rounded-full border-2 border-amber-400 border-t-transparent animate-spin" /></div>}>
+            {currentPage === 'about' && (
+              <AboutPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+            )}
+            {currentPage === 'programs' && (
+              <ProgramsPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+            )}
+            {currentPage === 'trainers' && (
+              <TrainersPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+            )}
+            {currentPage === 'facilities' && (
+              <FacilitiesPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+            )}
+            {currentPage === 'gallery' && (
+              <GalleryPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+            )}
+            {currentPage === 'pricing' && (
+              <PricingPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+            )}
+            {currentPage === 'booking' && (
+              <BookingPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+            )}
+            {currentPage === 'contact' && (
+              <ContactPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+            )}
+            {currentPage === 'privacy' && (
+              <PrivacyPolicyPage onNavigate={handleNavigate} />
+            )}
+            {currentPage === 'terms' && (
+              <TermsPage onNavigate={handleNavigate} />
+            )}
+            {currentPage === 'not-found' && (
+              <NotFoundPage onNavigate={handleNavigate} />
+            )}
+            {currentPage === 'login' && (
+              <LoginPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+            )}
+            {currentPage === 'member-dashboard' && (
+              <MemberDashboardPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+            )}
+            {currentPage === 'trainer-dashboard' && (
+              <TrainerDashboardPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+            )}
+            {currentPage === 'admin-dashboard' && (
+              <AdminDashboardPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+            )}
+          </Suspense>
         )}
       </main>
 
@@ -375,143 +363,144 @@ export default function App() {
         </button>
       </div>
 
-      {/* --- MODALS SUITE --- */}
+      {/* --- MODALS SUITE (Loaded On Demand via Suspense) --- */}
+      <Suspense fallback={null}>
+        {/* 1. Free Trial Booking Modal */}
+        <FreeTrialModal
+          isOpen={modalState.type === 'trial'}
+          onClose={handleCloseModal}
+        />
 
-      {/* 1. Free Trial Booking Modal */}
-      <FreeTrialModal
-        isOpen={modalState.type === 'trial'}
-        onClose={handleCloseModal}
-      />
+        {/* 2. Direct Membership / Lead Join Modal */}
+        <JoinModal
+          isOpen={modalState.type === 'join'}
+          onClose={handleCloseModal}
+          selectedPlan={selectedPlanForJoin}
+        />
 
-      {/* 2. Direct Membership / Lead Join Modal */}
-      <JoinModal
-        isOpen={modalState.type === 'join'}
-        onClose={handleCloseModal}
-        selectedPlan={selectedPlanForJoin}
-      />
+        {/* 3. Payment / Checkout Modal */}
+        <PaymentModal
+          isOpen={modalState.type === 'payment'}
+          onClose={handleCloseModal}
+          plan={selectedPlanForPayment}
+        />
 
-      {/* 3. Payment / Checkout Modal */}
-      <PaymentModal
-        isOpen={modalState.type === 'payment'}
-        onClose={handleCloseModal}
-        plan={selectedPlanForPayment}
-      />
+        {/* 4. Consultation Booking Modal */}
+        <ConsultationModal
+          isOpen={modalState.type === 'consultation'}
+          onClose={handleCloseModal}
+        />
 
-      {/* 4. Consultation Booking Modal */}
-      <ConsultationModal
-        isOpen={modalState.type === 'consultation'}
-        onClose={handleCloseModal}
-      />
+        {/* 5. Member Login Modal */}
+        <MemberLoginModal
+          isOpen={modalState.type === 'login'}
+          onClose={handleCloseModal}
+          onSuccess={handleLoginSuccess}
+        />
 
-      {/* 5. Member Login Modal */}
-      <MemberLoginModal
-        isOpen={modalState.type === 'login'}
-        onClose={handleCloseModal}
-        onSuccess={handleLoginSuccess}
-      />
+        {/* 6. Member Portal Dashboard Modal */}
+        <MemberDashboardModal
+          isOpen={modalState.type === 'memberDashboard'}
+          onClose={handleCloseModal}
+          member={activeMember}
+          onLogout={handleLogout}
+        />
 
-      {/* 6. Member Portal Dashboard Modal */}
-      <MemberDashboardModal
-        isOpen={modalState.type === 'memberDashboard'}
-        onClose={handleCloseModal}
-        member={activeMember}
-        onLogout={handleLogout}
-      />
+        {/* 7. Gym Owner CRM & Lead Management System Modal */}
+        <AdminCrmModal
+          isOpen={modalState.type === 'admin'}
+          onClose={handleCloseModal}
+        />
 
-      {/* 7. Gym Owner CRM & Lead Management System Modal */}
-      <AdminCrmModal
-        isOpen={modalState.type === 'admin'}
-        onClose={handleCloseModal}
-      />
+        {/* 8. Exit Intent Special Offer Popup */}
+        <ExitIntentModal
+          isOpen={modalState.type === 'exitIntent'}
+          onClose={handleCloseModal}
+          onClaimTrial={() => {
+            handleCloseModal();
+            handleNavigate('booking');
+          }}
+          onViewMembership={() => {
+            handleCloseModal();
+            handleNavigate('pricing');
+          }}
+        />
 
-      {/* 8. Exit Intent Special Offer Popup */}
-      <ExitIntentModal
-        isOpen={modalState.type === 'exitIntent'}
-        onClose={handleCloseModal}
-        onClaimTrial={() => {
-          handleCloseModal();
-          handleNavigate('booking');
-        }}
-        onViewMembership={() => {
-          handleCloseModal();
-          handleNavigate('pricing');
-        }}
-      />
+        {/* Smart Plan Advisor / Help Me Choose Modal */}
+        <SmartPlanAdvisorModal
+          isOpen={modalState.type === 'helpMeChoose'}
+          onClose={handleCloseModal}
+          onSelectPlan={(plan) => {
+            handleCloseModal();
+            handleOpenModal('payment', { plan, finalPrice: plan.price, billingCycle: 'monthly' });
+          }}
+          onBookTrial={() => {
+            handleCloseModal();
+            handleNavigate('booking');
+          }}
+        />
 
-      {/* Smart Plan Advisor / Help Me Choose Modal */}
-      <SmartPlanAdvisorModal
-        isOpen={modalState.type === 'helpMeChoose'}
-        onClose={handleCloseModal}
-        onSelectPlan={(plan) => {
-          handleCloseModal();
-          handleOpenModal('payment', { plan, finalPrice: plan.price, billingCycle: 'monthly' });
-        }}
-        onBookTrial={() => {
-          handleCloseModal();
-          handleNavigate('booking');
-        }}
-      />
+        {/* 9. Virtual Tour 4K Player Popup */}
+        <VirtualTourModal
+          isOpen={modalState.type === 'tour'}
+          onClose={handleCloseModal}
+          onOpenJoin={() => {
+            handleCloseModal();
+            handleOpenModal('join');
+          }}
+        />
 
-      {/* 9. Virtual Tour 4K Player Popup */}
-      <VirtualTourModal
-        isOpen={modalState.type === 'tour'}
-        onClose={handleCloseModal}
-        onOpenJoin={() => {
-          handleCloseModal();
-          handleOpenModal('join');
-        }}
-      />
+        {/* 10. Program Detail & Booking Popup */}
+        <ProgramDetailModal
+          program={selectedProgram}
+          actionType={programActionType}
+          onClose={handleCloseModal}
+          onRegister={() => {
+            handleCloseModal();
+            handleNavigate('booking');
+          }}
+        />
 
-      {/* 10. Program Detail & Booking Popup */}
-      <ProgramDetailModal
-        program={selectedProgram}
-        actionType={programActionType}
-        onClose={handleCloseModal}
-        onRegister={() => {
-          handleCloseModal();
-          handleNavigate('booking');
-        }}
-      />
+        {/* 11. Trainer Profile & Consultation Popup */}
+        <TrainerProfileModal
+          trainer={selectedTrainer}
+          onClose={handleCloseModal}
+          onBookTrainer={() => {
+            handleCloseModal();
+            handleNavigate('booking');
+          }}
+        />
 
-      {/* 11. Trainer Profile & Consultation Popup */}
-      <TrainerProfileModal
-        trainer={selectedTrainer}
-        onClose={handleCloseModal}
-        onBookTrainer={() => {
-          handleCloseModal();
-          handleNavigate('booking');
-        }}
-      />
+        {/* 12. Facility High-Res Lightbox */}
+        <FacilityLightboxModal
+          facility={selectedFacility}
+          onClose={handleCloseModal}
+          onOpenJoin={() => {
+            handleCloseModal();
+            handleNavigate('booking');
+          }}
+        />
 
-      {/* 12. Facility High-Res Lightbox */}
-      <FacilityLightboxModal
-        facility={selectedFacility}
-        onClose={handleCloseModal}
-        onOpenJoin={() => {
-          handleCloseModal();
-          handleNavigate('booking');
-        }}
-      />
+        {/* 13. Gym Owner Demo Highlights Modal */}
+        <DemoHighlightsModal
+          isOpen={modalState.type === 'demoHighlights'}
+          onClose={handleCloseModal}
+          onOpenAdmin={() => {
+            handleCloseModal();
+            handleNavigate('admin-dashboard');
+          }}
+          onOpenTrial={() => {
+            handleCloseModal();
+            handleNavigate('booking');
+          }}
+        />
 
-      {/* 13. Gym Owner Demo Highlights Modal */}
-      <DemoHighlightsModal
-        isOpen={modalState.type === 'demoHighlights'}
-        onClose={handleCloseModal}
-        onOpenAdmin={() => {
-          handleCloseModal();
-          handleNavigate('admin-dashboard');
-        }}
-        onOpenTrial={() => {
-          handleCloseModal();
-          handleNavigate('booking');
-        }}
-      />
-
-      {/* 14. Demo Website Inquiry Modal */}
-      <DemoInquiryModal
-        isOpen={modalState.type === 'demoInquiry'}
-        onClose={handleCloseModal}
-      />
+        {/* 14. Demo Website Inquiry Modal */}
+        <DemoInquiryModal
+          isOpen={modalState.type === 'demoInquiry'}
+          onClose={handleCloseModal}
+        />
+      </Suspense>
 
       {/* Floating Demo Website Badge */}
       <DemoWebsiteBadge

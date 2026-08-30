@@ -217,7 +217,9 @@ export const Hero: React.FC<HeroProps> = ({
           </video>
         ) : (
           <img
-            src={config.hero.heroImage ? `${config.hero.heroImage}?auto=format&fit=crop&w=1920&q=75&fm=webp` : "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1920&q=75&fm=webp"}
+            src={config.hero.heroImage ? `${config.hero.heroImage}?auto=format&fit=crop&w=1280&q=75&fm=webp` : "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1280&q=75&fm=webp"}
+            srcSet={`https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=640&q=75&fm=webp 640w, https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1080&q=75&fm=webp 1080w, https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1920&q=75&fm=webp 1920w`}
+            sizes="100vw"
             alt={`${config.brand.gymName} Luxury Architecture`}
             loading="eager"
             decoding="async"
@@ -298,12 +300,12 @@ export const Hero: React.FC<HeroProps> = ({
           </span>
         </motion.div>
 
-        {/* Cinematic Main Heading with Fluid Luxury Typography */}
+        {/* Cinematic Main Heading with Fluid Athletic Typography */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="text-[clamp(2rem,7.5vw,5.5rem)] font-black font-['Syne',sans-serif] tracking-tight uppercase leading-[1.04] text-white max-w-4xl w-full break-words mx-auto text-balance"
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="text-[clamp(2.2rem,8vw,5.75rem)] font-black font-heading tracking-tight uppercase leading-[0.98] sm:leading-[1.02] text-white max-w-4xl w-full break-words mx-auto text-balance"
         >
           {config.hero.heroHeading ? (
             <span>{config.hero.heroHeading}</span>
