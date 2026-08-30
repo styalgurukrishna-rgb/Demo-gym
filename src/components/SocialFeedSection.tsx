@@ -14,6 +14,7 @@ import {
   Volume2
 } from 'lucide-react';
 import { soundManager } from './common/SoundEffects';
+import { handleImageError } from '../utils/imageFallback';
 
 interface SocialPost {
   id: string;
@@ -28,7 +29,7 @@ interface SocialPost {
 const POSTS: SocialPost[] = [
   {
     id: 'post-1',
-    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1000&q=80&fm=webp',
     likes: '2,480',
     comments: '142',
     caption: 'Mastering the isolateral chest press on Italian Panatta machines. Zero joint pain, 100% chest recruitment. #KSGGym #PanattaSports',
@@ -37,7 +38,7 @@ const POSTS: SocialPost[] = [
   },
   {
     id: 'post-2',
-    image: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1000&q=80&fm=webp',
     likes: '1,920',
     comments: '98',
     caption: '16-week transformation by member @arjun_k. Lost 14kg of visceral fat while packing 5kg of dense muscle mass! #BeforeAfter #Recomp',
@@ -45,7 +46,7 @@ const POSTS: SocialPost[] = [
   },
   {
     id: 'post-3',
-    image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1000&q=80&fm=webp',
     likes: '3,110',
     comments: '215',
     caption: 'Morning heavy deadlifts on the calibrated Eleiko Olympic platform. The sound of oak wood and cast iron at 6:00 AM! #Eleiko #Deadlift',
@@ -54,7 +55,7 @@ const POSTS: SocialPost[] = [
   },
   {
     id: 'post-4',
-    image: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1000&q=80&fm=webp',
     likes: '1,640',
     comments: '84',
     caption: 'Post-workout recovery protocol in our Finnish Cedar Infrared Sauna & 4°C Cryo plunge. Speed up repair, drop cortisol! #RecoverySpa',

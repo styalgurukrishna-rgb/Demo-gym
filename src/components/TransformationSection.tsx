@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Sparkles, ArrowRight, Flame, Award, ChevronLeft, ChevronRight } from 'lucide-react';
 import { soundManager } from './common/SoundEffects';
+import { handleImageError } from '../utils/imageFallback';
 
 interface TransformationSectionProps {
   onOpenConsultation?: () => void;
@@ -23,8 +24,8 @@ const TRANSFORMATIONS = [
     bodyFatAfter: '11.2%',
     timeframe: '12 Weeks',
     quote: 'The structured Panatta biomechanics and custom macro nutrition plan transformed my body and focus in just 90 days.',
-    beforeImage: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=600&q=80',
-    afterImage: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=600&q=80',
+    beforeImage: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1000&q=80&fm=webp',
+    afterImage: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1000&q=80&fm=webp',
   },
   {
     id: 'trans-2',
@@ -39,8 +40,8 @@ const TRANSFORMATIONS = [
     bodyFatAfter: '16.5%',
     timeframe: '16 Weeks',
     quote: 'Never thought I could deadlift heavy without back pain. The coaches at KSG corrected my posture from Day 1.',
-    beforeImage: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=600&q=80',
-    afterImage: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=600&q=80',
+    beforeImage: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1000&q=80&fm=webp',
+    afterImage: 'https://images.unsplash.com/photo-1548690312-e3b507d8c110?auto=format&fit=crop&w=1000&q=80&fm=webp',
   },
   {
     id: 'trans-3',
@@ -48,15 +49,15 @@ const TRANSFORMATIONS = [
     age: 36,
     profession: 'Investment Banker',
     program: 'VIP Elite 1-on-1 Recomposition',
-    coach: 'Marcus Stone',
+    coach: 'Marcus Vance',
     beforeWeight: '88 kg',
     afterWeight: '82 kg',
     bodyFatBefore: '23.0%',
     bodyFatAfter: '10.8%',
     timeframe: '14 Weeks',
     quote: 'The VIP Concierge service fits my hectic schedule. I train at 6 AM, hit the sauna, and arrive at work charged.',
-    beforeImage: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80',
-    afterImage: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=600&q=80',
+    beforeImage: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=80&fm=webp',
+    afterImage: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=1000&q=80&fm=webp',
   }
 ];
 

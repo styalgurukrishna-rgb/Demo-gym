@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Maximize2, Check, Eye } from 'lucide-react';
 import { Facility } from '../types';
 import { FACILITIES } from '../data/gymData';
+import { handleImageError } from '../utils/imageFallback';
 
 interface FacilitiesSectionProps {
   onOpenLightbox: (facility: Facility) => void;
@@ -89,6 +90,7 @@ export const FacilitiesSection: React.FC<FacilitiesSectionProps> = ({ onOpenLigh
                     alt={facility.title}
                     loading="lazy"
                     decoding="async"
+                    onError={handleImageError}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 brightness-90 contrast-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0E] via-black/40 to-transparent" />

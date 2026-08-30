@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { X, Flame, Clock, User, CheckCircle2, Calendar, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
 import { Program } from '../../types';
+import { handleImageError, handleAvatarError } from '../../utils/imageFallback';
 
 interface ProgramDetailModalProps {
   program: Program | null;
@@ -41,6 +42,7 @@ export const ProgramDetailModal: React.FC<ProgramDetailModalProps> = ({
           <img
             src={program.image}
             alt={program.title}
+            onError={handleImageError}
             className="w-full h-full object-cover brightness-90 contrast-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#101014] via-[#101014]/60 to-transparent" />
@@ -126,6 +128,7 @@ export const ProgramDetailModal: React.FC<ProgramDetailModalProps> = ({
               <img
                 src={program.trainer.avatar}
                 alt={program.trainer.name}
+                onError={handleAvatarError}
                 className="w-12 h-12 rounded-xl object-cover border border-[#D4AF37]/50"
               />
               <div>

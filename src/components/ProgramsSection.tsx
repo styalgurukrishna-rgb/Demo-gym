@@ -5,6 +5,7 @@ import { Program } from '../types';
 import { PROGRAMS } from '../data/gymData';
 import { TiltCard } from './common/TiltCard';
 import { soundManager } from './common/SoundEffects';
+import { handleImageError, handleAvatarError } from '../utils/imageFallback';
 
 interface ProgramsSectionProps {
   onSelectProgram: (program: Program, actionType: 'learnMore' | 'bookTrainer' | 'explore' | 'start') => void;
@@ -175,6 +176,7 @@ export const ProgramsSection: React.FC<ProgramsSectionProps> = ({ onSelectProgra
                       alt={program.title}
                       loading="lazy"
                       decoding="async"
+                      onError={handleImageError}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-black/40 to-transparent" />
@@ -223,6 +225,7 @@ export const ProgramsSection: React.FC<ProgramsSectionProps> = ({ onSelectProgra
                           alt={program.trainer.name}
                           loading="lazy"
                           decoding="async"
+                          onError={handleAvatarError}
                           className="w-7 h-7 rounded-full object-cover border border-amber-500/40"
                         />
                         <div className="text-left">

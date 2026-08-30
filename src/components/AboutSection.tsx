@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'motion/react';
 import { Trophy, Zap, Clock, Users, CheckCircle2, Sparkles, ArrowRight } from 'lucide-react';
 import { STATS_DATA } from '../data/gymData';
+import { handleImageError } from '../utils/imageFallback';
 
 interface AboutSectionProps {
   onOpenJoin: () => void;
@@ -108,10 +109,11 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenJoin, onOpenTo
             <div className="relative rounded-3xl overflow-hidden border border-white/15 p-2 bg-gradient-to-br from-white/10 via-black to-white/5 shadow-2xl">
               <div className="relative rounded-2xl overflow-hidden aspect-[4/3] group">
                 <img
-                  src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1200&q=75&fm=webp"
+                  src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1200&q=80&fm=webp"
                   alt="KSG Gym Main Arena"
                   loading="lazy"
                   decoding="async"
+                  onError={handleImageError}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />

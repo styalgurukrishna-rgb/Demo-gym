@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { PROGRAMS } from '../data/gymData';
 import { PageType, ModalState, Program } from '../types';
+import { handleImageError } from '../utils/imageFallback';
 
 interface ProgramsPageProps {
   onNavigate: (page: PageType) => void;
@@ -94,6 +95,7 @@ export const ProgramsPage: React.FC<ProgramsPageProps> = ({ onNavigate, onOpenMo
                 <img
                   src={prog.image}
                   alt={prog.title}
+                  onError={handleImageError}
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />

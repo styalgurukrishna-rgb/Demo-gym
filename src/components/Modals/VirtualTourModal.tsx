@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { X, Play, Pause, Volume2, VolumeX, Sparkles, Compass, Eye, ShieldCheck, ArrowRight } from 'lucide-react';
+import { handleImageError } from '../../utils/imageFallback';
 
 interface VirtualTourModalProps {
   isOpen: boolean;
@@ -19,7 +20,7 @@ export const VirtualTourModal: React.FC<VirtualTourModalProps> = ({ isOpen, onCl
     {
       title: "Main Power Arena & Racks",
       subtitle: "15,000 Sq.Ft Open Floor",
-      image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80",
+      image: "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1600&q=80",
       description: "Panatta Hack Squats, Super Incline Presses, Eleiko Olympic platforms with acoustic shock dissipation.",
       stats: "70+ Workstations • Zero Queuing",
     },
@@ -33,7 +34,7 @@ export const VirtualTourModal: React.FC<VirtualTourModalProps> = ({ isOpen, onCl
     {
       title: "Hydrotherapy & Infrared Sauna",
       subtitle: "Bio-Recovery Spa",
-      image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1600&q=80",
+      image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1600&q=80",
       description: "Cedar infrared sauna (up to 80°C), 4°C cold plunge tub, and eucalyptus mist for instant autonomic nervous recovery.",
       stats: "4°C Cold Plunge • Infrared Cedar",
     },
@@ -94,6 +95,7 @@ export const VirtualTourModal: React.FC<VirtualTourModalProps> = ({ isOpen, onCl
           <img
             src={currentScene.image}
             alt={currentScene.title}
+            onError={handleImageError}
             className={`w-full h-full object-cover transition-transform duration-1000 ${
               isPlaying ? 'scale-105' : 'scale-100'
             }`}

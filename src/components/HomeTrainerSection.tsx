@@ -4,6 +4,7 @@ import { Award, ArrowRight, UserCheck, Calendar, Star, Sparkles } from 'lucide-r
 import { TRAINERS } from '../data/gymData';
 import { soundManager } from './common/SoundEffects';
 import { Trainer } from '../types';
+import { handleImageError } from '../utils/imageFallback';
 
 interface HomeTrainerSectionProps {
   onViewTrainerProfile: (trainer: Trainer) => void;
@@ -66,6 +67,7 @@ export const HomeTrainerSection: React.FC<HomeTrainerSectionProps> = ({
                     alt={trainer.name}
                     loading="lazy"
                     decoding="async"
+                    onError={handleImageError}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                   />

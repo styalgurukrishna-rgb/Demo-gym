@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { X, Award, Star, CheckCircle2, Trophy, Users, ShieldCheck, ArrowRight, Instagram } from 'lucide-react';
 import { Trainer } from '../../types';
+import { handleImageError } from '../../utils/imageFallback';
 
 interface TrainerProfileModalProps {
   trainer: Trainer | null;
@@ -51,6 +52,7 @@ export const TrainerProfileModal: React.FC<TrainerProfileModalProps> = ({
                 <img
                   src={trainer.image}
                   alt={trainer.name}
+                  onError={handleImageError}
                   className="w-full h-full object-cover object-top rounded-[14px]"
                 />
               </div>

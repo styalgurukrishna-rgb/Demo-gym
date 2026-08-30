@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { PageType, ModalState, GalleryItem } from '../types';
 import { leadStore } from '../services/leadStore';
+import { handleImageError } from '../utils/imageFallback';
 
 interface GalleryPageProps {
   onNavigate: (page: PageType) => void;
@@ -106,6 +107,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({ onNavigate }) => {
                   <img
                     src={item.image}
                     alt={item.title}
+                    onError={handleImageError}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
@@ -161,6 +163,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({ onNavigate }) => {
                 <img
                   src={lightboxItem.image}
                   alt={lightboxItem.title}
+                  onError={handleImageError}
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-contain max-h-[70vh]"
                 />

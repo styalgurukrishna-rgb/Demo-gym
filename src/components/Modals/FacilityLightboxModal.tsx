@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { X, Check, Sparkles, MapPin } from 'lucide-react';
 import { Facility } from '../../types';
+import { handleImageError } from '../../utils/imageFallback';
 
 interface FacilityLightboxModalProps {
   facility: Facility | null;
@@ -48,6 +49,7 @@ export const FacilityLightboxModal: React.FC<FacilityLightboxModalProps> = ({
           <img
             src={facility.image}
             alt={facility.title}
+            onError={handleImageError}
             className="w-full h-full object-cover brightness-95 contrast-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F12] via-transparent to-black/30" />

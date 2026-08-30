@@ -58,14 +58,14 @@ export const PROGRAMS: Program[] = [
     title: "Strength Training",
     subtitle: "Progressive Overload & Barbell Architecture",
     tagline: "Forge raw power, dense bone density, and structural joint integrity with calibrated Eleiko bars.",
-    image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1000&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1200&q=80&fm=webp",
     duration: "60 - 75 Mins",
     caloriesBurn: "450 - 700 kcal",
     level: "All Levels (Periodized)",
     trainer: {
       name: "Marcus Vance",
       role: "Head Strength Coach",
-      avatar: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=200&q=75&fm=webp"
+      avatar: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=300&q=80&fm=webp"
     },
     benefits: [
       "Targeted progressive overload protocols",
@@ -84,14 +84,14 @@ export const PROGRAMS: Program[] = [
     title: "Muscle Building",
     subtitle: "Hypertrophy & Physique Architecture",
     tagline: "Sculpt lean, dense muscle fibers through isolateral Panatta machinery and time-under-tension protocols.",
-    image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1000&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1200&q=80&fm=webp",
     duration: "60 - 75 Mins",
     caloriesBurn: "500 - 750 kcal",
     level: "Intermediate & Advanced",
     trainer: {
       name: "Vikram Singhania",
       role: "Master Transformation Director",
-      avatar: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=200&q=75&fm=webp"
+      avatar: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=300&q=80&fm=webp"
     },
     benefits: [
       "Imported Panatta isolateral pin-select & plate-loaded machines",
@@ -110,14 +110,14 @@ export const PROGRAMS: Program[] = [
     title: "Fat Loss Conditioning",
     subtitle: "High-Output VO2 Max & Metabolic Shred",
     tagline: "Elevate your anaerobic threshold and shred fat with dynamic Woodway sprints and SkiErg intervals.",
-    image: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1000&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1200&q=80&fm=webp",
     duration: "45 - 60 Mins",
     caloriesBurn: "600 - 900 kcal",
     level: "High Intensity",
     trainer: {
       name: "Elena Rostova",
       role: "HIIT & Endurance Specialist",
-      avatar: "https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=200&q=75&fm=webp"
+      avatar: "https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=300&q=80&fm=webp"
     },
     benefits: [
       "Curved Woodway treadmills for natural stride biomechanics",
@@ -136,14 +136,14 @@ export const PROGRAMS: Program[] = [
     title: "Functional Training",
     subtitle: "CrossFit, Agility & Explosive Power",
     tagline: "Unleash athletic versatility with Olympic lifting, kettlebell complexes, and turf sprints.",
-    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1000&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80&fm=webp",
     duration: "60 Mins",
     caloriesBurn: "550 - 800 kcal",
     level: "All Levels (Scalable)",
     trainer: {
       name: "Devraj Patel",
       role: "Olympic Lifting & CrossFit Head",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=75&fm=webp"
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80&fm=webp"
     },
     benefits: [
       "30-meter high-density sled push turf track",
@@ -162,14 +162,14 @@ export const PROGRAMS: Program[] = [
     title: "Personal Training",
     subtitle: "1-on-1 Bespoke Body Engineering",
     tagline: "Dedicated master coaching tailored strictly to your genetic blueprint, posture, and lifestyle.",
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&q=80&fm=webp",
     duration: "60 Mins Private",
     caloriesBurn: "600 - 850 kcal",
     level: "Exclusive 1-on-1",
     trainer: {
       name: "Vikram Singhania",
       role: "Master Transformation Director",
-      avatar: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=200&q=75&fm=webp"
+      avatar: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=300&q=80&fm=webp"
     },
     benefits: [
       "Complete InBody 770 composition assessment every 14 days",
@@ -188,14 +188,14 @@ export const PROGRAMS: Program[] = [
     title: "Athletic Performance",
     subtitle: "Powerlifting & Maximal Force Output",
     tagline: "Calibrated Eleiko competition discs, monolifts, and elite periodization for lifters.",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?auto=format&fit=crop&w=1200&q=80&fm=webp",
     duration: "75 - 90 Mins",
     caloriesBurn: "500 - 750 kcal",
     level: "Intermediate & Competitive",
     trainer: {
       name: "Marcus Vance",
       role: "Head Strength Coach",
-      avatar: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=200&q=75&fm=webp"
+      avatar: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=300&q=80&fm=webp"
     },
     benefits: [
       "IPF-spec calibrated steel discs and 29mm competition power bars",
@@ -218,7 +218,7 @@ export const TRAINERS: Trainer[] = [
     role: "Head Strength & Conditioning Coach",
     experience: "14+ Years Experience",
     specialization: "Hypertrophy, Powerlifting & Biomechanics",
-    image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=600&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=800&q=80&fm=webp",
     bio: "Former national powerlifting champion and certified CSCS coach. Marcus specializes in heavy compound lifts, structural symmetry, and bulletproofing joints against injury.",
     certifications: ["NSCA Certified Strength & Conditioning Specialist (CSCS)", "USA Weightlifting Level 2", "FMS Functional Movement Screen Certified"],
     achievements: ["Coached 120+ competitive athletes", "Keynote Speaker at Asian Fitness Summit", "99.4% Client Transformation Success"],
@@ -234,7 +234,7 @@ export const TRAINERS: Trainer[] = [
     role: "Master Transformation Director",
     experience: "11+ Years Experience",
     specialization: "Celebrity Body Recomposition & Clinical Nutrition",
-    image: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=600&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?auto=format&fit=crop&w=800&q=80&fm=webp",
     bio: "Vikram combines precision metabolic tracking with progressive overload. He has shaped high-profile corporate leaders and athletes with sustainable lifestyle adjustments.",
     certifications: ["ACE Master Personal Trainer", "Precision Nutrition Level 2 Certified", "Kettlebell Athletics Specialist"],
     achievements: ["Transformations featured in Men's Health", "Over 20,000 coaching hours completed", "InBody Elite Master Coach"],
@@ -250,7 +250,7 @@ export const TRAINERS: Trainer[] = [
     role: "Lead HIIT & Athletic Conditioning Coach",
     experience: "9+ Years Experience",
     specialization: "VO2 Max Endurance, HIIT & Shred Protocol",
-    image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=600&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=800&q=80&fm=webp",
     bio: "Olympic track qualifier turned high-intensity conditioning architect. Elena commands high-octane cardio sessions that maximize heart health and athletic stamina.",
     certifications: ["NASM Performance Enhancement Specialist (PES)", "TRX Master Instructor", "CrossFit Level 3 Coach"],
     achievements: ["Designed KSG High-Output Circuit Method", "Sub-3 Hour Marathon Finisher", "Voted Top Coach 2024"],
@@ -266,7 +266,7 @@ export const TRAINERS: Trainer[] = [
     role: "Mobility Director & Yoga Master",
     experience: "10+ Years Experience",
     specialization: "Athletic Mobility, Fascial Release & Breathwork",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80&fm=webp",
     bio: "Specializing in athletic recovery, joint mobility, and posture alignment. Aria helps lifters and runners unlock full range of motion while drastically reducing injury risks.",
     certifications: ["E-RYT 500 Yoga Alliance", "FRC Functional Range Conditioning Specialist", "Oxygen Advantage Breath Coach"],
     achievements: ["Restored over 400 lifters from chronic lower back tightness", "Developer of the KSG Spine Flow Series"],
@@ -282,7 +282,7 @@ export const TRAINERS: Trainer[] = [
     role: "Olympic Lifting & CrossFit Head",
     experience: "8+ Years Experience",
     specialization: "Olympic Snatch/Clean, Plyometrics & Agility",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80&fm=webp",
     bio: "Devraj brings raw intensity to functional movement. His technical breakdown of the Olympic lifts ensures members build rapid power safely.",
     certifications: ["CrossFit Level 3 Trainer (CF-L3)", "USAW Sports Performance Coach", "ISSA Strength & Conditioning"],
     achievements: ["Ranked Top 10 in National CrossFit Open", "Trained 30+ Podium CrossFit Competitors"],
@@ -298,7 +298,7 @@ export const TRAINERS: Trainer[] = [
     role: "Physique & Rehabilitation Coach",
     experience: "7+ Years Experience",
     specialization: "Women's Glute/Core Architecture & Posture Rehab",
-    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=600&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=800&q=80&fm=webp",
     bio: "Samantha blends physical therapy insights with progressive resistance training to create aesthetically sculpted, pain-free physiques.",
     certifications: ["B.Sc Physiotherapy & Sports Rehabilitation", "ACE Certified Personal Trainer", "Pre/Post-Natal Fitness Specialist"],
     achievements: ["Helped 350+ women achieve sustainable body recomp", "Corporate Ergonomics Consultant for Tech Firms"],
@@ -316,7 +316,7 @@ export const FACILITIES: Facility[] = [
     title: "Free Weights & Calibrated Rigs",
     category: "Heavy Iron & Eleiko Platforms",
     description: "Swedish Eleiko Olympic calibrated barbells, IPF-spec competition power racks, and precision dumbbells ranging from 2.5 kg to 70 kg.",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80&fm=webp",
     features: [
       "Eleiko IWF-certified Olympic Barbells & Calibrated Steel Discs",
       "Cast Iron & Urethane Dumbbells from 2.5 kg to 70 kg in 2.5kg steps",
@@ -330,7 +330,7 @@ export const FACILITIES: Facility[] = [
     title: "Isolateral Strength Machines",
     category: "Italian Panatta Machinery",
     description: "State-of-the-art Italian Panatta isolateral plate-loaded and pin-selected machines engineered for anatomical biomechanics.",
-    image: "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1000&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1200&q=80&fm=webp",
     features: [
       "Panatta Super Squat, Belt Squat & Pendulum Leg Press",
       "Dual Cable High-Tension Functional Columns",
@@ -344,7 +344,7 @@ export const FACILITIES: Facility[] = [
     title: "Cardio Conditioning Arena",
     category: "VO2 Max & Aerobic Theater",
     description: "Curved non-motorized Woodway sprint tracks, Concept2 Rowers, SkiErgs, and Assault AirBikes with real-time biometric telemetry.",
-    image: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1000&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1200&q=80&fm=webp",
     features: [
       "Curved Non-Motorized Woodway Treadmills for natural stride dynamics",
       "Concept2 SkiErgs, Rowers & Echo AirBikes",
@@ -358,7 +358,7 @@ export const FACILITIES: Facility[] = [
     title: "Functional Turf & Rig Arena",
     category: "CrossFit & Athletic Agility",
     description: "30-meter high-density indoor sprint turf, Rogue Monster rigs, Olympic lifting platforms, and heavy sled drive lanes.",
-    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1000&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80&fm=webp",
     features: [
       "30-Meter High-Density Heavy Sled Prowler Track",
       "Custom Multi-Station Rogue Monster Pull-Up Rig",
@@ -372,7 +372,7 @@ export const FACILITIES: Facility[] = [
     title: "Luxury Locker Suites",
     category: "Spa Amenities & Dressing Rooms",
     description: "Italian Carrara marble dressing lounges, keyless RFID biometric lockers, Dyson Supersonic hair stations, and rainforest showers.",
-    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1000&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80&fm=webp",
     features: [
       "Biometric Pin & RFID Keyless Luxury Smart Lockers",
       "Plush Egyptian Cotton Towels & Bathrobe Service",
@@ -386,7 +386,7 @@ export const FACILITIES: Facility[] = [
     title: "Recovery Suite & Cryo Plunge",
     category: "Hydrotherapy & Biohacking",
     description: "Finnish Cedar infrared saunas, 4°C chilled stainless steel cold plunges, and Normatec air-compression boots to slash soreness.",
-    image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1000&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1200&q=80&fm=webp",
     features: [
       "Finnish Cedar Full-Spectrum Infrared Sauna (Up to 85°C)",
       "High-Volume 4°C Chilled Stainless Steel Hydrotherapy Plunge",
@@ -400,7 +400,7 @@ export const FACILITIES: Facility[] = [
     title: "Premium Gym Interior",
     category: "15,000 Sq.Ft Open Architecture",
     description: "Sprawling multi-level athletic sanctuary with medical-grade HEPA air exchange, acoustic zoning, and glare-free architectural lighting.",
-    image: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1000&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1200&q=80&fm=webp",
     features: [
       "15,000 Sq.Ft Open Architecture Floor Plan",
       "Hospital-Grade HEPA-14 Air Filtration exchanging fresh air every 6 mins",
@@ -417,7 +417,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Heavy Deadlift on Eleiko Platform",
     category: "workout",
     categoryLabel: "Workout",
-    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=800&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1000&q=80&fm=webp",
     description: "Member locking out a 210kg personal record on calibrated Eleiko competition plates.",
     tag: "Deadlift"
   },
@@ -426,7 +426,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Annual KSG Summer Push-Pull Championship",
     category: "events",
     categoryLabel: "Events",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=80&fm=webp",
     description: "Over 150 members competed in our annual athletic festival and lifting showcase.",
     tag: "Championship"
   },
@@ -435,7 +435,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "16-Week Recomposition - Rahul M.",
     category: "transformation",
     categoryLabel: "Transformation",
-    image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=800&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=1000&q=80&fm=webp",
     description: "Dropped from 24% to 11% body fat while building 4.5kg of dense lean muscle.",
     tag: "Recomp"
   },
@@ -444,7 +444,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Master Coach Marcus Vance in Action",
     category: "trainers",
     categoryLabel: "Trainers",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1000&q=80&fm=webp",
     description: "Guiding an isolateral shoulder press with millimeter biomechanical accuracy.",
     tag: "Coaching"
   },
@@ -453,7 +453,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Functional Turf Sprint & Sled Push",
     category: "workout",
     categoryLabel: "Workout",
-    image: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=800&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?auto=format&fit=crop&w=1000&q=80&fm=webp",
     description: "High-intensity athletic conditioning on the 30-meter indoor shock-absorbent turf.",
     tag: "HIIT"
   },
@@ -462,7 +462,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "VIP Charity Lifting Marathon 2024",
     category: "events",
     categoryLabel: "Events",
-    image: "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1000&q=80&fm=webp",
     description: "Raised ₹5,00,000 for youth sports development in Karnataka with 24-hr lifting relay.",
     tag: "Charity"
   },
@@ -471,7 +471,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Post-Workout Infrared Sauna Ritual",
     category: "workout",
     categoryLabel: "Workout",
-    image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=800&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1000&q=80&fm=webp",
     description: "Athletes flushing cortisol in the 80°C cedar sauna after heavy leg day.",
     tag: "Sauna"
   },
@@ -480,7 +480,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Transformation Spotlight - Priya K.",
     category: "transformation",
     categoryLabel: "Transformation",
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1000&q=80&fm=webp",
     description: "From chronic desk stiffness to completing her first Olympic triathlon in 9 months.",
     tag: "Endurance"
   },
@@ -489,7 +489,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Coach Elena Rostova Leading HIIT Squad",
     category: "trainers",
     categoryLabel: "Trainers",
-    image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=800&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=1000&q=80&fm=webp",
     description: "Heart rates peaking at 178 BPM in the morning sprint conditioning theater.",
     tag: "Cardio"
   },
@@ -498,7 +498,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Olympic Clean & Jerk Workshop",
     category: "events",
     categoryLabel: "Events",
-    image: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=800&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&w=1000&q=80&fm=webp",
     description: "International guest coach clinic breaking down bar velocity and catch stability.",
     tag: "Workshop"
   },
@@ -507,7 +507,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Mobility & Hip Flow by Aria Thorne",
     category: "trainers",
     categoryLabel: "Trainers",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1000&q=80&fm=webp",
     description: "Athletic mobility class unlocking tight hip flexors and thoracic rotation.",
     tag: "Mobility"
   },
@@ -516,7 +516,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     title: "Transformation Spotlight - Arvind S.",
     category: "transformation",
     categoryLabel: "Transformation",
-    image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=800&q=75&fm=webp",
+    image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1000&q=80&fm=webp",
     description: "Lost 18kg in 20 weeks with Coach Vikram. Replaced blood pressure meds with deadlifts.",
     tag: "Health"
   }

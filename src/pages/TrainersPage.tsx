@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { PageType, ModalState, Trainer } from '../types';
 import { leadStore } from '../services/leadStore';
+import { handleImageError } from '../utils/imageFallback';
 
 interface TrainersPageProps {
   onNavigate: (page: PageType) => void;
@@ -103,6 +104,7 @@ export const TrainersPage: React.FC<TrainersPageProps> = ({ onNavigate, onOpenMo
                 <img
                   src={trainer.image}
                   alt={trainer.name}
+                  onError={handleImageError}
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                 />
