@@ -87,10 +87,10 @@ export const HomePricingSection: React.FC<HomePricingSectionProps> = ({
             return (
               <motion.div
                 key={plan.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 1, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.15 }}
+                viewport={{ once: true, margin: "250px 0px" }}
+                transition={{ duration: 0.35, delay: idx * 0.05 }}
                 className={`relative rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 ${
                   isPopular
                     ? 'bg-zinc-900 border-2 border-amber-500 shadow-2xl shadow-amber-500/10 md:scale-105 z-10'

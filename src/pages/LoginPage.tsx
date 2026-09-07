@@ -12,8 +12,6 @@ import {
   CheckCircle2,
   Eye,
   EyeOff,
-  LayoutDashboard,
-  Award,
   KeyRound,
   ArrowRight,
   AlertCircle
@@ -53,23 +51,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
-  const handleRoleSelect = (role: UserRole) => {
-    soundManager.playClick();
-    setSelectedRole(role);
-    setErrorMsg('');
-    setSuccessMsg('');
-    if (role === 'member') {
-      setIdentifier('+91 75499 29102');
-      setPassword('pass123');
-    } else if (role === 'trainer') {
-      setIdentifier('vikram.trainer@ksg.com');
-      setPassword('pass123');
-    } else if (role === 'admin') {
-      setIdentifier('admin@ksgdemogym.com');
-      setPassword('admin123');
-    }
-  };
-
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -80,13 +61,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
       setIsLoading(false);
       if (res.success && res.user) {
         soundManager.playSuccess();
-        if (res.user.role === 'admin') {
-          onNavigate('admin-dashboard');
-        } else if (res.user.role === 'trainer') {
-          onNavigate('trainer-dashboard');
-        } else {
-          onNavigate('member-dashboard');
-        }
+        onNavigate('member-dashboard');
       } else {
         soundManager.playClick();
         setErrorMsg(res.error || 'Invalid credentials.');
@@ -126,31 +101,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
     }, 500);
   };
 
-  const handleOneClickDemoLogin = (role: UserRole) => {
-    soundManager.playClick();
-    setIsLoading(true);
-    setErrorMsg('');
-    
-    setTimeout(() => {
-      if (role === 'member') {
-        leadStore.login('+91 75499 29102', 'pass123');
-        setIsLoading(false);
-        soundManager.playSuccess();
-        onNavigate('member-dashboard');
-      } else if (role === 'trainer') {
-        leadStore.login('vikram.trainer@ksg.com', 'pass123');
-        setIsLoading(false);
-        soundManager.playSuccess();
-        onNavigate('trainer-dashboard');
-      } else if (role === 'admin') {
-        leadStore.login('admin@ksgdemogym.com', 'admin123');
-        setIsLoading(false);
-        soundManager.playSuccess();
-        onNavigate('admin-dashboard');
-      }
-    }, 350);
-  };
-
   const handleForgotPasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!forgotInput) return;
@@ -167,10 +117,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
             <Dumbbell className="w-7 h-7" />
           </div>
           <h1 className="text-3xl font-black text-white uppercase tracking-tight">
-            KSG <span className="text-amber-400">SAAS PORTAL</span>
+            KSG <span className="text-amber-400">MEMBER PORTAL</span>
           </h1>
           <p className="text-xs sm:text-sm text-zinc-400 mt-1">
-            Role-Based Access for Members, Coaches & Gym Owners
+            Access your membership, workout schedules & progress tracking
           </p>
         </div>
 
@@ -226,53 +176,6 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
 
           {activeTab === 'login' ? (
             <div>
-              {/* Role Selection Pills */}
-              <div className="mb-5">
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-2">
-                  Select Your Account Role
-                </label>
-                <div className="grid grid-cols-3 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => handleRoleSelect('member')}
-                    className={`py-2 px-2.5 rounded-xl border text-[11px] font-bold uppercase tracking-wider flex flex-col items-center gap-1 transition-all cursor-pointer ${
-                      selectedRole === 'member'
-                        ? 'bg-amber-500 text-black border-amber-400 font-black shadow-md'
-                        : 'bg-zinc-950 text-zinc-400 border-zinc-800 hover:text-white'
-                    }`}
-                  >
-                    <User className="w-3.5 h-3.5" />
-                    <span>Member</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleRoleSelect('trainer')}
-                    className={`py-2 px-2.5 rounded-xl border text-[11px] font-bold uppercase tracking-wider flex flex-col items-center gap-1 transition-all cursor-pointer ${
-                      selectedRole === 'trainer'
-                        ? 'bg-amber-500 text-black border-amber-400 font-black shadow-md'
-                        : 'bg-zinc-950 text-zinc-400 border-zinc-800 hover:text-white'
-                    }`}
-                  >
-                    <Award className="w-3.5 h-3.5" />
-                    <span>Trainer</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleRoleSelect('admin')}
-                    className={`py-2 px-2.5 rounded-xl border text-[11px] font-bold uppercase tracking-wider flex flex-col items-center gap-1 transition-all cursor-pointer ${
-                      selectedRole === 'admin'
-                        ? 'bg-emerald-500 text-black border-emerald-400 font-black shadow-md'
-                        : 'bg-zinc-950 text-zinc-400 border-zinc-800 hover:text-white'
-                    }`}
-                  >
-                    <LayoutDashboard className="w-3.5 h-3.5" />
-                    <span>Admin</span>
-                  </button>
-                </div>
-              </div>
-
               <form onSubmit={handleLogin} className="space-y-4">
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-2">
@@ -350,57 +253,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
                     <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
                   ) : (
                     <>
-                      <span>LOG IN TO {selectedRole.toUpperCase()}</span>
+                      <span>LOG IN TO MEMBER PORTAL</span>
                       <ArrowRight className="w-4 h-4" />
                     </>
                   )}
                 </button>
               </form>
-
-              {/* Single Click Fast Demo Logins */}
-              <div className="mt-6 pt-5 border-t border-zinc-800 space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">
-                    ⚡ 1-Click Demo Evaluation Logins
-                  </span>
-                  <Sparkles className="w-3 h-3 text-amber-400" />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                  <button
-                    id="demo-member-login-btn"
-                    onClick={() => handleOneClickDemoLogin('member')}
-                    className="p-2.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-left transition-all cursor-pointer group"
-                  >
-                    <span className="block text-[10px] font-black text-amber-400 group-hover:text-amber-300 uppercase">
-                      Demo Member
-                    </span>
-                    <span className="block text-[9px] text-zinc-500 truncate">Karan M. (VIP)</span>
-                  </button>
-
-                  <button
-                    id="demo-trainer-login-btn"
-                    onClick={() => handleOneClickDemoLogin('trainer')}
-                    className="p-2.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-left transition-all cursor-pointer group"
-                  >
-                    <span className="block text-[10px] font-black text-amber-400 group-hover:text-amber-300 uppercase">
-                      Coach Vikram
-                    </span>
-                    <span className="block text-[9px] text-zinc-500 truncate">CSCS Director</span>
-                  </button>
-
-                  <button
-                    id="demo-admin-login-btn"
-                    onClick={() => handleOneClickDemoLogin('admin')}
-                    className="p-2.5 rounded-xl bg-zinc-950 hover:bg-emerald-900/30 border border-emerald-500/30 text-left transition-all cursor-pointer group"
-                  >
-                    <span className="block text-[10px] font-black text-emerald-400 uppercase">
-                      Gym Owner
-                    </span>
-                    <span className="block text-[9px] text-zinc-500 truncate">Full CRM Access</span>
-                  </button>
-                </div>
-              </div>
             </div>
           ) : (
             /* Member Registration Form */

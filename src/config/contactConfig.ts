@@ -39,6 +39,6 @@ export const CONTACT_CONFIG = {
     return `https://wa.me/917549929102?text=${text}`;
   },
   
-  getTelUrl: () => 'tel:7549929102',
+  getTelUrl: () => 'tel:+917549929102',
   getMailtoUrl: (subject?: string) => `mailto:contact@ksgdemogym.com${subject ? `?subject=${encodeURIComponent(subject)}` : ''}`,
 };

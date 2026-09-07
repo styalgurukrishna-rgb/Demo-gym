@@ -197,42 +197,62 @@ export const Hero: React.FC<HeroProps> = ({
       onMouseMove={handleMouseMove}
       className="relative min-h-[90vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden pt-24 sm:pt-28 pb-16 sm:pb-20 bg-[#080808]"
     >
-      {/* 3D Depth Layer 1: Background Luxury Gym Video/Photo with Ambient Parallax */}
-      <motion.div
-        style={{ x: bgX, y: bgY }}
-        className="absolute -inset-4 sm:-inset-8 z-0 overflow-hidden pointer-events-none scale-105"
-      >
-        {isVideoBg ? (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover object-center opacity-30 brightness-75 contrast-125 filter"
-            poster="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1920&q=75&fm=webp"
-          >
-            <source
-              src="https://assets.mixkit.co/videos/preview/mixkit-athlete-working-out-with-heavy-ropes-in-a-gym-44163-large.mp4"
-              type="video/mp4"
-            />
-          </video>
-        ) : (
-          <img
-            src={optimizeImageUrl(config.hero.heroImage || "https://images.unsplash.com/photo-1534438327276-14e5300c3a48", 1920, 80)}
-            alt={`${config.brand.gymName} Luxury Architecture`}
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-            referrerPolicy="no-referrer"
-            onError={handleImageError}
-            className="w-full h-full object-cover object-center opacity-35 brightness-75 contrast-125 filter transition-opacity duration-300"
-          />
-        )}
+      {/* 1. DEDICATED BACKGROUND IMAGE LAYER (Separated, subtly blurred, responsive, works on all devices) */}
+      <div className="hero-background absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+        <motion.div
+          style={{ x: bgX, y: bgY }}
+          className="absolute -inset-4 sm:-inset-8 scale-105"
+        >
+          {isVideoBg ? (
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover object-center opacity-45 brightness-75 contrast-110 filter blur-[2px]"
+              poster="/images/hero-gym-bg.webp"
+            >
+              <source
+                src="https://assets.mixkit.co/videos/preview/mixkit-athlete-working-out-with-heavy-ropes-in-a-gym-44163-large.mp4"
+                type="video/mp4"
+              />
+            </video>
+          ) : (
+            <picture className="w-full h-full block">
+              {/* Mobile optimized WebP */}
+              <source
+                media="(max-width: 767px)"
+                srcSet="/images/hero-gym-bg-mobile.webp"
+                type="image/webp"
+              />
+              {/* Desktop / Tablet WebP */}
+              <source
+                media="(min-width: 768px)"
+                srcSet="/images/hero-gym-bg.webp"
+                type="image/webp"
+              />
+              {/* JPEG fallback for maximum legacy compatibility */}
+              <source
+                srcSet="/images/hero-gym-bg.jpg"
+                type="image/jpeg"
+              />
+              <img
+                src={config.hero.heroImage?.startsWith('http') ? optimizeImageUrl(config.hero.heroImage, 1920, 80) : (config.hero.heroImage || '/images/hero-gym-bg.webp')}
+                alt={`${config.brand.gymName} Premium Training Floor`}
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
+                onError={handleImageError}
+                className="w-full h-full object-cover object-center max-sm:object-[center_35%] opacity-55 sm:opacity-50 brightness-[0.80] contrast-[1.15] filter blur-[2px] sm:blur-[3px] transition-opacity duration-300"
+              />
+            </picture>
+          )}
 
-        {/* Cinematic Vignette Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/75 to-[#080808]/90 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-[#080808]/60 to-[#080808] pointer-events-none" />
-      </motion.div>
+          {/* 2. DARK CONTROLLED GRADIENT OVERLAY - Keeps gym environment visible while guaranteeing text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/65 to-[#080808]/75 pointer-events-none" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(8,8,8,0.25)_0%,rgba(8,8,8,0.75)_100%)] pointer-events-none" />
+        </motion.div>
+      </div>
 
       {/* 3D Depth Layer 2: Moving Light Reflections & Glow Spheres */}
       <motion.div
@@ -282,8 +302,8 @@ export const Hero: React.FC<HeroProps> = ({
         </button>
       </div>
 
-      {/* Main Content Container */}
-      <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center w-full">
+      {/* 4. HERO CONTENT LAYER (Z-20: Perfectly sharp, above background blur) */}
+      <div className="hero-content relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center w-full">
         
         {/* Top Eyebrow Badge - Brand Message */}
         <motion.div

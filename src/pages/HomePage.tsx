@@ -23,9 +23,6 @@ import { TransformationSection } from '../components/TransformationSection';
 import { TestimonialsSection } from '../components/TestimonialsSection';
 import { FacilitiesSection } from '../components/FacilitiesSection';
 import { TrustCertificationsSection } from '../components/TrustCertificationsSection';
-import { AiFitnessCoachSection } from '../components/AiFitnessCoachSection';
-import { DemoFeatureShowcase } from '../components/DemoFeatureShowcase';
-import { RoiBusinessBenefitSection } from '../components/RoiBusinessBenefitSection';
 import { FindOurGymSection } from '../components/FindOurGymSection';
 import { gymConfigStore } from '../services/gymConfigStore';
 import { soundManager } from '../components/common/SoundEffects';
@@ -74,10 +71,10 @@ export const HomePage: React.FC<HomePageProps> = ({
             {STATS_DATA.map((stat, idx) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 1, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                viewport={{ once: true, margin: "250px 0px" }}
+                transition={{ duration: 0.35, delay: idx * 0.04 }}
                 className="relative text-center p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800/60 shadow-lg hover:border-amber-500/30 transition-all group"
               >
                 <div className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white group-hover:text-amber-400 transition-colors flex items-center justify-center gap-1 font-mono">
@@ -135,10 +132,10 @@ export const HomePage: React.FC<HomePageProps> = ({
             {PROGRAMS.slice(0, 3).map((prog: Program, idx: number) => (
               <motion.div
                 key={prog.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 1, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.15 }}
+                viewport={{ once: true, margin: "250px 0px" }}
+                transition={{ duration: 0.35, delay: idx * 0.05 }}
                 className="group relative rounded-2xl bg-zinc-900/90 border border-zinc-800 overflow-hidden flex flex-col hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300"
               >
                 <div className="relative h-60 w-full overflow-hidden">
@@ -226,27 +223,23 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       {/* 8. FACILITIES SHOWCASE: TAKE A LOOK INSIDE */}
       <FacilitiesSection 
+        onOpenLightbox={(facility) => onOpenModal('facilityLightbox', facility)}
         onOpenTour={() => onOpenModal('tour')}
         onBookPass={() => onNavigate('booking')}
       />
 
-      {/* 9. AI FITNESS COACH & VIRTUAL CONCIERGE */}
-      <AiFitnessCoachSection 
-        onOpenBooking={() => onNavigate('booking')}
-      />
-
-      {/* 10. SOCIAL PROOF: WHAT OUR MEMBERS SAY (TESTIMONIALS SLIDER) */}
+      {/* 9. SOCIAL PROOF: WHAT OUR MEMBERS SAY (TESTIMONIALS SLIDER) */}
       <TestimonialsSection 
         onJoinClick={() => onOpenModal('join')}
       />
 
-      {/* 11. TRUST & CERTIFICATIONS */}
+      {/* 10. TRUST & CERTIFICATIONS */}
       <TrustCertificationsSection />
 
-      {/* 12. FIND OUR GYM: LOCATION & GOOGLE MAPS */}
+      {/* 11. FIND OUR GYM: LOCATION & GOOGLE MAPS */}
       <FindOurGymSection onBookTour={() => onOpenModal('tour')} />
 
-      {/* 13. READY TO START? (EXPERIENCE KSG DEMO GYM) */}
+      {/* 12. READY TO START? (EXPERIENCE KSG DEMO GYM) */}
       <section className="relative py-24 bg-gradient-to-b from-zinc-900 to-zinc-950 border-t border-zinc-800 text-center overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.08),transparent_70%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
@@ -288,20 +281,6 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
       </section>
-
-      {/* 13. WHITE-LABEL SYSTEM: ROI & BUSINESS BENEFIT FUNNEL */}
-      {config.demoMode && !config.whiteLabelMode && (
-        <>
-          <RoiBusinessBenefitSection 
-            onOpenBooking={() => onNavigate('booking')}
-            onOpenJoin={() => onOpenModal('join')}
-            onOpenDemoInquiry={() => onOpenModal('demoInquiry')}
-          />
-          <DemoFeatureShowcase 
-            onOpenDemoInquiry={() => onOpenModal('demoInquiry')}
-          />
-        </>
-      )}
     </div>
   );
 };

@@ -6,19 +6,16 @@ import {
   Sparkles, 
   Volume2, 
   VolumeX, 
-  User, 
-  LayoutDashboard, 
   Calendar,
   Phone,
-  ChevronDown,
-  Award,
-  ShieldCheck
+  MessageCircle,
+  Clock
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { soundManager } from './common/SoundEffects';
-import { PageType, ModalState, User as UserType, GymConfig } from '../types';
-import { leadStore } from '../services/leadStore';
+import { PageType, ModalState, GymConfig } from '../types';
 import { gymConfigStore } from '../services/gymConfigStore';
+import { CONTACT_CONFIG } from '../config/contactConfig';
 
 interface NavbarProps {
   currentPage: PageType;
@@ -34,7 +31,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
-  const [currentUser, setCurrentUser] = useState<UserType | null>(null);
   const [config, setConfig] = useState<GymConfig>(gymConfigStore.getConfig());
 
   useEffect(() => {
@@ -52,15 +48,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const updateAuth = () => {
-      setCurrentUser(leadStore.getCurrentUser());
-    };
-    updateAuth();
-    const unsub = leadStore.subscribe(updateAuth);
-    return () => unsub();
   }, []);
 
   useEffect(() => {
@@ -164,57 +151,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Right Action Controls - Desktop */}
           <div className="hidden xl:flex items-center gap-2.5">
-            {/* Gym Owner Admin CRM Trigger */}
-            <button
-              id="nav-crm-demo-btn"
-              onClick={() => handleNavClick('admin-dashboard')}
-              title="Open Gym Owner CRM & Lead Management System"
-              className={`px-3 py-1.5 rounded-xl border text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${
-                currentPage === 'admin-dashboard'
-                  ? 'bg-emerald-500 text-black border-emerald-400 font-black'
-                  : 'bg-emerald-500/10 hover:bg-emerald-500/20 border-emerald-500/30 text-emerald-400'
-              }`}
-            >
-              <LayoutDashboard className="w-3.5 h-3.5" />
-              <span>Admin CRM</span>
-            </button>
-
-            {/* Trainer Portal */}
-            <button
-              id="nav-trainer-btn"
-              onClick={() => handleNavClick('trainer-dashboard')}
-              title="Open Coach & Trainer Portal"
-              className={`px-3 py-1.5 rounded-xl border text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${
-                currentPage === 'trainer-dashboard'
-                  ? 'bg-amber-500 text-black border-amber-400 font-black'
-                  : 'bg-zinc-900 hover:bg-zinc-800 border-zinc-800 text-zinc-300'
-              }`}
-            >
-              <Award className="w-3.5 h-3.5 text-amber-400" />
-              <span>Coach</span>
-            </button>
-
-            {/* Member Portal Login / Dashboard */}
-            <button
-              id="nav-member-login-btn"
-              onClick={() => handleNavClick(currentUser?.role === 'member' ? 'member-dashboard' : 'login')}
-              onMouseEnter={() => soundManager.playHover()}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider border flex items-center gap-1.5 transition-all cursor-pointer ${
-                currentPage === 'login' || currentPage === 'member-dashboard'
-                  ? 'bg-amber-500 text-black border-amber-400 font-black'
-                  : 'text-zinc-300 hover:text-white hover:bg-zinc-800 bg-zinc-900 border-zinc-800'
-              }`}
-            >
-              <User className="w-3.5 h-3.5 text-amber-400" />
-              <span>{currentUser ? currentUser.name.split(' ')[0] : 'Portal'}</span>
-            </button>
-
             {/* Sound FX Toggle */}
             <button
               id="nav-sound-toggle-btn"
               onClick={toggleSound}
               title={isMuted ? "Enable Sound Effects" : "Mute Sound Effects"}
-              className="p-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors cursor-pointer"
             >
               {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-amber-400 animate-pulse" />}
             </button>
@@ -224,9 +166,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               id="nav-trial-btn-desktop"
               onClick={() => handleNavClick('booking')}
               onMouseEnter={() => soundManager.playHover()}
-              className="px-3.5 py-1.5 text-xs font-black uppercase tracking-wider text-zinc-200 hover:text-white hover:bg-zinc-800 border border-zinc-700 rounded-xl transition-all duration-200 cursor-pointer"
+              className="px-4 py-2 text-xs font-black uppercase tracking-wider text-zinc-200 hover:text-white hover:bg-zinc-800 border border-zinc-700 rounded-xl transition-all duration-200 cursor-pointer"
             >
-              Free Trial
+              Book Free Trial
             </button>
 
             {/* Join Now */}
@@ -234,7 +176,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               id="nav-join-now-btn-desktop"
               onClick={() => onOpenModal('join')}
               onMouseEnter={() => soundManager.playHover()}
-              className="relative group overflow-hidden px-4 py-2 rounded-xl font-black text-xs uppercase tracking-wider text-black bg-amber-500 hover:bg-amber-400 shadow-md shadow-amber-500/20 active:scale-95 transition-all duration-200 cursor-pointer flex items-center gap-1.5"
+              className="relative group overflow-hidden px-4.5 py-2 rounded-xl font-black text-xs uppercase tracking-wider text-black bg-amber-500 hover:bg-amber-400 shadow-md shadow-amber-500/20 active:scale-95 transition-all duration-200 cursor-pointer flex items-center gap-1.5"
             >
               <Sparkles className="w-3.5 h-3.5 fill-black" />
               <span>JOIN NOW</span>
@@ -364,43 +306,40 @@ export const Navbar: React.FC<NavbarProps> = ({
                   })}
                 </div>
 
-                {/* Portals in Mobile Drawer */}
+                {/* Quick Customer Contact in Mobile Drawer */}
                 <div className="mt-4 pt-4 border-t border-zinc-800/80 space-y-2">
-                  <button
-                    onClick={() => handleNavClick('member-dashboard')}
-                    className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold uppercase flex items-center justify-center gap-2 border transition-all ${
-                      currentPage === 'member-dashboard'
-                        ? 'bg-amber-500 text-black border-amber-400 font-black'
-                        : 'bg-zinc-900 text-white border-zinc-800 hover:bg-zinc-850'
-                    }`}
+                  <a
+                    href={CONTACT_CONFIG.getTelUrl()}
+                    onClick={() => {
+                      soundManager.playClick();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="w-full py-2.5 px-4 rounded-xl text-xs font-bold uppercase flex items-center justify-center gap-2 border bg-zinc-900 hover:bg-zinc-800 border-zinc-800 text-zinc-200 transition-all cursor-pointer"
                   >
-                    <User className="w-4 h-4 text-amber-400" />
-                    <span>Member Portal</span>
-                  </button>
+                    <Phone className="w-4 h-4 text-amber-400" />
+                    <span>Call: {CONTACT_CONFIG.displayPhone}</span>
+                  </a>
 
-                  <button
-                    onClick={() => handleNavClick('trainer-dashboard')}
-                    className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold uppercase flex items-center justify-center gap-2 border transition-all ${
-                      currentPage === 'trainer-dashboard'
-                        ? 'bg-amber-500 text-black border-amber-400 font-black'
-                        : 'bg-zinc-900 text-white border-zinc-800 hover:bg-zinc-850'
-                    }`}
+                  <a
+                    href={CONTACT_CONFIG.getWhatsAppUrl("Hello KSG DEMO GYM, I would like to book a visit and inquire about memberships.")}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      soundManager.playClick();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="w-full py-2.5 px-4 rounded-xl text-xs font-bold uppercase flex items-center justify-center gap-2 border bg-emerald-950/40 hover:bg-emerald-900/50 border-emerald-500/30 text-emerald-400 transition-all cursor-pointer"
                   >
-                    <Award className="w-4 h-4 text-amber-400" />
-                    <span>Trainer Portal</span>
-                  </button>
+                    <MessageCircle className="w-4 h-4 text-emerald-400 fill-current" />
+                    <span>Chat on WhatsApp</span>
+                  </a>
 
-                  <button
-                    onClick={() => handleNavClick('admin-dashboard')}
-                    className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold uppercase flex items-center justify-center gap-2 border transition-all ${
-                      currentPage === 'admin-dashboard'
-                        ? 'bg-emerald-500 text-black border-emerald-400 font-black'
-                        : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/20'
-                    }`}
-                  >
-                    <LayoutDashboard className="w-4 h-4" />
-                    <span>Gym Owner CRM</span>
-                  </button>
+                  <div className="p-2.5 rounded-xl bg-zinc-900/50 border border-zinc-800/60 text-center">
+                    <span className="text-[10px] text-zinc-400 font-medium flex items-center justify-center gap-1.5">
+                      <Clock className="w-3 h-3 text-amber-400" />
+                      <span>Mon–Sat 5am–11pm • Sun 6am–9pm</span>
+                    </span>
+                  </div>
                 </div>
               </div>
 

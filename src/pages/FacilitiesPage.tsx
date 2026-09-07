@@ -84,7 +84,7 @@ export const FacilitiesPage: React.FC<FacilitiesPageProps> = ({ onNavigate, onOp
           className="rounded-3xl bg-zinc-900/90 border border-zinc-800 overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-0"
         >
           {/* Left: High-Res Image with Lightbox Zoom */}
-          <div className="lg:col-span-7 relative h-80 sm:h-[480px] overflow-hidden group">
+          <div className="lg:col-span-7 relative h-72 sm:h-[420px] lg:h-[480px] overflow-hidden group bg-zinc-950">
             <img
               src={activeFacility.image}
               alt={activeFacility.title}
@@ -92,36 +92,34 @@ export const FacilitiesPage: React.FC<FacilitiesPageProps> = ({ onNavigate, onOp
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/60 via-transparent to-black/20 pointer-events-none" />
             
             <button
               onClick={() => onOpenModal('facilityLightbox', activeFacility)}
-              className="absolute top-4 right-4 p-3 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-amber-500 hover:text-black transition-colors"
+              className="absolute top-4 right-4 p-3 rounded-full bg-black/70 backdrop-blur-md text-white hover:bg-amber-500 hover:text-black transition-colors cursor-pointer shadow-lg"
               title="Expand High-Resolution View"
             >
               <Maximize2 className="w-4 h-4" />
             </button>
 
-            <div className="absolute bottom-6 left-6 right-6">
-              <span className="px-3 py-1 rounded-full bg-amber-500 text-black text-[11px] font-black uppercase tracking-wider">
+            <div className="absolute top-4 left-4 pointer-events-none">
+              <span className="px-3.5 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-amber-500/40 text-amber-400 text-xs font-black uppercase tracking-wider shadow-md">
                 {activeFacility.highlight}
               </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-white uppercase mt-2">{activeFacility.title}</h2>
-              <p className="text-xs text-zinc-300 font-medium">{activeFacility.category}</p>
             </div>
           </div>
 
           {/* Right: Detailed Description & Amenities */}
-          <div className="lg:col-span-5 p-8 sm:p-10 flex flex-col justify-between bg-zinc-900/60">
+          <div className="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between bg-zinc-900/90">
             <div>
-              <div className="text-xs font-black uppercase tracking-widest text-amber-500 mb-2">Zone Overview</div>
-              <h3 className="text-xl font-bold text-white mb-4 uppercase">{activeFacility.title}</h3>
-              <p className="text-sm text-zinc-300 leading-relaxed mb-6">
+              <div className="text-xs font-black uppercase tracking-widest text-amber-400 mb-1.5">{activeFacility.category}</div>
+              <h2 className="text-2xl sm:text-3xl font-black text-white mb-3 uppercase tracking-tight font-['Syne',sans-serif]">{activeFacility.title}</h2>
+              <p className="text-sm text-zinc-300 leading-relaxed mb-6 font-light">
                 {activeFacility.description}
               </p>
 
-              <div className="space-y-3 mb-8">
-                <span className="text-xs font-bold uppercase tracking-wider text-zinc-400 block">Highlights & Specs:</span>
+              <div className="space-y-2.5 mb-8">
+                <span className="text-xs font-bold uppercase tracking-wider text-zinc-400 block">Highlights & Equipment Specs:</span>
                 {activeFacility.features.map((feat, fIdx) => (
                   <div key={fIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-200">
                     <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
@@ -134,14 +132,14 @@ export const FacilitiesPage: React.FC<FacilitiesPageProps> = ({ onNavigate, onOp
             <div className="space-y-3 pt-4 border-t border-zinc-800">
               <button
                 onClick={() => onNavigate('booking')}
-                className="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-xs uppercase tracking-wider shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>BOOK FREE FACILITY TOUR & TRIAL</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
               <button
                 onClick={() => onOpenModal('tour')}
-                className="w-full py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold uppercase tracking-wider border border-zinc-700 transition-all"
+                className="w-full py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold uppercase tracking-wider border border-zinc-700 transition-all cursor-pointer"
               >
                 Explore In 360° Virtual Tour
               </button>
@@ -154,39 +152,47 @@ export const FacilitiesPage: React.FC<FacilitiesPageProps> = ({ onNavigate, onOp
           <div className="text-center mb-12">
             <span className="text-xs font-black tracking-widest text-amber-500 uppercase">Complete Tour</span>
             <h2 className="text-3xl font-black text-white uppercase tracking-tight mt-1">
-              Explore All <span className="text-amber-400">5 Specialized Zones</span>
+              Explore All <span className="text-amber-400">6 Specialized Zones</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {FACILITIES.map((facility: Facility) => (
               <div
                 key={facility.id}
                 onClick={() => setActiveTab(facility.id)}
-                className="rounded-2xl bg-zinc-900 border border-zinc-800 overflow-hidden hover:border-amber-500/50 transition-all cursor-pointer group flex flex-col justify-between"
+                className="rounded-2xl sm:rounded-3xl bg-zinc-900 border border-zinc-800 overflow-hidden hover:border-amber-500/50 transition-all cursor-pointer group flex flex-col justify-between hover:-translate-y-1 shadow-xl"
               >
-                <div className="h-56 relative overflow-hidden">
+                <div className="h-56 relative overflow-hidden bg-zinc-950">
                   <img
                     src={facility.image}
                     alt={facility.title}
                     referrerPolicy="no-referrer"
+                    onError={handleImageError}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent" />
-                  <span className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md text-amber-400 text-[10px] font-black uppercase tracking-wider">
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/90 via-transparent to-black/20 pointer-events-none" />
+                  <span className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-amber-400 text-[10px] font-black uppercase tracking-wider border border-amber-500/30">
                     {facility.highlight}
                   </span>
-                  <div className="absolute bottom-3 left-4 right-4">
-                    <h4 className="text-lg font-black text-white uppercase">{facility.title}</h4>
-                    <p className="text-[11px] text-zinc-300">{facility.category}</p>
-                  </div>
                 </div>
-                <div className="p-5 flex-1 flex flex-col justify-between">
-                  <p className="text-xs text-zinc-400 line-clamp-2 mb-4">{facility.description}</p>
-                  <span className="text-xs font-bold text-amber-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                    <span>Inspect Zone Details</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
+
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <span className="text-[11px] font-extrabold uppercase tracking-widest text-amber-400 block mb-1">
+                      {facility.category}
+                    </span>
+                    <h3 className="text-lg sm:text-xl font-black font-['Syne',sans-serif] text-white uppercase mb-2 group-hover:text-amber-400 transition-colors">
+                      {facility.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-zinc-300 font-light line-clamp-3 mb-4">{facility.description}</p>
+                  </div>
+                  <div className="pt-3 border-t border-zinc-800/80 flex items-center justify-between">
+                    <span className="text-xs font-bold text-amber-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                      <span>Inspect Zone Details</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}

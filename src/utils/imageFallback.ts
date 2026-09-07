@@ -5,8 +5,8 @@ import React from 'react';
  * Ensures zero broken image icons, graceful degradation, and uniform optimization params.
  */
 
-export const FALLBACK_GYM_IMAGE = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=75&fm=webp";
-export const FALLBACK_AVATAR_IMAGE = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80";
+export const FALLBACK_GYM_IMAGE = "/images/fallback-gym.webp";
+export const FALLBACK_AVATAR_IMAGE = "/images/fallback-avatar.webp";
 
 export const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, fallbackUrl: string = FALLBACK_GYM_IMAGE) => {
   const target = e.currentTarget;

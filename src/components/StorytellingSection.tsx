@@ -113,9 +113,9 @@ export const StorytellingSection: React.FC<StorytellingSectionProps> = ({
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto mb-16">
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 1, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "250px 0px" }}
               className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold uppercase tracking-widest mb-4"
             >
               <AlertTriangle className="w-3.5 h-3.5" />
@@ -123,10 +123,10 @@ export const StorytellingSection: React.FC<StorytellingSectionProps> = ({
             </motion.div>
 
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
+              viewport={{ once: true, margin: "250px 0px" }}
+              transition={{ delay: 0.05 }}
               className="text-3xl sm:text-4xl md:text-5xl font-black font-['Syne',sans-serif] uppercase tracking-tight text-white leading-tight"
             >
               STRUGGLING TO REACH YOUR <br />
@@ -136,10 +136,10 @@ export const StorytellingSection: React.FC<StorytellingSectionProps> = ({
             </motion.h2>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
+              viewport={{ once: true, margin: "250px 0px" }}
+              transition={{ delay: 0.1 }}
               className="mt-4 text-sm sm:text-base text-neutral-400 font-light max-w-2xl mx-auto"
             >
               Over 87% of gym goers quit within 90 days not because of lack of desire, but because of flawed training environments and missing scientific guidance.
@@ -153,10 +153,10 @@ export const StorytellingSection: React.FC<StorytellingSectionProps> = ({
               return (
                 <motion.div
                   key={item.id}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 1, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  viewport={{ once: true, margin: "250px 0px" }}
+                  transition={{ duration: 0.35, delay: idx * 0.05 }}
                   className="group relative p-6 sm:p-7 rounded-3xl bg-[#121217] border border-white/10 hover:border-red-500/40 transition-all duration-300 shadow-xl flex flex-col justify-between hover:-translate-y-1.5 hover:shadow-red-950/20"
                 >
                   <div className="space-y-4">
@@ -201,9 +201,9 @@ export const StorytellingSection: React.FC<StorytellingSectionProps> = ({
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto mb-16">
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 1, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "250px 0px" }}
               className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] text-xs font-black uppercase tracking-widest mb-4 shadow-lg shadow-[#D4AF37]/10"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] animate-spin" style={{ animationDuration: '6s' }} />
@@ -211,10 +211,10 @@ export const StorytellingSection: React.FC<StorytellingSectionProps> = ({
             </motion.div>
 
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
+              viewport={{ once: true, margin: "250px 0px" }}
+              transition={{ delay: 0.05 }}
               className="text-3xl sm:text-4xl md:text-5xl font-black font-['Syne',sans-serif] uppercase tracking-tight text-white leading-tight"
             >
               KSG DEMO GYM HAS THE <br />
@@ -224,10 +224,10 @@ export const StorytellingSection: React.FC<StorytellingSectionProps> = ({
             </motion.h2>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
+              viewport={{ once: true, margin: "250px 0px" }}
+              transition={{ delay: 0.1 }}
               className="mt-4 text-sm sm:text-base text-neutral-300 font-light max-w-2xl mx-auto"
             >
               We engineered a luxury performance sanctuary where elite equipment, accredited master coaches, and bespoke recovery harmonize to guarantee measurable results.
@@ -241,10 +241,10 @@ export const StorytellingSection: React.FC<StorytellingSectionProps> = ({
               return (
                 <motion.div
                   key={sol.id}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 1, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  viewport={{ once: true, margin: "250px 0px" }}
+                  transition={{ duration: 0.35, delay: idx * 0.05 }}
                   className={`group relative p-7 rounded-3xl bg-gradient-to-b ${sol.color} backdrop-blur-xl border ${sol.borderColor} hover:border-[#D4AF37]/80 transition-all duration-300 shadow-2xl flex flex-col justify-between hover:-translate-y-2 hover:shadow-[0_15px_35px_rgba(0,0,0,0.6)]`}
                 >
                   <div className="space-y-4">

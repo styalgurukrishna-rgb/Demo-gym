@@ -50,8 +50,8 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
       {!isFinished && (
         <motion.div
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, y: -40, scale: 1.03 }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          exit={{ opacity: 0, scale: 1.01 }}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
           className="fixed inset-0 z-50 bg-[#080808] flex flex-col items-center justify-center overflow-hidden"
         >
           {/* Animated luxury ambient background aura */}

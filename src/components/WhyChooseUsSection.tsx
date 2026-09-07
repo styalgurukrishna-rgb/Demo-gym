@@ -121,10 +121,10 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
             return (
               <motion.div
                 key={card.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 1, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                viewport={{ once: true, margin: "250px 0px" }}
+                transition={{ duration: 0.35, delay: idx * 0.04 }}
                 onMouseEnter={() => soundManager.playHover()}
                 className="group relative p-8 rounded-3xl bg-zinc-900/80 backdrop-blur-xl border border-zinc-800 hover:border-amber-500/50 shadow-xl transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-amber-500/5 flex flex-col justify-between"
               >

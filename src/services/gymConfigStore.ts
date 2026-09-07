@@ -26,7 +26,7 @@ export const DEFAULT_GYM_CONFIG: GymConfig = {
     heroSubtitle: 'Transform Your Body. Upgrade Your Life.',
     ctaButtonText: 'JOIN NOW',
     secondaryButtonText: 'BOOK FREE TRIAL',
-    heroImage: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1920&q=80',
+    heroImage: '/images/hero-gym-bg.webp',
     heroVideo: ''
   },
   contact: {

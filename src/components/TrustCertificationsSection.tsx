@@ -47,10 +47,10 @@ export const TrustCertificationsSection: React.FC = () => {
             return (
               <motion.div
                 key={item.id}
-                initial={{ opacity: 0, y: 25 }}
+                initial={{ opacity: 1, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                viewport={{ once: true, margin: "250px 0px" }}
+                transition={{ duration: 0.35, delay: idx * 0.05 }}
                 className="group p-6 sm:p-7 rounded-3xl bg-[#121216] border border-white/10 hover:border-[#D4AF37]/50 transition-all duration-300 shadow-xl flex flex-col justify-between"
               >
                 <div>
@@ -86,10 +86,10 @@ export const TrustCertificationsSection: React.FC = () => {
           {trustStats.map((stat, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 1, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              viewport={{ once: true, margin: "250px 0px" }}
+              transition={{ duration: 0.35, delay: idx * 0.05 }}
               className="space-y-1"
             >
               <span className="font-['Syne',sans-serif] text-3xl sm:text-5xl font-black bg-gradient-to-r from-white via-[#FFF4B8] to-[#D4AF37] bg-clip-text text-transparent block">

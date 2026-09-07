@@ -313,101 +313,81 @@ export const TRAINERS: Trainer[] = [
 export const FACILITIES: Facility[] = [
   {
     id: "free-weights",
-    title: "Free Weights & Calibrated Rigs",
-    category: "Heavy Iron & Eleiko Platforms",
-    description: "Swedish Eleiko Olympic calibrated barbells, IPF-spec competition power racks, and precision dumbbells ranging from 2.5 kg to 70 kg.",
+    title: "Competition Barbell Rigs & Platforms",
+    category: "Calibrated Equipment",
+    description: "Swedish Eleiko Olympic calibrated barbells, IPF-spec competition power cages, and shock-absorbent solid oak lifting platforms with precision steel discs.",
     image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80&fm=webp",
     features: [
-      "Eleiko IWF-certified Olympic Barbells & Calibrated Steel Discs",
-      "Cast Iron & Urethane Dumbbells from 2.5 kg to 70 kg in 2.5kg steps",
-      "Solid Oak Shock-Absorbent Olympic Lifting Platforms",
-      "Competition Bench Presses with Safety Rollers & Spotter Stands"
+      "Eleiko IWF-certified Olympic Barbells & Discs",
+      "Solid Oak Shock-Absorbent Lifting Platforms",
+      "Cast Iron & Urethane Dumbbells to 70 kg"
     ],
-    highlight: "Calibrated Competition Equipment"
+    highlight: "Eleiko Olympic Specs"
   },
   {
     id: "strength-machines",
-    title: "Isolateral Strength Machines",
-    category: "Italian Panatta Machinery",
-    description: "State-of-the-art Italian Panatta isolateral plate-loaded and pin-selected machines engineered for anatomical biomechanics.",
+    title: "Italian Panatta Biomechanical Machinery",
+    category: "Isolateral Strength",
+    description: "Precision-engineered Italian plate-loaded and pin-select machinery with anatomical convergence arcs for maximum hypertrophy and joint longevity.",
     image: "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1200&q=80&fm=webp",
     features: [
       "Panatta Super Squat, Belt Squat & Pendulum Leg Press",
-      "Dual Cable High-Tension Functional Columns",
-      "Converging Chest & Incline Isolateral Press Systems",
-      "Linear Roller Incline & Flat Hack Squats"
+      "Converging Chest & Incline Isolateral Press Stations",
+      "Dual-Cable High-Tension Functional Columns"
     ],
-    highlight: "Italian Panatta Biomechanics"
-  },
-  {
-    id: "cardio-area",
-    title: "Cardio Conditioning Arena",
-    category: "VO2 Max & Aerobic Theater",
-    description: "Curved non-motorized Woodway sprint tracks, Concept2 Rowers, SkiErgs, and Assault AirBikes with real-time biometric telemetry.",
-    image: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1200&q=80&fm=webp",
-    features: [
-      "Curved Non-Motorized Woodway Treadmills for natural stride dynamics",
-      "Concept2 SkiErgs, Rowers & Echo AirBikes",
-      "StairMaster 8Gx Gauntlet Step Mills",
-      "Real-time Polar & Myzone HR Telemetry Monitors"
-    ],
-    highlight: "Woodway & Concept2 Rig"
+    highlight: "Panatta Isolateral Systems"
   },
   {
     id: "functional-area",
-    title: "Functional Turf & Rig Arena",
-    category: "CrossFit & Athletic Agility",
-    description: "30-meter high-density indoor sprint turf, Rogue Monster rigs, Olympic lifting platforms, and heavy sled drive lanes.",
+    title: "Functional Sled Turf & Monster Rigs",
+    category: "Athletic Conditioning",
+    description: "A 30-meter high-density sprint and prowler turf paired with custom Rogue Monster multi-station pull-up rigs and Russian competition kettlebells.",
     image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1200&q=80&fm=webp",
     features: [
       "30-Meter High-Density Heavy Sled Prowler Track",
-      "Custom Multi-Station Rogue Monster Pull-Up Rig",
-      "Competition Russian Kettlebells from 8 kg to 48 kg",
-      "Climbing Ropes, Gymnastic Rings & Plyo Box Stacks"
+      "Custom Multi-Station Rogue Monster Rig",
+      "Competition Russian Kettlebells from 8kg to 48kg"
     ],
-    highlight: "30m Turf & Rogue Rigs"
+    highlight: "30-Meter Sled Turf Track"
   },
   {
-    id: "locker-area",
-    title: "Luxury Locker Suites",
-    category: "Spa Amenities & Dressing Rooms",
-    description: "Italian Carrara marble dressing lounges, keyless RFID biometric lockers, Dyson Supersonic hair stations, and rainforest showers.",
-    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80&fm=webp",
+    id: "cardio-area",
+    title: "Curved Woodway & VO2 Max Arena",
+    category: "Cardiovascular Theater",
+    description: "Non-motorized Woodway curved runners, Concept2 SkiErgs, Rowers, and StairMaster Gauntlets synchronized with real-time biometric telemetry.",
+    image: "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=1200&q=80&fm=webp",
     features: [
-      "Biometric Pin & RFID Keyless Luxury Smart Lockers",
-      "Plush Egyptian Cotton Towels & Bathrobe Service",
-      "Dyson Supersonic Hair Care Styling Bars",
-      "Complimentary Malin+Goetz Organic Grooming Essentials"
+      "Non-Motorized Woodway Curved Treadmills",
+      "Concept2 SkiErgs, Rowers & Echo AirBikes",
+      "Real-Time Polar & Myzone HR Telemetry"
     ],
-    highlight: "5-Star Spa Grooming"
+    highlight: "Woodway Stride Biometrics"
   },
   {
     id: "recovery-area",
-    title: "Recovery Suite & Cryo Plunge",
-    category: "Hydrotherapy & Biohacking",
-    description: "Finnish Cedar infrared saunas, 4°C chilled stainless steel cold plunges, and Normatec air-compression boots to slash soreness.",
+    title: "Infrared Sauna & 4°C Hydro Plunge",
+    category: "Biohacking & Spa",
+    description: "Full-spectrum Finnish cedar infrared saunas reaching 85°C, stainless steel 4°C chilled cold plunges, and Normatec dynamic air-compression recovery.",
     image: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1200&q=80&fm=webp",
     features: [
-      "Finnish Cedar Full-Spectrum Infrared Sauna (Up to 85°C)",
-      "High-Volume 4°C Chilled Stainless Steel Hydrotherapy Plunge",
-      "Eucalyptus-Infused Aromatherapy Crystal Steam Suite",
-      "Normatec Dynamic Air Compression Recovery Boots"
+      "Finnish Cedar Full-Spectrum Infrared Sauna",
+      "4°C Chilled Stainless Steel Hydrotherapy Plunge",
+      "Normatec Dynamic Air Compression Boots"
     ],
-    highlight: "Infrared Sauna & 4°C Plunge"
+    highlight: "85°C Sauna & 4°C Cold Plunge"
   },
   {
-    id: "gym-interior",
-    title: "Premium Gym Interior",
-    category: "15,000 Sq.Ft Open Architecture",
-    description: "Sprawling multi-level athletic sanctuary with medical-grade HEPA air exchange, acoustic zoning, and glare-free architectural lighting.",
-    image: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1200&q=80&fm=webp",
+    id: "locker-area",
+    title: "Executive Italian Marble Dressing Suites",
+    category: "Five-Star Amenities",
+    description: "Italian Carrara marble dressing lounges, keyless RFID biometric smart lockers, Dyson Supersonic hair bars, and Malin+Goetz amenities.",
+    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80&fm=webp",
     features: [
-      "15,000 Sq.Ft Open Architecture Floor Plan",
-      "Hospital-Grade HEPA-14 Air Filtration exchanging fresh air every 6 mins",
-      "Custom Acoustically Tuned Surround Sound System",
-      "Glare-Free Architectural Ambient Lighting"
+      "Biometric Pin & RFID Keyless Luxury Smart Lockers",
+      "Dyson Supersonic Hair Care Styling Bars",
+      "Rainforest Showers & Plush Bathrobe Service"
     ],
-    highlight: "15,000 Sq.Ft Sanctuary"
+    highlight: "RFID Lockers & Dyson Care"
   }
 ];
 

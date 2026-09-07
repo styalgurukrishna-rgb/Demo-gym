@@ -26,6 +26,10 @@
     <meta name="twitter:title" content="KSG DEMO GYM | Luxury Fitness Club" />
     <meta name="twitter:description" content="Transform your body and upgrade your life at Bangalore's finest fitness facility." />
 
+    <!-- Preload Critical Above-The-Fold Hero Assets -->
+    <link rel="preload" as="image" href="/images/hero-gym-bg.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="/images/hero-gym-bg-mobile.webp" media="(max-width: 767px)" type="image/webp" fetchpriority="high">
+
     <!-- Google Athletic & Modern Typography System (Preloaded & Optimized) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,7 +82,47 @@
     </script>
   </head>
   <body class="bg-[#080808] text-[#F3F4F6] font-['Inter',-apple-system,BlinkMacSystemFont,sans-serif] selection:bg-[#EF4444] selection:text-white antialiased overflow-x-hidden">
-    <div id="root"></div>
+    <div id="root">
+      <!-- Instant First-Paint Critical Shell (Eliminates black screen before React hydration) -->
+      <div style="min-height: 100vh; background-color: #080808; color: #F3F4F6; display: flex; flex-direction: column;">
+        <!-- Header Shell -->
+        <header style="position: fixed; top: 0; left: 0; right: 0; height: 64px; background: rgba(8,8,8,0.92); border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; z-index: 50;">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="width: 34px; height: 34px; border-radius: 8px; background: #f59e0b; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; font-size: 13px;">KSG</div>
+            <span style="font-size: 1.15rem; font-weight: 900; letter-spacing: 0.05em; color: #FFFFFF;">KSG DEMO GYM</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <a href="tel:7549929102" style="font-size: 0.85rem; font-weight: 700; color: #f59e0b; text-decoration: none;">+91 75499 29102</a>
+            <span style="padding: 0.45rem 1rem; border-radius: 9999px; background: #f59e0b; color: #000; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.05em;">BOOK FREE TRIAL</span>
+          </div>
+        </header>
+
+        <!-- Hero Shell -->
+        <div style="min-height: 92vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6rem 1rem 3rem 1rem; position: relative; overflow: hidden;">
+          <!-- Hero background layer -->
+          <div style="position: absolute; inset: 0; z-index: 0; overflow: hidden;">
+            <img src="/images/hero-gym-bg.webp" alt="KSG Gym" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.45; filter: blur(3px);" />
+            <div style="position: absolute; inset: 0; background: linear-gradient(to top, #080808 0%, rgba(8,8,8,0.65) 60%, rgba(8,8,8,0.75) 100%);"></div>
+          </div>
+          <div style="position: relative; z-index: 1; max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; align-items: center;">
+            <div style="display: inline-block; padding: 0.35rem 1rem; border-radius: 9999px; background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: #f59e0b; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 1.5rem;">
+              TRANSFORM YOUR BODY. UPGRADE YOUR LIFE.
+            </div>
+            <h1 style="font-size: clamp(2.2rem, 6.5vw, 4.75rem); font-weight: 900; line-height: 1.02; letter-spacing: -0.02em; color: #FFFFFF; text-transform: uppercase; margin: 0 0 1rem 0;">
+              BUILD THE STRONGEST<br/>
+              <span style="color: #f59e0b;">VERSION OF YOURSELF</span>
+            </h1>
+            <p style="font-size: 1.1rem; color: #D1D5DB; font-weight: 300; max-width: 600px; margin: 0 auto 2rem auto;">
+              Transform Your Body. Upgrade Your Life. Luxury Fitness Club with certified personal trainers.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+              <span style="padding: 0.85rem 2rem; border-radius: 9999px; background: #f59e0b; color: #000; font-weight: 900; font-size: 0.85rem; letter-spacing: 0.05em;">JOIN NOW</span>
+              <span style="padding: 0.85rem 1.8rem; border-radius: 9999px; background: rgba(255,255,255,0.08); color: #FFF; font-weight: 800; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.2);">BOOK FREE TRIAL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

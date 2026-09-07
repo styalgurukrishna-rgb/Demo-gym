@@ -4,7 +4,6 @@ import { Footer } from './components/Footer';
 import { FloatingActions } from './components/FloatingActions';
 import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { OfflineNotice } from './components/OfflineNotice';
-import { DemoWebsiteBadge } from './components/DemoWebsiteBadge';
 
 // Critical First-Screen Page (Direct Import)
 import { HomePage } from './pages/HomePage';
@@ -39,8 +38,6 @@ const MemberDashboardModal = lazy(() => import('./components/Modals/MemberDashbo
 const AdminCrmModal = lazy(() => import('./components/Modals/AdminCrmModal').then(m => ({ default: m.AdminCrmModal })));
 const ExitIntentModal = lazy(() => import('./components/Modals/ExitIntentModal').then(m => ({ default: m.ExitIntentModal })));
 const ConsultationModal = lazy(() => import('./components/Modals/ConsultationModal').then(m => ({ default: m.ConsultationModal })));
-const DemoHighlightsModal = lazy(() => import('./components/Modals/DemoHighlightsModal').then(m => ({ default: m.DemoHighlightsModal })));
-const DemoInquiryModal = lazy(() => import('./components/Modals/DemoInquiryModal').then(m => ({ default: m.DemoInquiryModal })));
 const SmartPlanAdvisorModal = lazy(() => import('./components/Modals/SmartPlanAdvisorModal').then(m => ({ default: m.SmartPlanAdvisorModal })));
 
 import { PageType, ModalState, Program, Trainer, Facility, PricingPlan, MemberProfile } from './types';
@@ -192,6 +189,17 @@ export default function App() {
     return () => document.removeEventListener('mouseleave', handleMouseLeave);
   }, []);
 
+  // Global Escape key listener to close any active modal
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && modalState.type !== null) {
+        handleCloseModal();
+      }
+    };
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, [modalState.type]);
+
   // Comprehensive navigation handler supporting both full page transitions and section anchors
   const handleNavigate = (page: PageType, sectionId?: string) => {
     soundManager.playClick();
@@ -276,7 +284,7 @@ export default function App() {
       />
 
       {/* 2. Dynamic Page View Renderer */}
-      <main className="flex-1 pt-16">
+      <main className="flex-1 pt-16 pb-20 md:pb-0">
         {currentPage === 'home' ? (
           <HomePage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
         ) : (
@@ -344,24 +352,6 @@ export default function App() {
         onOpenJoin={() => handleOpenModal('join')} 
         onOpenBooking={() => handleNavigate('booking')}
       />
-
-      {/* 6. Gym Owner CRM Pitch / Demo Highlights Floating Trigger Button */}
-      <div className="fixed bottom-20 left-4 z-40 hidden sm:block">
-        <button
-          id="client-pitch-demo-btn"
-          onClick={() => {
-            soundManager.playClick();
-            handleOpenModal('demoHighlights');
-          }}
-          className="group px-3.5 py-2 rounded-2xl bg-zinc-900/90 hover:bg-zinc-900 border border-amber-500/40 hover:border-amber-400 text-white text-[11px] font-black uppercase tracking-wider shadow-2xl backdrop-blur-xl flex items-center gap-2 cursor-pointer transition-all hover:scale-105"
-        >
-          <div className="w-6 h-6 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400 group-hover:rotate-12 transition-transform">
-            <Sparkles className="w-3.5 h-3.5" />
-          </div>
-          <span className="hidden md:inline">SYSTEM DEMO GUIDE</span>
-          <span className="md:hidden">GUIDE</span>
-        </button>
-      </div>
 
       {/* --- MODALS SUITE (Loaded On Demand via Suspense) --- */}
       <Suspense fallback={null}>
@@ -481,32 +471,7 @@ export default function App() {
           }}
         />
 
-        {/* 13. Gym Owner Demo Highlights Modal */}
-        <DemoHighlightsModal
-          isOpen={modalState.type === 'demoHighlights'}
-          onClose={handleCloseModal}
-          onOpenAdmin={() => {
-            handleCloseModal();
-            handleNavigate('admin-dashboard');
-          }}
-          onOpenTrial={() => {
-            handleCloseModal();
-            handleNavigate('booking');
-          }}
-        />
-
-        {/* 14. Demo Website Inquiry Modal */}
-        <DemoInquiryModal
-          isOpen={modalState.type === 'demoInquiry'}
-          onClose={handleCloseModal}
-        />
       </Suspense>
-
-      {/* Floating Demo Website Badge */}
-      <DemoWebsiteBadge
-        onOpenCustomizer={() => handleNavigate('admin-dashboard')}
-        onOpenInquiry={() => handleOpenModal('demoInquiry')}
-      />
     </div>
   );
 }

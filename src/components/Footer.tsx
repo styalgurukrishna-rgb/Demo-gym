@@ -272,12 +272,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenModal }) => {
               <li>
                 <button onClick={() => handlePageClick('terms')} className="hover:text-white transition-colors cursor-pointer">Terms & Conditions</button>
               </li>
-              <li>
-                <button onClick={() => handlePageClick('login')} className="hover:text-white transition-colors cursor-pointer">Member Portal</button>
-              </li>
-              <li>
-                <button onClick={() => handlePageClick('admin-dashboard')} className="hover:text-emerald-400 text-emerald-400 font-semibold transition-colors cursor-pointer">Gym Owner CRM</button>
-              </li>
             </ul>
           </div>
 

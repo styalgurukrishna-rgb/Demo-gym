@@ -54,10 +54,10 @@ export const HomeTrainerSection: React.FC<HomeTrainerSectionProps> = ({
           {TRAINERS.slice(0, 3).map((trainer, idx) => (
             <motion.div
               key={trainer.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 1, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.15 }}
+              viewport={{ once: true, margin: "250px 0px" }}
+              transition={{ duration: 0.35, delay: idx * 0.05 }}
               className="group relative rounded-3xl bg-zinc-900/80 border border-zinc-800 hover:border-amber-500/50 shadow-xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
             >
               <div>

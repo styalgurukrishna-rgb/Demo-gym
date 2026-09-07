@@ -11,7 +11,8 @@ import {
   HeartHandshake, 
   Dumbbell, 
   Compass,
-  Calendar
+  Calendar,
+  Play
 } from 'lucide-react';
 import { GYM_INFO, STATS_DATA, TIMELINE_DATA, TRAINERS } from '../data/gymData';
 import { PageType, ModalState, Trainer } from '../types';
@@ -74,6 +75,23 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenModal })
             <p className="text-sm sm:text-base text-zinc-400 max-w-2xl mx-auto mt-4">
               We engineered KSG DEMO GYM as an uncompromising sanctuary for athletic progress, combining imported Italian biomechanical equipment with certified coach mentorship.
             </p>
+            <div className="flex flex-wrap items-center justify-center gap-3.5 mt-8">
+              <button
+                id="about-hero-watch-tour-btn"
+                onClick={() => onOpenModal('tour')}
+                className="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-xs uppercase tracking-wider transition-all shadow-md active:scale-95 flex items-center gap-2 cursor-pointer"
+              >
+                <Play className="w-3.5 h-3.5 fill-black" />
+                <span>WATCH VIRTUAL TOUR</span>
+              </button>
+              <button
+                id="about-hero-book-trial-btn"
+                onClick={() => onNavigate('booking')}
+                className="px-6 py-3 rounded-xl bg-zinc-900 hover:bg-zinc-850 text-white font-bold text-xs uppercase tracking-wider border border-zinc-700 transition-all cursor-pointer"
+              >
+                BOOK FREE TRIAL
+              </button>
+            </div>
           </motion.div>
         </div>
       </section>

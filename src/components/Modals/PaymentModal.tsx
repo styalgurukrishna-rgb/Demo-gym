@@ -25,7 +25,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
   // Customer details for billing
   const [customer, setCustomer] = useState({
     name: 'Karan Malhotra',
-    phone: '+91 98765 43210',
+    phone: '+91 75499 29102',
     email: 'karan.malhotra@gmail.com',
   });
 

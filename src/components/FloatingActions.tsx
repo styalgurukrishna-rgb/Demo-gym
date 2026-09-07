@@ -100,7 +100,7 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
           {showTooltip && (
             <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-zinc-900/95 border border-amber-500/40 text-white text-xs font-medium shadow-2xl backdrop-blur-md animate-bounce">
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span className="text-[11px] font-semibold text-zinc-200">Chat With Fitness Coach</span>
+              <span className="text-[11px] font-semibold text-zinc-200">Chat With Gym Team</span>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
