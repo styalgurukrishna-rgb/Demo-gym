@@ -50,12 +50,19 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenModal })
   return (
     <div className="w-full min-h-screen bg-zinc-950 text-zinc-100 selection:bg-amber-500 selection:text-black">
       {/* 1. HERO SECTION */}
-      <section className="relative py-24 sm:py-32 overflow-hidden border-b border-zinc-800/80">
-        <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/60 via-zinc-950 to-zinc-950 z-0" />
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity scale-105"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80')` }}
-        />
+      <section className="relative py-24 sm:py-32 overflow-hidden border-b border-zinc-800/80 bg-zinc-950">
+        {/* Stable Background Image Layer */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+          <img
+            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80&fm=webp"
+            alt="KSG Gym Interior"
+            loading="eager"
+            decoding="async"
+            onError={handleImageError}
+            className="w-full h-full object-cover object-center opacity-30 brightness-90 contrast-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/80 via-zinc-950/60 to-zinc-950" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <motion.div
             initial={{ opacity: 1, y: 10 }}
