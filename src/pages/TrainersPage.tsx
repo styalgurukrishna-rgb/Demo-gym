@@ -90,13 +90,13 @@ export const TrainersPage: React.FC<TrainersPageProps> = ({ onNavigate, onOpenMo
       {/* 2. TRAINERS DIRECTORY GRID */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredTrainers.map((trainer: Trainer, idx: number) => (
+          {filteredTrainers.map((trainer: Trainer) => (
             <motion.div
               key={trainer.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 1, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              transition={{ duration: 0.3 }}
               className="rounded-3xl bg-zinc-900/80 border border-zinc-800 hover:border-amber-500/50 transition-all overflow-hidden flex flex-col justify-between shadow-2xl group"
             >
               {/* Photo & Badge */}

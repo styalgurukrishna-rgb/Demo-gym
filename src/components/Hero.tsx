@@ -97,11 +97,30 @@ export const Hero: React.FC<HeroProps> = ({
     let isVisible = true;
 
     // Observe hero visibility to stop canvas calculations when scrolled away
+    let animationRunning = false;
+
+    const startAnimation = () => {
+      if (!animationRunning && isVisible && !document.hidden) {
+        animationRunning = true;
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+
+    const stopAnimation = () => {
+      animationRunning = false;
+      cancelAnimationFrame(animationFrameId);
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         isVisible = entry.isIntersecting;
+        if (isVisible) {
+          startAnimation();
+        } else {
+          stopAnimation();
+        }
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
 
     if (heroRef.current) {
@@ -150,7 +169,7 @@ export const Hero: React.FC<HeroProps> = ({
 
     const render = () => {
       if (!isVisible || document.hidden) {
-        animationFrameId = requestAnimationFrame(render);
+        animationRunning = false;
         return;
       }
 
@@ -181,12 +200,12 @@ export const Hero: React.FC<HeroProps> = ({
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    startAnimation();
 
     return () => {
       window.removeEventListener('resize', handleResize);
       observer.disconnect();
-      cancelAnimationFrame(animationFrameId);
+      stopAnimation();
     };
   }, []);
 
@@ -307,9 +326,9 @@ export const Hero: React.FC<HeroProps> = ({
         
         {/* Top Eyebrow Badge - Brand Message */}
         <motion.div
-          initial={{ opacity: 0, y: -20, scale: 0.95 }}
+          initial={{ opacity: 1, y: -10, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-amber-500/40 backdrop-blur-md mb-5 sm:mb-7 shadow-xl shadow-black/80 max-w-full"
         >
           <span className="flex h-2 w-2 relative shrink-0">
@@ -323,9 +342,9 @@ export const Hero: React.FC<HeroProps> = ({
 
         {/* Cinematic Main Heading with Fluid Athletic Typography */}
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 1, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
           className="text-[clamp(2.2rem,8vw,5.75rem)] font-black font-heading tracking-tight uppercase leading-[0.98] sm:leading-[1.02] text-white max-w-4xl w-full break-words mx-auto text-balance"
         >
           {config.hero.heroHeading ? (
@@ -343,9 +362,9 @@ export const Hero: React.FC<HeroProps> = ({
 
         {/* Subheading with Fluid Constraint */}
         <motion.p
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 1, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.35, ease: 'easeOut' }}
+          transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
           className="mt-4 sm:mt-6 text-[clamp(0.95rem,2.2vw,1.3rem)] text-zinc-300 max-w-2xl font-light leading-relaxed tracking-wide px-2 text-pretty"
         >
           {config.hero.heroSubtitle || 'Transform Your Body. Upgrade Your Life.'}
@@ -353,9 +372,9 @@ export const Hero: React.FC<HeroProps> = ({
 
         {/* High-Conversion Action Buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 1, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
           className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-5 w-full max-w-sm sm:max-w-none"
         >
           {/* Button 1: JOIN NOW (Primary Warm Gold / Amber Accent) */}
@@ -407,9 +426,9 @@ export const Hero: React.FC<HeroProps> = ({
 
         {/* High-Impact Trust Info Bar */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 1, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.65 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-10 sm:mt-14 pt-6 sm:pt-8 border-t border-zinc-800/80 w-full grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 text-left"
         >
           {/* Card 1: 500+ Members */}

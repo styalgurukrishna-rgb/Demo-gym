@@ -159,10 +159,10 @@ export const ProgramsSection: React.FC<ProgramsSectionProps> = ({ onSelectProgra
             return (
               <motion.div
                 key={program.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 1, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                transition={{ duration: 0.3 }}
                 className="h-full"
               >
                 <TiltCard

@@ -18,7 +18,6 @@ export const FacilitiesSection: React.FC<FacilitiesSectionProps> = ({
   onBookPass
 }) => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
-  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
 
   const categories = [
     { id: 'all', label: 'All Spaces' },
@@ -105,8 +104,6 @@ export const FacilitiesSection: React.FC<FacilitiesSectionProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           <AnimatePresence mode="popLayout">
             {filteredFacilities.map((facility) => {
-              const isLoaded = loadedImages[facility.id];
-
               return (
                 <motion.div
                   key={facility.id}
@@ -118,24 +115,14 @@ export const FacilitiesSection: React.FC<FacilitiesSectionProps> = ({
                   className="group rounded-2xl sm:rounded-3xl bg-zinc-900/90 border border-zinc-800 hover:border-amber-500/50 overflow-hidden shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/70"
                 >
                   {/* Top Image Frame with Lightbox & Highlight */}
-                  <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-zinc-950">
-                    {/* Placeholder Shimmer (Never Blank/Black) */}
-                    {!isLoaded && (
-                      <div className="absolute inset-0 bg-zinc-900 flex items-center justify-center">
-                        <Dumbbell className="w-8 h-8 text-zinc-700 animate-pulse" />
-                      </div>
-                    )}
-
+                  <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-zinc-900">
                     <img
                       src={facility.image}
                       alt={facility.title}
                       loading="lazy"
                       decoding="async"
-                      onLoad={() => setLoadedImages((prev) => ({ ...prev, [facility.id]: true }))}
                       onError={handleImageError}
-                      className={`w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ${
-                        isLoaded ? 'opacity-100' : 'opacity-0'
-                      }`}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-100"
                     />
 
                     {/* Gradient Transition from image to card body */}

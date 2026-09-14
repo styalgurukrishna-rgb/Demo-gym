@@ -171,14 +171,22 @@ export default function App() {
     return () => unsub();
   }, [currentPage]);
 
-  // Exit intent detection (session-based)
+  // Exit intent detection (session-based, desktop only after delay)
   useEffect(() => {
     let hasTriggered = false;
     const isDismissed = sessionStorage.getItem('ksg_exit_intent_dismissed');
     if (isDismissed) return;
 
+    const pageLoadTime = Date.now();
+
     const handleMouseLeave = (e: MouseEvent) => {
-      if (e.clientY <= 10 && !hasTriggered) {
+      // Only trigger on desktop (>1024px) after at least 15s of engagement when cursor actually exits viewport top
+      if (
+        window.innerWidth >= 1024 &&
+        Date.now() - pageLoadTime > 15000 &&
+        e.clientY <= 0 &&
+        !hasTriggered
+      ) {
         hasTriggered = true;
         sessionStorage.setItem('ksg_exit_intent_dismissed', 'true');
         setModalState({ type: 'exitIntent' });
@@ -284,7 +292,7 @@ export default function App() {
       />
 
       {/* 2. Dynamic Page View Renderer */}
-      <main className="flex-1 pt-16 pb-20 md:pb-0">
+      <main id="main-content" className="flex-1 pt-16 pb-20 md:pb-0 bg-zinc-950 relative z-0">
         {currentPage === 'home' ? (
           <HomePage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
         ) : (
@@ -353,124 +361,149 @@ export default function App() {
         onOpenBooking={() => handleNavigate('booking')}
       />
 
-      {/* --- MODALS SUITE (Loaded On Demand via Suspense) --- */}
+      {/* --- MODALS SUITE (Loaded On Demand via Suspense when triggered) --- */}
       <Suspense fallback={null}>
         {/* 1. Free Trial Booking Modal */}
-        <FreeTrialModal
-          isOpen={modalState.type === 'trial'}
-          onClose={handleCloseModal}
-        />
+        {modalState.type === 'trial' && (
+          <FreeTrialModal
+            isOpen={true}
+            onClose={handleCloseModal}
+          />
+        )}
 
         {/* 2. Direct Membership / Lead Join Modal */}
-        <JoinModal
-          isOpen={modalState.type === 'join'}
-          onClose={handleCloseModal}
-          selectedPlan={selectedPlanForJoin}
-        />
+        {modalState.type === 'join' && (
+          <JoinModal
+            isOpen={true}
+            onClose={handleCloseModal}
+            selectedPlan={selectedPlanForJoin}
+          />
+        )}
 
         {/* 3. Payment / Checkout Modal */}
-        <PaymentModal
-          isOpen={modalState.type === 'payment'}
-          onClose={handleCloseModal}
-          plan={selectedPlanForPayment}
-        />
+        {modalState.type === 'payment' && (
+          <PaymentModal
+            isOpen={true}
+            onClose={handleCloseModal}
+            plan={selectedPlanForPayment}
+          />
+        )}
 
         {/* 4. Consultation Booking Modal */}
-        <ConsultationModal
-          isOpen={modalState.type === 'consultation'}
-          onClose={handleCloseModal}
-        />
+        {modalState.type === 'consultation' && (
+          <ConsultationModal
+            isOpen={true}
+            onClose={handleCloseModal}
+          />
+        )}
 
         {/* 5. Member Login Modal */}
-        <MemberLoginModal
-          isOpen={modalState.type === 'login'}
-          onClose={handleCloseModal}
-          onSuccess={handleLoginSuccess}
-        />
+        {modalState.type === 'login' && (
+          <MemberLoginModal
+            isOpen={true}
+            onClose={handleCloseModal}
+            onSuccess={handleLoginSuccess}
+          />
+        )}
 
         {/* 6. Member Portal Dashboard Modal */}
-        <MemberDashboardModal
-          isOpen={modalState.type === 'memberDashboard'}
-          onClose={handleCloseModal}
-          member={activeMember}
-          onLogout={handleLogout}
-        />
+        {modalState.type === 'memberDashboard' && (
+          <MemberDashboardModal
+            isOpen={true}
+            onClose={handleCloseModal}
+            member={activeMember}
+            onLogout={handleLogout}
+          />
+        )}
 
         {/* 7. Gym Owner CRM & Lead Management System Modal */}
-        <AdminCrmModal
-          isOpen={modalState.type === 'admin'}
-          onClose={handleCloseModal}
-        />
+        {modalState.type === 'admin' && (
+          <AdminCrmModal
+            isOpen={true}
+            onClose={handleCloseModal}
+          />
+        )}
 
         {/* 8. Exit Intent Special Offer Popup */}
-        <ExitIntentModal
-          isOpen={modalState.type === 'exitIntent'}
-          onClose={handleCloseModal}
-          onClaimTrial={() => {
-            handleCloseModal();
-            handleNavigate('booking');
-          }}
-          onViewMembership={() => {
-            handleCloseModal();
-            handleNavigate('pricing');
-          }}
-        />
+        {modalState.type === 'exitIntent' && (
+          <ExitIntentModal
+            isOpen={true}
+            onClose={handleCloseModal}
+            onClaimTrial={() => {
+              handleCloseModal();
+              handleNavigate('booking');
+            }}
+            onViewMembership={() => {
+              handleCloseModal();
+              handleNavigate('pricing');
+            }}
+          />
+        )}
 
         {/* Smart Plan Advisor / Help Me Choose Modal */}
-        <SmartPlanAdvisorModal
-          isOpen={modalState.type === 'helpMeChoose'}
-          onClose={handleCloseModal}
-          onSelectPlan={(plan) => {
-            handleCloseModal();
-            handleOpenModal('payment', { plan, finalPrice: plan.price, billingCycle: 'monthly' });
-          }}
-          onBookTrial={() => {
-            handleCloseModal();
-            handleNavigate('booking');
-          }}
-        />
+        {modalState.type === 'helpMeChoose' && (
+          <SmartPlanAdvisorModal
+            isOpen={true}
+            onClose={handleCloseModal}
+            onSelectPlan={(plan) => {
+              handleCloseModal();
+              handleOpenModal('payment', { plan, finalPrice: plan.price, billingCycle: 'monthly' });
+            }}
+            onBookTrial={() => {
+              handleCloseModal();
+              handleNavigate('booking');
+            }}
+          />
+        )}
 
         {/* 9. Virtual Tour 4K Player Popup */}
-        <VirtualTourModal
-          isOpen={modalState.type === 'tour'}
-          onClose={handleCloseModal}
-          onOpenJoin={() => {
-            handleCloseModal();
-            handleOpenModal('join');
-          }}
-        />
+        {modalState.type === 'tour' && (
+          <VirtualTourModal
+            isOpen={true}
+            onClose={handleCloseModal}
+            onOpenJoin={() => {
+              handleCloseModal();
+              handleOpenModal('join');
+            }}
+          />
+        )}
 
         {/* 10. Program Detail & Booking Popup */}
-        <ProgramDetailModal
-          program={selectedProgram}
-          actionType={programActionType}
-          onClose={handleCloseModal}
-          onRegister={() => {
-            handleCloseModal();
-            handleNavigate('booking');
-          }}
-        />
+        {modalState.type === 'program' && (
+          <ProgramDetailModal
+            program={selectedProgram}
+            actionType={programActionType}
+            onClose={handleCloseModal}
+            onRegister={() => {
+              handleCloseModal();
+              handleNavigate('booking');
+            }}
+          />
+        )}
 
         {/* 11. Trainer Profile & Consultation Popup */}
-        <TrainerProfileModal
-          trainer={selectedTrainer}
-          onClose={handleCloseModal}
-          onBookTrainer={() => {
-            handleCloseModal();
-            handleNavigate('booking');
-          }}
-        />
+        {modalState.type === 'trainer' && (
+          <TrainerProfileModal
+            trainer={selectedTrainer}
+            onClose={handleCloseModal}
+            onBookTrainer={() => {
+              handleCloseModal();
+              handleNavigate('booking');
+            }}
+          />
+        )}
 
         {/* 12. Facility High-Res Lightbox */}
-        <FacilityLightboxModal
-          facility={selectedFacility}
-          onClose={handleCloseModal}
-          onOpenJoin={() => {
-            handleCloseModal();
-            handleNavigate('booking');
-          }}
-        />
-
+        {modalState.type === 'facility' && selectedFacility && (
+          <FacilityLightboxModal
+            facility={selectedFacility}
+            onClose={handleCloseModal}
+            onOpenJoin={() => {
+              handleCloseModal();
+              handleNavigate('booking');
+            }}
+          />
+        )}
       </Suspense>
     </div>
   );

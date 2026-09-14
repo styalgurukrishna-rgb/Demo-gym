@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Star, ChevronLeft, ChevronRight, Quote, Trophy, Sparkles } from 'lucide-react';
 import { TESTIMONIALS } from '../data/gymData';
@@ -7,6 +7,8 @@ import { soundManager } from './common/SoundEffects';
 export const TestimonialsSection: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isInView, setIsInView] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
 
   const nextTestimonial = () => {
     soundManager.playClick();
@@ -19,17 +21,30 @@ export const TestimonialsSection: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    if (!sectionRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isAutoPlaying || !isInView) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
-    }, 5500);
+    }, 6000);
     return () => clearInterval(interval);
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, isInView]);
 
   const activeTestimonial = TESTIMONIALS[currentIndex];
 
   return (
     <section
+      ref={sectionRef}
       id="reviews"
       className="relative py-28 bg-[#080808] overflow-hidden"
       onMouseEnter={() => setIsAutoPlaying(false)}
@@ -57,13 +72,13 @@ export const TestimonialsSection: React.FC = () => {
 
         {/* Carousel Slider Card */}
         <div className="mt-16 relative">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="sync">
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0.7, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 0.45, ease: 'easeOut' }}
+              exit={{ opacity: 0.7, x: -20 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
               className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-white/[0.08] via-[#101014] to-[#0A0A0C] border border-white/15 shadow-2xl backdrop-blur-xl relative overflow-hidden"
             >
               {/* Background watermark quote */}

@@ -156,14 +156,21 @@
   }
 }
 
+/* Keep img and video rendering stable without content-visibility layout thrashing */
 img, video {
-  content-visibility: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+main {
+  background-color: #080808;
+  position: relative;
+  z-index: 0;
 }
 
 /* Hardware accelerated transform utility */
 .gpu-layer {
   transform: translateZ(0);
-  will-change: transform, opacity;
 }
 
 

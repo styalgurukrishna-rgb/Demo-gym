@@ -201,10 +201,10 @@ export const AboutFaqSection: React.FC<AboutFaqSectionProps> = ({ onNavigate, on
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 1, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.3 }}
           >
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 font-extrabold text-xs tracking-widest uppercase mb-4">
               <HelpCircle className="w-3.5 h-3.5" />
@@ -297,10 +297,10 @@ export const AboutFaqSection: React.FC<AboutFaqSectionProps> = ({ onNavigate, on
               return (
                 <motion.div
                   key={faq.id}
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 1, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: idx * 0.04 }}
+                  transition={{ duration: 0.2 }}
                   className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
                     isOpen
                       ? 'bg-zinc-900 border-amber-500/50 shadow-xl shadow-black/40'
@@ -405,10 +405,10 @@ export const AboutFaqSection: React.FC<AboutFaqSectionProps> = ({ onNavigate, on
 
         {/* Bottom Support / WhatsApp Concierge Box */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 1, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
           className="max-w-4xl mx-auto mt-14 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-zinc-900 via-zinc-900 to-zinc-950 border border-amber-500/30 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl"
         >
           <div className="space-y-1 text-center sm:text-left">

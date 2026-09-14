@@ -58,9 +58,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenModal })
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 1, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.5 }}
             className="max-w-4xl mx-auto"
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 font-extrabold text-xs tracking-widest uppercase mb-6">
@@ -101,10 +101,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenModal })
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 1, x: 0 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.4 }}
             >
               <div className="text-xs font-black tracking-widest uppercase text-amber-500 mb-2">
                 Our Foundational Philosophy
@@ -134,10 +134,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenModal })
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
+              initial={{ opacity: 1, x: 0 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.4 }}
               className="relative"
             >
               <div className="relative rounded-2xl overflow-hidden border border-zinc-700/80 shadow-2xl">
@@ -183,10 +183,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate, onOpenModal })
                 return (
                   <motion.div
                     key={item.year}
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 1, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: idx * 0.15 }}
+                    transition={{ duration: 0.3 }}
                     className={`relative flex flex-col md:flex-row items-center ${isEven ? 'md:flex-row-reverse' : ''}`}
                   >
                     {/* Content Box */}

@@ -78,9 +78,9 @@ export const FacilitiesPage: React.FC<FacilitiesPageProps> = ({ onNavigate, onOp
         {/* Active Facility Feature Card */}
         <motion.div
           key={activeFacility.id}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 1, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.3 }}
           className="rounded-3xl bg-zinc-900/90 border border-zinc-800 overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-0"
         >
           {/* Left: High-Res Image with Lightbox Zoom */}

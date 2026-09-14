@@ -124,10 +124,10 @@ export const PricingPage: React.FC<PricingPageProps> = ({ onNavigate, onOpenModa
             return (
               <motion.div
                 key={plan.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 1, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.15 }}
+                transition={{ duration: 0.3 }}
                 className={`relative rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 ${
                   plan.isPopular
                     ? 'bg-zinc-900 border-2 border-amber-500 shadow-2xl shadow-amber-500/10 md:scale-105 z-10'

@@ -35,13 +35,13 @@ export const TrainersSection: React.FC<TrainersSectionProps> = ({ onSelectTraine
 
         {/* Trainers Grid with 3D Tilt Cards */}
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {TRAINERS.map((trainer, idx) => (
+          {TRAINERS.map((trainer) => (
             <motion.div
               key={trainer.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 1, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.12 }}
+              transition={{ duration: 0.3 }}
               className="h-full"
             >
               <TiltCard

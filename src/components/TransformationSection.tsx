@@ -114,13 +114,20 @@ export const TransformationSection: React.FC<TransformationSectionProps> = ({
           <div className="lg:col-span-7">
             <div
               className="relative w-full aspect-[4/3] sm:aspect-[16/10] rounded-2xl overflow-hidden select-none cursor-ew-resize border border-white/15 shadow-2xl"
+              style={{ touchAction: 'pan-y' }}
+              onMouseDown={() => setIsDragging(true)}
+              onMouseUp={() => setIsDragging(false)}
+              onMouseLeave={() => setIsDragging(false)}
+              onTouchStart={() => setIsDragging(true)}
+              onTouchEnd={() => setIsDragging(false)}
+              onTouchCancel={() => setIsDragging(false)}
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
                 setSliderPosition((x / rect.width) * 100);
               }}
               onTouchMove={(e) => {
-                if (!e.touches[0]) return;
+                if (!isDragging || !e.touches[0]) return;
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = Math.max(0, Math.min(e.touches[0].clientX - rect.left, rect.width));
                 setSliderPosition((x / rect.width) * 100);
