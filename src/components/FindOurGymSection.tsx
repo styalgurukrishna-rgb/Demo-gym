@@ -43,9 +43,9 @@ export const FindOurGymSection: React.FC<FindOurGymSectionProps> = ({ onBookTour
   };
 
   return (
-    <section id="find-our-gym" className="relative py-20 bg-zinc-950/95 border-t border-zinc-800 overflow-hidden">
-      {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-amber-500/5 rounded-full blur-[140px] pointer-events-none" />
+    <section id="find-our-gym" className="relative py-20 bg-zinc-950/95 border-t border-zinc-800 overflow-hidden min-h-[500px]">
+      {/* Ambient background glow (Optimized radial gradient) */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.03),transparent_70%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-14">
@@ -67,7 +67,7 @@ export const FindOurGymSection: React.FC<FindOurGymSectionProps> = ({ onBookTour
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* Information Column */}
           <div className="lg:col-span-6 space-y-6">
-            <div className="p-8 rounded-3xl bg-zinc-900/80 border border-zinc-800 shadow-2xl backdrop-blur-sm space-y-6">
+            <div className="p-8 rounded-3xl bg-zinc-900 border border-zinc-800 shadow-2xl space-y-6">
               <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80">
                 <div className="flex items-center gap-2.5">
                   <Sparkles className="w-5 h-5 text-amber-400" />
@@ -181,7 +181,7 @@ export const FindOurGymSection: React.FC<FindOurGymSectionProps> = ({ onBookTour
                   <MapPin className="w-7 h-7 fill-black" />
                 </motion.div>
 
-                <div className="px-4 py-2 rounded-xl bg-zinc-950/90 border border-zinc-800 backdrop-blur-md shadow-xl max-w-xs">
+                <div className="px-4 py-2 rounded-xl bg-zinc-950 border border-zinc-800 shadow-xl max-w-xs">
                   <p className="text-xs font-black uppercase text-white tracking-wide">
                     {config.brand.gymName}
                   </p>
@@ -192,7 +192,7 @@ export const FindOurGymSection: React.FC<FindOurGymSectionProps> = ({ onBookTour
               </div>
 
               {/* Bottom Interactive Bar */}
-              <div className="absolute bottom-0 inset-x-0 p-4 bg-zinc-950/90 backdrop-blur-md border-t border-zinc-800 flex items-center justify-between">
+              <div className="absolute bottom-0 inset-x-0 p-4 bg-zinc-950 border-t border-zinc-800 flex items-center justify-between">
                 <div className="flex items-center gap-2 text-xs text-zinc-300">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                   <span>Interactive Map Preview</span>

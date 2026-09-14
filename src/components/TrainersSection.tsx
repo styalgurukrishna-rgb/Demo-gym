@@ -13,8 +13,8 @@ interface TrainersSectionProps {
 export const TrainersSection: React.FC<TrainersSectionProps> = ({ onSelectTrainer }) => {
   return (
     <section id="trainers" className="relative py-28 bg-[#080808] overflow-hidden">
-      {/* Glow */}
-      <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-[#D4AF37]/5 rounded-full blur-[150px] pointer-events-none" />
+      {/* Glow (Optimized radial gradient) */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(212,175,55,0.03)_0%,transparent_60%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -61,13 +61,13 @@ export const TrainersSection: React.FC<TrainersSectionProps> = ({ onSelectTraine
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0E] via-black/30 to-transparent" />
 
                   {/* Rating Badge */}
-                  <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-[#D4AF37]/50 flex items-center gap-1 text-[11px] font-bold text-[#FDE047]">
+                  <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/90 border border-[#D4AF37]/50 flex items-center gap-1 text-[11px] font-bold text-[#FDE047]">
                     <Star className="w-3 h-3 fill-current text-[#FDE047]" />
                     <span>{trainer.rating.toFixed(1)}</span>
                   </div>
 
                   {/* Experience Badge */}
-                  <div className="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-black/80 backdrop-blur-md border border-white/10 text-[10px] uppercase font-bold tracking-wider text-neutral-300">
+                  <div className="absolute bottom-3 left-3 px-2.5 py-1 rounded-lg bg-black/90 border border-white/10 text-[10px] uppercase font-bold tracking-wider text-neutral-300">
                     {trainer.experience}
                   </div>
                 </div>

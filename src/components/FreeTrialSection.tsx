@@ -54,11 +54,11 @@ export const FreeTrialSection: React.FC<FreeTrialSectionProps> = ({ onDirectPass
 
   return (
     <section id="trial" className="relative py-28 bg-[#0C0C0E] border-y border-white/5 overflow-hidden">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-96 bg-gradient-to-r from-[#EF4444]/15 via-[#D4AF37]/15 to-[#EF4444]/15 rounded-full blur-[140px] pointer-events-none" />
+      {/* Background ambient lighting (Optimized radial gradient) */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl h-96 bg-[radial-gradient(ellipse_at_center,rgba(239,68,68,0.12),rgba(212,175,55,0.08),transparent_70%)] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="rounded-3xl bg-gradient-to-b from-white/[0.08] via-black/80 to-white/[0.02] border border-white/15 p-8 sm:p-12 md:p-14 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+        <div className="rounded-3xl bg-[#111116] border border-white/15 p-8 sm:p-12 md:p-14 shadow-2xl relative overflow-hidden">
           
           {/* Top aesthetic corner accents */}
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#D4AF37]/30 to-transparent pointer-events-none" />
@@ -105,7 +105,7 @@ export const FreeTrialSection: React.FC<FreeTrialSectionProps> = ({ onDirectPass
                 <form
                   id="free-trial-form"
                   onSubmit={handleSubmit}
-                  className="space-y-4 p-6 rounded-2xl bg-black/60 border border-white/10 backdrop-blur-md shadow-xl"
+                  className="space-y-4 p-6 rounded-2xl bg-[#09090D] border border-white/10 shadow-xl"
                 >
                   <h3 className="text-base font-bold uppercase tracking-wider text-white flex items-center gap-2 pb-2 border-b border-white/10">
                     <Ticket className="w-4 h-4 text-[#EF4444]" />

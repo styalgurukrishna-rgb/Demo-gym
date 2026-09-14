@@ -106,8 +106,8 @@ export const StorytellingSection: React.FC<StorytellingSectionProps> = ({
       {/* SECTION 2: PROBLEM */}
       {/* ======================================================== */}
       <section className="relative py-24 bg-[#0A0A0D] border-t border-white/5">
-        {/* Background glow */}
-        <div className="absolute top-1/2 left-0 w-96 h-96 bg-red-950/20 rounded-full blur-[140px] pointer-events-none" />
+        {/* Background glow (Optimized radial gradient) */}
+        <div className="absolute top-1/2 left-0 w-96 h-96 bg-[radial-gradient(circle_at_center,rgba(69,10,10,0.25),transparent_70%)] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header */}
@@ -193,9 +193,9 @@ export const StorytellingSection: React.FC<StorytellingSectionProps> = ({
       {/* SECTION 3: SOLUTION */}
       {/* ======================================================== */}
       <section className="relative py-24 bg-[#08080A] border-t border-white/10 overflow-hidden">
-        {/* Ambient Gold and Red Lighting */}
-        <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-[#D4AF37]/10 rounded-full blur-[160px] pointer-events-none" />
-        <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-[#EF4444]/10 rounded-full blur-[160px] pointer-events-none" />
+        {/* Ambient Gold and Red Lighting (Optimized radial gradients) */}
+        <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent_70%)] pointer-events-none" />
+        <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-[radial-gradient(circle_at_center,rgba(239,68,68,0.08),transparent_70%)] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header */}
@@ -245,7 +245,7 @@ export const StorytellingSection: React.FC<StorytellingSectionProps> = ({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "250px 0px" }}
                   transition={{ duration: 0.35, delay: idx * 0.05 }}
-                  className={`group relative p-7 rounded-3xl bg-gradient-to-b ${sol.color} backdrop-blur-xl border ${sol.borderColor} hover:border-[#D4AF37]/80 transition-all duration-300 shadow-2xl flex flex-col justify-between hover:-translate-y-2 hover:shadow-[0_15px_35px_rgba(0,0,0,0.6)]`}
+                  className={`group relative p-7 rounded-3xl bg-gradient-to-b ${sol.color} border ${sol.borderColor} hover:border-[#D4AF37]/80 transition-all duration-300 shadow-2xl flex flex-col justify-between hover:-translate-y-2 hover:shadow-[0_15px_35px_rgba(0,0,0,0.6)]`}
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">

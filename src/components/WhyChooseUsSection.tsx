@@ -90,9 +90,8 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
 
   return (
     <section id="why-choose-us" className="relative py-24 bg-zinc-950 border-t border-zinc-800/80 overflow-hidden">
-      {/* Ambient background glows */}
-      <div className="absolute top-1/3 left-10 w-[500px] h-[500px] bg-red-500/5 rounded-full blur-[180px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[180px] pointer-events-none" />
+      {/* Ambient background glows (Optimized radial gradient without GPU blur cost) */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(239,68,68,0.03)_0%,transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(245,158,11,0.03)_0%,transparent_60%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -116,17 +115,13 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
 
         {/* 6 Luxury Trust Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {cards.map((card, idx) => {
+          {cards.map((card) => {
             const Icon = card.icon;
             return (
-              <motion.div
+              <div
                 key={card.id}
-                initial={{ opacity: 1, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "250px 0px" }}
-                transition={{ duration: 0.35, delay: idx * 0.04 }}
                 onMouseEnter={() => soundManager.playHover()}
-                className="group relative p-8 rounded-3xl bg-zinc-900/80 backdrop-blur-xl border border-zinc-800 hover:border-amber-500/50 shadow-xl transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-amber-500/5 flex flex-col justify-between"
+                className="group relative p-8 rounded-3xl bg-zinc-900/80 border border-zinc-800 hover:border-amber-500/50 shadow-xl transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-amber-500/5 flex flex-col justify-between"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
@@ -147,7 +142,7 @@ export const WhyChooseUsSection: React.FC<WhyChooseUsSectionProps> = ({
                     {card.desc}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>

@@ -163,9 +163,8 @@ export const FitnessCalculatorSection: React.FC<FitnessCalculatorSectionProps> =
 
   return (
     <section id="calculator" className="relative py-24 bg-[#080808] border-t border-white/10 overflow-hidden">
-      {/* Background Glows */}
-      <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-[#D4AF37]/10 rounded-full blur-[160px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#EF4444]/10 rounded-full blur-[160px] pointer-events-none" />
+      {/* Background Glows (Optimized radial gradient) */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(212,175,55,0.04)_0%,transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(239,68,68,0.04)_0%,transparent_60%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}

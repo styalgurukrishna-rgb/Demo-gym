@@ -42,22 +42,18 @@ export const CtaUrgencySection: React.FC<CtaUrgencySectionProps> = ({
   const slotsRemaining = slotsTotal - slotsClaimed;
 
   return (
-    <section className="relative py-20 bg-gradient-to-b from-[#080808] via-[#140D0D] to-[#080808] border-y border-white/10 overflow-hidden">
-      {/* Glow Orbs */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[#EF4444]/15 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-[#D4AF37]/15 rounded-full blur-[100px] pointer-events-none" />
+    <section className="relative py-20 bg-gradient-to-b from-[#080808] via-[#140D0D] to-[#080808] border-y border-white/10 overflow-hidden min-h-[400px]">
+      {/* Glow Orbs (Optimized radial gradient) */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(239,68,68,0.06),transparent_70%)] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         {/* Urgency Pill Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+        <div
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#EF4444]/20 border border-[#EF4444]/40 text-[#EF4444] text-xs font-black uppercase tracking-widest mb-6 shadow-lg shadow-red-900/30"
         >
           <Flame className="w-4 h-4 animate-bounce" />
           <span>Limited Membership Intake • March 2026 Batch</span>
-        </motion.div>
+        </div>
 
         {/* Heading */}
         <h2 className="text-3xl sm:text-5xl md:text-6xl font-black font-['Syne',sans-serif] uppercase tracking-tight text-white leading-tight">
@@ -73,7 +69,7 @@ export const CtaUrgencySection: React.FC<CtaUrgencySectionProps> = ({
 
         {/* Live Countdown Timer Digits */}
         <div className="mt-8 flex items-center justify-center gap-3 sm:gap-6">
-          <div className="p-3.5 sm:p-5 rounded-2xl bg-black/60 border-2 border-white/10 min-w-[72px] sm:min-w-[95px] backdrop-blur-md shadow-2xl">
+          <div className="p-3.5 sm:p-5 rounded-2xl bg-[#111116] border-2 border-white/10 min-w-[72px] sm:min-w-[95px] shadow-2xl">
             <span className="font-mono text-2xl sm:text-4xl font-black text-white block">
               {String(timeLeft.hours).padStart(2, '0')}
             </span>
@@ -82,9 +78,9 @@ export const CtaUrgencySection: React.FC<CtaUrgencySectionProps> = ({
             </span>
           </div>
 
-          <span className="font-mono text-2xl sm:text-4xl font-black text-[#EF4444] animate-pulse">:</span>
+          <span className="font-mono text-2xl sm:text-4xl font-black text-[#EF4444]">:</span>
 
-          <div className="p-3.5 sm:p-5 rounded-2xl bg-black/60 border-2 border-white/10 min-w-[72px] sm:min-w-[95px] backdrop-blur-md shadow-2xl">
+          <div className="p-3.5 sm:p-5 rounded-2xl bg-[#111116] border-2 border-white/10 min-w-[72px] sm:min-w-[95px] shadow-2xl">
             <span className="font-mono text-2xl sm:text-4xl font-black text-white block">
               {String(timeLeft.minutes).padStart(2, '0')}
             </span>
@@ -93,9 +89,9 @@ export const CtaUrgencySection: React.FC<CtaUrgencySectionProps> = ({
             </span>
           </div>
 
-          <span className="font-mono text-2xl sm:text-4xl font-black text-[#EF4444] animate-pulse">:</span>
+          <span className="font-mono text-2xl sm:text-4xl font-black text-[#EF4444]">:</span>
 
-          <div className="p-3.5 sm:p-5 rounded-2xl bg-black/60 border-2 border-[#D4AF37]/50 min-w-[72px] sm:min-w-[95px] backdrop-blur-md shadow-2xl shadow-[#D4AF37]/10">
+          <div className="p-3.5 sm:p-5 rounded-2xl bg-[#111116] border-2 border-[#D4AF37]/50 min-w-[72px] sm:min-w-[95px] shadow-2xl shadow-[#D4AF37]/10">
             <span className="font-mono text-2xl sm:text-4xl font-black text-[#D4AF37] block">
               {String(timeLeft.seconds).padStart(2, '0')}
             </span>
@@ -118,12 +114,9 @@ export const CtaUrgencySection: React.FC<CtaUrgencySectionProps> = ({
           </div>
 
           <div className="w-full h-2.5 rounded-full bg-white/10 overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: `${(slotsClaimed / slotsTotal) * 100}%` }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.2, ease: 'easeOut' }}
-              className="h-full bg-gradient-to-r from-[#EF4444] via-[#F59E0B] to-[#D4AF37] rounded-full"
+            <div
+              style={{ width: `${(slotsClaimed / slotsTotal) * 100}%` }}
+              className="h-full bg-gradient-to-r from-[#EF4444] via-[#F59E0B] to-[#D4AF37] rounded-full transition-all duration-1000"
             />
           </div>
 
@@ -154,7 +147,7 @@ export const CtaUrgencySection: React.FC<CtaUrgencySectionProps> = ({
               soundManager.playClick();
               onOpenTrial();
             }}
-            className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest text-neutral-200 hover:text-white bg-white/5 hover:bg-white/15 border border-white/15 hover:border-[#D4AF37]/50 backdrop-blur-md shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-xs uppercase tracking-widest text-neutral-200 hover:text-white bg-white/5 hover:bg-white/15 border border-white/15 hover:border-[#D4AF37]/50 shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2"
           >
             <span>BOOK FREE TRIAL</span>
           </button>

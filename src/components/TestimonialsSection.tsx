@@ -1,14 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Star, ChevronLeft, ChevronRight, Quote, Trophy, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Star, ChevronLeft, ChevronRight, Quote, Trophy } from 'lucide-react';
 import { TESTIMONIALS } from '../data/gymData';
 import { soundManager } from './common/SoundEffects';
 
 export const TestimonialsSection: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [isInView, setIsInView] = useState(false);
-  const sectionRef = useRef<HTMLElement | null>(null);
 
   const nextTestimonial = () => {
     soundManager.playClick();
@@ -21,37 +18,24 @@ export const TestimonialsSection: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!sectionRef.current) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!isAutoPlaying || !isInView) return;
+    if (!isAutoPlaying) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
-    }, 6000);
+    }, 7000);
     return () => clearInterval(interval);
-  }, [isAutoPlaying, isInView]);
+  }, [isAutoPlaying]);
 
-  const activeTestimonial = TESTIMONIALS[currentIndex];
+  const activeTestimonial = TESTIMONIALS[currentIndex] || TESTIMONIALS[0];
 
   return (
     <section
-      ref={sectionRef}
       id="reviews"
-      className="relative py-28 bg-[#080808] overflow-hidden"
+      className="relative py-28 bg-[#080808] overflow-hidden min-h-[500px]"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#D4AF37]/5 rounded-full blur-[170px] pointer-events-none" />
+      {/* Background glow (Optimized radial gradient) */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.03),transparent_70%)] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -72,48 +56,39 @@ export const TestimonialsSection: React.FC = () => {
 
         {/* Carousel Slider Card */}
         <div className="mt-16 relative">
-          <AnimatePresence mode="sync">
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0.7, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0.7, x: -20 }}
-              transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-white/[0.08] via-[#101014] to-[#0A0A0C] border border-white/15 shadow-2xl backdrop-blur-xl relative overflow-hidden"
-            >
-              {/* Background watermark quote */}
-              <Quote className="w-20 h-20 text-[#D4AF37]/10 absolute top-6 right-6 pointer-events-none" />
+          <div
+            key={currentIndex}
+            className="p-8 sm:p-12 rounded-3xl bg-[#121217] border border-white/15 shadow-2xl relative overflow-hidden transition-all duration-300"
+          >
+            {/* Background watermark quote */}
+            <Quote className="w-20 h-20 text-[#D4AF37]/10 absolute top-6 right-6 pointer-events-none" />
 
-              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
-                {/* Member Avatar */}
-                <div className="relative shrink-0">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden p-[2px] bg-gradient-to-br from-[#EF4444] to-[#D4AF37] shadow-xl">
-                    <img
-                      src={activeTestimonial.avatar}
-                      alt={activeTestimonial.name}
-                      className="w-full h-full object-cover rounded-[14px]"
-                    />
-                  </div>
-                  <div className="absolute -bottom-2 -right-2 px-2 py-0.5 rounded-full bg-[#EF4444] text-[9px] font-black uppercase text-white tracking-wider shadow">
-                    VERIFIED
-                  </div>
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
+              {/* Member Avatar */}
+              <div className="relative shrink-0">
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden p-[2px] bg-gradient-to-br from-[#EF4444] to-[#D4AF37] shadow-xl">
+                  <img
+                    src={activeTestimonial.avatar}
+                    alt={activeTestimonial.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover rounded-[14px]"
+                  />
                 </div>
+                <div className="absolute -bottom-2 -right-2 px-2 py-0.5 rounded-full bg-[#EF4444] text-[9px] font-black uppercase text-white tracking-wider shadow">
+                  VERIFIED
+                </div>
+              </div>
 
-                {/* Testimonial Content */}
-                <div className="flex-1 text-center sm:text-left">
-                  {/* Glowing Animated Star Rating */}
-                  <div className="flex items-center justify-center sm:justify-start gap-1 text-[#FDE047] mb-3">
-                    {[...Array(activeTestimonial.rating)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ delay: i * 0.1, duration: 0.6 }}
-                      >
-                        <Star className="w-4 h-4 fill-current drop-shadow-[0_0_8px_rgba(253,224,71,0.6)]" />
-                      </motion.div>
-                    ))}
-                    <span className="text-xs font-bold text-white ml-2">5.0 / 5.0 Rating</span>
-                  </div>
+              {/* Testimonial Content */}
+              <div className="flex-1 text-center sm:text-left">
+                {/* Star Rating */}
+                <div className="flex items-center justify-center sm:justify-start gap-1 text-[#FDE047] mb-3">
+                  {[...Array(activeTestimonial.rating || 5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-current text-amber-400" />
+                  ))}
+                  <span className="text-xs font-bold text-white ml-2">5.0 / 5.0 Rating</span>
+                </div>
 
                   {/* Transformation Highlight Badge */}
                   <div className="inline-block px-3.5 py-1 rounded-md bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] text-xs font-bold uppercase tracking-wider mb-4">
@@ -139,8 +114,7 @@ export const TestimonialsSection: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
-          </AnimatePresence>
+            </div>
 
           {/* Carousel Navigation Arrows & Dots */}
           <div className="flex items-center justify-between mt-8">

@@ -55,9 +55,9 @@ export const FacilitiesSection: React.FC<FacilitiesSectionProps> = ({
   };
 
   return (
-    <section id="facilities" className="relative py-24 sm:py-32 bg-[#09090C] border-t border-white/5 overflow-hidden scroll-mt-20">
-      {/* Subtle architectural ambient glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-amber-500/5 rounded-full blur-[180px] pointer-events-none" />
+    <section id="facilities" className="relative py-24 sm:py-32 bg-[#09090C] border-t border-white/5 overflow-hidden scroll-mt-20 min-h-[500px]">
+      {/* Subtle architectural ambient glow (Optimized radial gradient) */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(245,158,11,0.03)_0%,transparent_60%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -102,18 +102,12 @@ export const FacilitiesSection: React.FC<FacilitiesSectionProps> = ({
 
         {/* Facilities Grid: 1 column on mobile, 2 on tablet, 3 on desktop */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          <AnimatePresence mode="popLayout">
-            {filteredFacilities.map((facility) => {
-              return (
-                <motion.div
-                  key={facility.id}
-                  layout
-                  initial={{ opacity: 1, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.3 }}
-                  className="group rounded-2xl sm:rounded-3xl bg-zinc-900/90 border border-zinc-800 hover:border-amber-500/50 overflow-hidden shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/70"
-                >
+          {filteredFacilities.map((facility) => {
+            return (
+              <div
+                key={facility.id}
+                className="group rounded-2xl sm:rounded-3xl bg-zinc-900/90 border border-zinc-800 hover:border-amber-500/50 overflow-hidden shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/70"
+              >
                   {/* Top Image Frame with Lightbox & Highlight */}
                   <div className="relative h-56 sm:h-64 w-full overflow-hidden bg-zinc-900">
                     <img
@@ -130,7 +124,7 @@ export const FacilitiesSection: React.FC<FacilitiesSectionProps> = ({
 
                     {/* Top Feature Tag */}
                     <div className="absolute top-3.5 left-3.5 z-10 pointer-events-none">
-                      <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-amber-500/40 text-amber-400 text-[10px] font-black uppercase tracking-wider shadow-md">
+                      <span className="px-3 py-1 rounded-full bg-black/90 border border-amber-500/40 text-amber-400 text-[10px] font-black uppercase tracking-wider shadow-md">
                         {facility.highlight}
                       </span>
                     </div>
@@ -143,7 +137,7 @@ export const FacilitiesSection: React.FC<FacilitiesSectionProps> = ({
                         e.stopPropagation();
                         handleLightboxClick(facility);
                       }}
-                      className="absolute top-3.5 right-3.5 z-10 w-9 h-9 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-zinc-300 hover:text-black hover:bg-amber-500 hover:border-amber-400 flex items-center justify-center transition-all cursor-pointer shadow-lg active:scale-90"
+                      className="absolute top-3.5 right-3.5 z-10 w-9 h-9 rounded-full bg-black/90 border border-white/20 text-zinc-300 hover:text-black hover:bg-amber-500 hover:border-amber-400 flex items-center justify-center transition-all cursor-pointer shadow-lg active:scale-90"
                       title="Inspect High-Res View"
                     >
                       <Maximize2 className="w-4 h-4" />
@@ -198,10 +192,9 @@ export const FacilitiesSection: React.FC<FacilitiesSectionProps> = ({
                       </button>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
-          </AnimatePresence>
         </div>
 
         {/* Bottom Tour & Experience Banner */}

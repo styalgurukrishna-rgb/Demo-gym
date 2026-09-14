@@ -75,9 +75,9 @@ export const RoiBusinessBenefitSection: React.FC<RoiBusinessBenefitSectionProps>
 
   return (
     <section id="roi-business-benefit-section" className="py-20 bg-zinc-950 relative border-t border-zinc-900 overflow-hidden">
-      {/* Background Accent Gradients */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-500/5 rounded-full blur-[140px] pointer-events-none" />
+      {/* Background Accent Gradients (Optimized radial gradients) */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.08),transparent_70%)] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[radial-gradient(circle_at_center,rgba(239,68,68,0.05),transparent_70%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}

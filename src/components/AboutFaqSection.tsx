@@ -193,9 +193,9 @@ export const AboutFaqSection: React.FC<AboutFaqSectionProps> = ({ onNavigate, on
 
   return (
     <section id="about-faq-section" className="py-24 bg-zinc-950 border-t border-zinc-800/80 relative overflow-hidden">
-      {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-amber-500/5 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-yellow-500/5 rounded-full blur-[160px] pointer-events-none" />
+      {/* Ambient background glow (Optimized radial gradients) */}
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.05),transparent_70%)] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-[radial-gradient(circle_at_center,rgba(234,179,8,0.05),transparent_70%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}

@@ -44,7 +44,7 @@ export const HomePricingSection: React.FC<HomePricingSectionProps> = ({
 
   return (
     <section id="pricing" className="py-24 bg-zinc-950 border-t border-zinc-800/80 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[200px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.04),transparent_70%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -80,17 +80,13 @@ export const HomePricingSection: React.FC<HomePricingSectionProps> = ({
 
         {/* 3 PRICING CARDS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          {plans.map((plan: PricingPlan, idx: number) => {
+          {plans.map((plan: PricingPlan) => {
             const isPopular = plan.isPopular;
             const isVip = plan.isVIP;
 
             return (
-              <motion.div
+              <div
                 key={plan.id}
-                initial={{ opacity: 1, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "250px 0px" }}
-                transition={{ duration: 0.35, delay: idx * 0.05 }}
                 className={`relative rounded-3xl p-8 flex flex-col justify-between transition-all duration-300 ${
                   isPopular
                     ? 'bg-zinc-900 border-2 border-amber-500 shadow-2xl shadow-amber-500/10 md:scale-105 z-10'
@@ -155,7 +151,7 @@ export const HomePricingSection: React.FC<HomePricingSectionProps> = ({
                   <span>{plan.ctaText || 'JOIN THIS PLAN'}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
-              </motion.div>
+              </div>
             );
           })}
         </div>

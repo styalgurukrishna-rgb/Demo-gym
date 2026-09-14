@@ -64,10 +64,9 @@ const CounterItem: React.FC<{ target: number; suffix: string; label: string; des
 
 export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenJoin, onOpenTour }) => {
   return (
-    <section id="about" className="relative py-28 bg-[#080808] overflow-hidden">
-      {/* Decorative Glow */}
-      <div className="absolute top-1/2 -left-48 w-96 h-96 bg-[#EF4444]/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute -bottom-20 right-0 w-96 h-96 bg-[#D4AF37]/10 rounded-full blur-[140px] pointer-events-none" />
+    <section id="about" className="relative py-28 bg-[#080808] overflow-hidden min-h-[500px]">
+      {/* Decorative Glow (Optimized radial gradient) */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(239,68,68,0.04)_0%,transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(212,175,55,0.04)_0%,transparent_60%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Tag */}
@@ -119,7 +118,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenJoin, onOpenTo
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
                 {/* Floating Member Transformation Quote Tag */}
-                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-black/80 backdrop-blur-md border border-white/15 flex items-center justify-between">
+                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-black/90 border border-white/15 flex items-center justify-between">
                   <div>
                     <p className="text-xs uppercase tracking-wider text-[#D4AF37] font-bold">Verified Transformation</p>
                     <p className="text-sm font-semibold text-white">"From 32% body fat to competition lean in 9 months."</p>

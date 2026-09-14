@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Maximize2, SlidersHorizontal, ArrowLeftRight, CheckCircle2, Shield } from 'lucide-react';
 import { TiltCard } from './common/TiltCard';
 import { Facility } from '../types';
@@ -128,8 +127,8 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onOpenLightbox }
 
   return (
     <section id="gallery" className="relative py-28 bg-[#09090B] border-t border-white/5 overflow-hidden">
-      {/* Ambient background glow */}
-      <div className="absolute top-1/2 left-1/3 -translate-x-1/2 w-[700px] h-[500px] bg-[#D4AF37]/5 rounded-full blur-[180px] pointer-events-none" />
+      {/* Ambient background glow (Optimized radial gradient) */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.03)_0%,transparent_70%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -198,7 +197,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onOpenLightbox }
                     decoding="async"
                     className="w-full h-full object-cover object-center pointer-events-none"
                   />
-                  <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-emerald-500/80 backdrop-blur-md text-white text-[11px] font-black uppercase tracking-wider shadow">
+                  <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-emerald-600/90 text-white text-[11px] font-black uppercase tracking-wider shadow">
                     AFTER ({currentT.duration})
                   </div>
 
@@ -218,7 +217,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onOpenLightbox }
                         height: '100%',
                       }}
                     />
-                    <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-neutral-300 text-[11px] font-black uppercase tracking-wider border border-white/20">
+                    <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/90 text-neutral-300 text-[11px] font-black uppercase tracking-wider border border-white/20">
                       BEFORE (WEEK 0)
                     </div>
                   </div>
@@ -235,7 +234,7 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onOpenLightbox }
                   </div>
 
                   {/* Bottom Guide Hint */}
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/10 text-[10px] uppercase font-bold text-neutral-300 tracking-wider flex items-center gap-1.5 pointer-events-none">
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-black/80 border border-white/10 text-[10px] uppercase font-bold text-neutral-300 tracking-wider flex items-center gap-1.5 pointer-events-none">
                     <span>⟵ Drag slider to compare results ⟶</span>
                   </div>
                 </div>
@@ -313,67 +312,58 @@ export const GallerySection: React.FC<GallerySectionProps> = ({ onOpenLightbox }
               ))}
             </div>
 
-            {/* Photo Grid with 3D Tilt Card and Lightbox trigger */}
+            {/* Photo Grid with Lightbox trigger */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <AnimatePresence mode="popLayout">
-                {filteredPhotos.map((photo, idx) => (
-                  <motion.div
-                    key={photo.id}
-                    layout
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.4, delay: idx * 0.08 }}
+              {filteredPhotos.map((photo) => (
+                <div key={photo.id}>
+                  <TiltCard
+                    id={`gallery-photo-card-${photo.id}`}
+                    className="rounded-2xl overflow-hidden bg-[#111114] border border-white/10 hover:border-[#D4AF37]/50 shadow-2xl group"
+                    onClick={() =>
+                      onOpenLightbox({
+                        id: photo.id,
+                        title: photo.title,
+                        category: photo.category,
+                        image: photo.image,
+                        description: photo.description,
+                        highlight: photo.highlight,
+                        features: photo.features,
+                      })
+                    }
                   >
-                    <TiltCard
-                      id={`gallery-photo-card-${photo.id}`}
-                      className="rounded-2xl overflow-hidden bg-[#111114] border border-white/10 hover:border-[#D4AF37]/50 shadow-2xl group"
-                      onClick={() =>
-                        onOpenLightbox({
-                          id: photo.id,
-                          title: photo.title,
-                          category: photo.category,
-                          image: photo.image,
-                          description: photo.description,
-                          highlight: photo.highlight,
-                          features: photo.features,
-                        })
-                      }
-                    >
-                      <div className="relative aspect-[16/10] overflow-hidden">
-                        <img
-                          src={photo.image}
-                          alt={photo.title}
-                          loading="lazy"
-                          decoding="async"
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 brightness-90"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <img
+                        src={photo.image}
+                        alt={photo.title}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 brightness-90"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
 
-                        {/* Top tag */}
-                        <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                          <span className="px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md border border-[#D4AF37]/40 text-[#D4AF37] text-[10px] font-bold uppercase tracking-wider">
-                            {photo.highlight}
-                          </span>
-                          <div className="w-8 h-8 rounded-full bg-black/70 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                            <Maximize2 className="w-4 h-4 text-[#D4AF37]" />
-                          </div>
-                        </div>
-
-                        {/* Bottom details */}
-                        <div className="absolute bottom-3 left-3 right-3">
-                          <p className="text-[10px] text-[#EF4444] font-bold uppercase tracking-widest">
-                            {photo.category}
-                          </p>
-                          <h4 className="text-lg font-black font-['Syne',sans-serif] uppercase text-white group-hover:text-[#D4AF37] transition-colors">
-                            {photo.title}
-                          </h4>
+                      {/* Top tag */}
+                      <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+                        <span className="px-2.5 py-1 rounded-md bg-black/85 border border-[#D4AF37]/40 text-[#D4AF37] text-[10px] font-bold uppercase tracking-wider">
+                          {photo.highlight}
+                        </span>
+                        <div className="w-8 h-8 rounded-full bg-black/85 border border-white/20 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Maximize2 className="w-4 h-4 text-[#D4AF37]" />
                         </div>
                       </div>
-                    </TiltCard>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+
+                      {/* Bottom details */}
+                      <div className="absolute bottom-3 left-3 right-3">
+                        <p className="text-[10px] text-[#EF4444] font-bold uppercase tracking-widest">
+                          {photo.category}
+                        </p>
+                        <h4 className="text-lg font-black font-['Syne',sans-serif] uppercase text-white group-hover:text-[#D4AF37] transition-colors">
+                          {photo.title}
+                        </h4>
+                      </div>
+                    </div>
+                  </TiltCard>
+                </div>
+              ))}
             </div>
           </div>
         )}

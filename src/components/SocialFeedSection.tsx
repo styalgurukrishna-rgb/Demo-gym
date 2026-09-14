@@ -82,8 +82,8 @@ export const SocialFeedSection: React.FC = () => {
 
   return (
     <section className="relative py-24 bg-[#08080A] border-t border-white/10 overflow-hidden">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-pink-950/10 rounded-full blur-[180px] pointer-events-none" />
+      {/* Background ambient lighting (Optimized radial gradient) */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(80,20,50,0.06)_0%,transparent_70%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -138,7 +138,7 @@ export const SocialFeedSection: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 opacity-60 group-hover:opacity-40 transition-opacity" />
 
                   {/* Tag Pill */}
-                  <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10px] font-black uppercase tracking-wider text-[#D4AF37]">
+                  <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/80 border border-white/15 text-[10px] font-black uppercase tracking-wider text-[#D4AF37]">
                     {post.tag}
                   </div>
 
@@ -150,7 +150,7 @@ export const SocialFeedSection: React.FC = () => {
                   )}
 
                   {/* Hover Overlay with Stats */}
-                  <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-6 text-white font-bold text-sm">
+                  <div className="absolute inset-0 bg-black/75 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-6 text-white font-bold text-sm">
                     <button
                       onClick={() => toggleLike(post.id)}
                       className="flex items-center gap-1.5 hover:text-pink-400 transition-colors cursor-pointer"

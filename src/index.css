@@ -17,23 +17,32 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    scroll-behavior: smooth;
   }
 
-  html, body {
+  html {
     background-color: #080808;
     color: #F3F4F6;
-    overflow-x: hidden;
-    width: 100%;
-    max-width: 100%;
     margin: 0;
     padding: 0;
+    width: 100%;
+    overflow-x: clip;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body {
+    background-color: #080808;
+    color: #F3F4F6;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    overflow-x: clip;
   }
 
   #root {
-    overflow-x: hidden;
     width: 100%;
-    max-width: 100%;
+    min-height: 100vh;
+    overflow-x: clip;
   }
 
   /* Athletic Typography Hierarchy */
@@ -71,24 +80,36 @@
   }
 }
 
-/* Custom glow and glassmorphism helpers */
+/* Custom glow and panel helpers with GPU-friendly rendering */
 .glass-panel {
-  background: rgba(18, 18, 20, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(18, 18, 22, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-panel-gold {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.07) 0%, rgba(18, 18, 20, 0.9) 100%);
-  backdrop-filter: blur(12px);
+  background: linear-gradient(135deg, rgba(30, 24, 12, 0.95) 0%, rgba(18, 18, 22, 0.98) 100%);
   border: 1px solid rgba(212, 175, 55, 0.25);
 }
 
 .glass-panel-red {
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.07) 0%, rgba(18, 18, 20, 0.9) 100%);
-  backdrop-filter: blur(12px);
+  background: linear-gradient(135deg, rgba(35, 15, 15, 0.95) 0%, rgba(18, 18, 22, 0.98) 100%);
   border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+@media (min-width: 1024px) {
+  .glass-panel {
+    background: rgba(18, 18, 20, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .glass-panel-gold {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.07) 0%, rgba(18, 18, 20, 0.9) 100%);
+    backdrop-filter: blur(12px);
+  }
+  .glass-panel-red {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.07) 0%, rgba(18, 18, 20, 0.9) 100%);
+    backdrop-filter: blur(12px);
+  }
 }
 
 .gold-gradient-text {

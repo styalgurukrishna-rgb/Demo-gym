@@ -35,7 +35,7 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 lg:hidden px-3 pb-3 pt-1 pointer-events-auto">
-      <div className="max-w-md mx-auto rounded-3xl bg-[#0F0F14]/95 backdrop-blur-2xl border border-white/15 shadow-[0_-10px_35px_rgba(0,0,0,0.8)] px-2 py-2 flex items-center justify-around">
+      <div className="max-w-md mx-auto rounded-3xl bg-[#0F0F14] border border-white/15 shadow-[0_-10px_35px_rgba(0,0,0,0.8)] px-2 py-2 flex items-center justify-around">
         {/* 1. Home */}
         <button
           onClick={() => handleScrollTo('home')}

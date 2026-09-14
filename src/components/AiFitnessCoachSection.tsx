@@ -186,9 +186,9 @@ export const AiFitnessCoachSection: React.FC<AiFitnessCoachSectionProps> = ({
 
   return (
     <section id="ai-coach" className="relative py-24 bg-[#0A0A0E] border-t border-white/10 overflow-hidden">
-      {/* Background ambient orbs */}
-      <div className="absolute top-1/2 right-1/4 w-[450px] h-[450px] bg-red-900/10 rounded-full blur-[160px] pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-[450px] h-[450px] bg-[#D4AF37]/10 rounded-full blur-[160px] pointer-events-none" />
+      {/* Background ambient orbs (Optimized radial gradients) */}
+      <div className="absolute top-1/2 right-1/4 w-[450px] h-[450px] bg-[radial-gradient(circle_at_center,rgba(153,27,27,0.1),transparent_70%)] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-[450px] h-[450px] bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08),transparent_70%)] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}

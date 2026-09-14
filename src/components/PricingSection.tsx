@@ -13,8 +13,8 @@ interface PricingSectionProps {
 export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) => {
   return (
     <section id="pricing" className="relative py-28 bg-[#080808] overflow-hidden">
-      {/* Background glow effects */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#D4AF37]/5 rounded-full blur-[180px] pointer-events-none" />
+      {/* Background glow effects (Optimized radial gradient) */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.04),transparent_70%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}

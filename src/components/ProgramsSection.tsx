@@ -110,8 +110,8 @@ export const ProgramsSection: React.FC<ProgramsSectionProps> = ({ onSelectProgra
 
   return (
     <section id="programs" className="relative py-28 bg-[#09090b] border-y border-zinc-800/80 overflow-hidden">
-      {/* Background radial highlight */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-amber-500/5 rounded-full blur-[160px] pointer-events-none" />
+      {/* Background radial highlight (Optimized radial gradient) */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.04),transparent_70%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -183,7 +183,7 @@ export const ProgramsSection: React.FC<ProgramsSectionProps> = ({ onSelectProgra
 
                     {/* Badge */}
                     {program.badge && (
-                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-amber-500/50 text-amber-300 text-[10px] font-bold uppercase tracking-wider">
+                      <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/90 border border-amber-500/50 text-amber-300 text-[10px] font-bold uppercase tracking-wider">
                         {program.badge}
                       </div>
                     )}
@@ -194,11 +194,11 @@ export const ProgramsSection: React.FC<ProgramsSectionProps> = ({ onSelectProgra
                     </div>
 
                     <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-zinc-300">
-                      <span className="flex items-center gap-1 bg-black/75 px-2.5 py-1 rounded-md border border-white/10 backdrop-blur-sm">
+                      <span className="flex items-center gap-1 bg-black/90 px-2.5 py-1 rounded-md border border-white/10">
                         <Clock className="w-3.5 h-3.5 text-amber-400" />
                         {program.duration}
                       </span>
-                      <span className="flex items-center gap-1 bg-black/75 px-2.5 py-1 rounded-md border border-white/10 backdrop-blur-sm">
+                      <span className="flex items-center gap-1 bg-black/90 px-2.5 py-1 rounded-md border border-white/10">
                         <Flame className="w-3.5 h-3.5 text-amber-500" />
                         {program.caloriesBurn}
                       </span>

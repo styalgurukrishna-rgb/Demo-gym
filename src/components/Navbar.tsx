@@ -90,7 +90,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         id="main-navbar"
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled
-            ? 'bg-zinc-950/90 backdrop-blur-xl border-b border-zinc-800/80 py-2.5 shadow-2xl shadow-black/80'
+            ? 'bg-zinc-950 md:bg-zinc-950/90 md:backdrop-blur-xl border-b border-zinc-800/80 py-2.5 shadow-2xl shadow-black/80'
             : 'bg-gradient-to-b from-zinc-950 via-zinc-950/70 to-transparent py-4'
         }`}
       >

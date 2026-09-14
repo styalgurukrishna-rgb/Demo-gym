@@ -65,17 +65,13 @@ export const HomePage: React.FC<HomePageProps> = ({
       />
 
       {/* 2. STATS SECTION */}
-      <section id="stats-section" className="relative py-14 bg-zinc-950/90 border-y border-zinc-800/80 backdrop-blur-xl">
+      <section id="stats-section" className="relative py-14 bg-zinc-950 border-y border-zinc-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {STATS_DATA.map((stat, idx) => (
-              <motion.div
+            {STATS_DATA.map((stat) => (
+              <div
                 key={stat.label}
-                initial={{ opacity: 1, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "250px 0px" }}
-                transition={{ duration: 0.35, delay: idx * 0.04 }}
-                className="relative text-center p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800/60 shadow-lg hover:border-amber-500/30 transition-all group"
+                className="relative text-center p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800/60 shadow-lg hover:border-amber-500/30 hover:-translate-y-0.5 transition-all duration-300 group"
               >
                 <div className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white group-hover:text-amber-400 transition-colors flex items-center justify-center gap-1 font-mono">
                   <span>{stat.value}</span>
@@ -87,7 +83,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <p className="text-xs text-zinc-400 mt-1 hidden sm:block">
                   {stat.description}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -129,20 +125,18 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PROGRAMS.slice(0, 3).map((prog: Program, idx: number) => (
-              <motion.div
+            {PROGRAMS.slice(0, 3).map((prog: Program) => (
+              <div
                 key={prog.id}
-                initial={{ opacity: 1, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "250px 0px" }}
-                transition={{ duration: 0.35, delay: idx * 0.05 }}
-                className="group relative rounded-2xl bg-zinc-900/90 border border-zinc-800 overflow-hidden flex flex-col hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300"
+                className="group relative rounded-2xl bg-zinc-900/90 border border-zinc-800 overflow-hidden flex flex-col hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/10 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="relative h-60 w-full overflow-hidden">
                   <img
                     src={prog.image}
                     alt={prog.title}
                     referrerPolicy="no-referrer"
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
@@ -197,7 +191,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                     </button>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

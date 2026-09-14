@@ -80,8 +80,13 @@ export const Hero: React.FC<HeroProps> = ({
     mouseY.set(y);
   };
 
-  // Subtle floating luxury dust/sparkle particles effect - lightweight & efficient
+  // Subtle floating luxury dust/sparkle particles effect - lightweight & desktop only
   useEffect(() => {
+    // Only run canvas particles on desktop non-touch devices to preserve mobile GPU memory
+    if (typeof window === 'undefined') return;
+    const isMobileOrTouch = window.innerWidth < 1024 || 'ontouchstart' in window;
+    if (isMobileOrTouch) return;
+
     // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
@@ -228,7 +233,7 @@ export const Hero: React.FC<HeroProps> = ({
               loop
               muted
               playsInline
-              className="w-full h-full object-cover object-center opacity-45 brightness-75 contrast-110 filter blur-[2px]"
+              className="w-full h-full object-cover object-center opacity-45 brightness-75 contrast-110"
               poster="/images/hero-gym-bg.webp"
             >
               <source
@@ -262,7 +267,7 @@ export const Hero: React.FC<HeroProps> = ({
                 decoding="async"
                 fetchPriority="high"
                 onError={handleImageError}
-                className="w-full h-full object-cover object-center max-sm:object-[center_35%] opacity-55 sm:opacity-50 brightness-[0.80] contrast-[1.15] filter blur-[2px] sm:blur-[3px] transition-opacity duration-300"
+                className="w-full h-full object-cover object-center max-sm:object-[center_35%] opacity-55 sm:opacity-50 brightness-[0.80] contrast-[1.15] transition-opacity duration-300"
               />
             </picture>
           )}
@@ -273,14 +278,14 @@ export const Hero: React.FC<HeroProps> = ({
         </motion.div>
       </div>
 
-      {/* 3D Depth Layer 2: Moving Light Reflections & Glow Spheres */}
+      {/* 3D Depth Layer 2: Moving Light Reflections & Glow Spheres (Optimized radial gradients) */}
       <motion.div
         style={{ x: midX, y: midY }}
-        className="absolute inset-0 z-0 pointer-events-none will-change-transform"
+        className="absolute inset-0 z-0 pointer-events-none"
       >
-        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[280px] sm:w-[500px] h-[280px] sm:h-[500px] bg-[#EF4444]/12 rounded-full blur-[60px] sm:blur-[90px]" />
-        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[240px] sm:w-[450px] h-[240px] sm:h-[450px] bg-[#D4AF37]/12 rounded-full blur-[60px] sm:blur-[90px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] bg-white/[0.02] rounded-full blur-[50px]" />
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[280px] sm:w-[500px] h-[280px] sm:h-[500px] rounded-full bg-[radial-gradient(circle,rgba(239,68,68,0.12)_0%,transparent_70%)]" />
+        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-[240px] sm:w-[450px] h-[240px] sm:h-[450px] rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.12)_0%,transparent_70%)]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] sm:w-[300px] h-[200px] sm:h-[300px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.03)_0%,transparent_70%)]" />
       </motion.div>
 
       {/* 3D Depth Layer 3: Floating Dynamic Light Streaks */}
@@ -292,10 +297,10 @@ export const Hero: React.FC<HeroProps> = ({
         <div className="absolute bottom-1/3 left-10 w-96 h-1 bg-gradient-to-r from-transparent via-[#EF4444] to-transparent -rotate-45 blur-sm" />
       </motion.div>
 
-      {/* Floating Sparkle Particles Canvas */}
+      {/* Floating Sparkle Particles Canvas (Desktop only) */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 z-10 pointer-events-none opacity-80"
+        className="absolute inset-0 z-10 pointer-events-none opacity-80 hidden lg:block"
       />
 
       {/* Background Toggle Button (Photo / Video Mode) */}
@@ -329,7 +334,7 @@ export const Hero: React.FC<HeroProps> = ({
           initial={{ opacity: 1, y: -10, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-amber-500/40 backdrop-blur-md mb-5 sm:mb-7 shadow-xl shadow-black/80 max-w-full"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900 border border-amber-500/40 mb-5 sm:mb-7 shadow-xl shadow-black/80 max-w-full"
         >
           <span className="flex h-2 w-2 relative shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
@@ -401,7 +406,7 @@ export const Hero: React.FC<HeroProps> = ({
               handleTrial();
             }}
             onMouseEnter={() => soundManager.playHover()}
-            className="w-full sm:w-auto group px-7 sm:px-9 py-3.5 sm:py-4 rounded-full font-black text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest text-zinc-100 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700 hover:border-amber-500/60 backdrop-blur-xl shadow-lg hover:shadow-[0_0_30px_rgba(245,158,11,0.25)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2.5"
+            className="w-full sm:w-auto group px-7 sm:px-9 py-3.5 sm:py-4 rounded-full font-black text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest text-zinc-100 hover:text-white bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-amber-500/60 shadow-lg hover:shadow-[0_0_30px_rgba(245,158,11,0.25)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2.5"
           >
             <Flame className="w-4 h-4 text-amber-400" />
             <span>{config.hero.secondaryButtonText || 'BOOK FREE TRIAL'}</span>

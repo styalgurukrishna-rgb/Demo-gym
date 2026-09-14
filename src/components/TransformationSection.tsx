@@ -86,10 +86,9 @@ export const TransformationSection: React.FC<TransformationSectionProps> = ({
   };
 
   return (
-    <section id="transformations" className="relative py-24 bg-[#0B0B0E] overflow-hidden">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#D4AF37]/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#EF4444]/10 rounded-full blur-[140px] pointer-events-none" />
+    <section id="transformations" className="relative py-24 bg-[#0B0B0E] overflow-hidden min-h-[500px]">
+      {/* Background ambient lighting (Optimized radial gradient) */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(212,175,55,0.04)_0%,transparent_60%),radial-gradient(ellipse_at_bottom_right,rgba(239,68,68,0.04)_0%,transparent_60%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -139,9 +138,10 @@ export const TransformationSection: React.FC<TransformationSectionProps> = ({
                 alt={`${current.name} After Transformation`}
                 loading="lazy"
                 decoding="async"
-                className="absolute inset-0 w-full h-full object-cover"
+                onError={handleImageError}
+                className="absolute inset-0 w-full h-full object-cover bg-zinc-900"
               />
-              <div className="absolute top-4 right-4 z-10 px-3 py-1 rounded-full bg-emerald-500/90 backdrop-blur-md text-white text-xs font-black uppercase tracking-wider shadow-lg">
+              <div className="absolute top-4 right-4 z-10 px-3 py-1 rounded-full bg-emerald-600 text-white text-xs font-black uppercase tracking-wider shadow-lg">
                 AFTER ({current.timeframe})
               </div>
 
@@ -155,9 +155,10 @@ export const TransformationSection: React.FC<TransformationSectionProps> = ({
                   alt={`${current.name} Before Transformation`}
                   loading="lazy"
                   decoding="async"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  onError={handleImageError}
+                  className="absolute inset-0 w-full h-full object-cover bg-zinc-900"
                 />
-                <div className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-neutral-900/90 backdrop-blur-md text-neutral-300 text-xs font-black uppercase tracking-wider border border-white/20 shadow-lg">
+                <div className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-neutral-900 text-neutral-300 text-xs font-black uppercase tracking-wider border border-white/20 shadow-lg">
                   BEFORE
                 </div>
               </div>

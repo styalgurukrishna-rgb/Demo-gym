@@ -19,7 +19,7 @@ export const HomeTrainerSection: React.FC<HomeTrainerSectionProps> = ({
 }) => {
   return (
     <section id="trainers" className="py-24 bg-zinc-950 border-t border-zinc-800/80 relative overflow-hidden">
-      <div className="absolute top-1/4 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(245,158,11,0.03)_0%,transparent_60%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -51,13 +51,9 @@ export const HomeTrainerSection: React.FC<HomeTrainerSectionProps> = ({
 
         {/* 3 Featured Trainers Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {TRAINERS.slice(0, 3).map((trainer, idx) => (
-            <motion.div
+          {TRAINERS.slice(0, 3).map((trainer) => (
+            <div
               key={trainer.id}
-              initial={{ opacity: 1, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "250px 0px" }}
-              transition={{ duration: 0.35, delay: idx * 0.05 }}
               className="group relative rounded-3xl bg-zinc-900/80 border border-zinc-800 hover:border-amber-500/50 shadow-xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
             >
               <div>
@@ -73,7 +69,7 @@ export const HomeTrainerSection: React.FC<HomeTrainerSectionProps> = ({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/30 to-transparent" />
 
-                  <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-zinc-950/80 border border-amber-500/40 text-amber-400 text-xs font-mono font-bold backdrop-blur-md">
+                  <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-zinc-950/95 border border-amber-500/40 text-amber-400 text-xs font-mono font-bold">
                     {trainer.experience}
                   </div>
 
@@ -122,7 +118,7 @@ export const HomeTrainerSection: React.FC<HomeTrainerSectionProps> = ({
                   <span>BOOK TRAINER</span>
                 </button>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

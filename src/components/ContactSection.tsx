@@ -84,9 +84,9 @@ export const ContactSection: React.FC = () => {
   const phoneDisplay = config.contact.phone || CONTACT_CONFIG.displayPhone;
 
   return (
-    <section id="contact" className="relative py-28 bg-[#0A0A0C] border-t border-white/5 overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute top-1/3 -right-20 w-[600px] h-[600px] bg-[#EF4444]/5 rounded-full blur-[180px] pointer-events-none" />
+    <section id="contact" className="relative py-28 bg-[#0A0A0C] border-t border-white/5 overflow-hidden min-h-[500px]">
+      {/* Background glow (Optimized radial gradient) */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(239,68,68,0.03),transparent_60%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}

@@ -42,16 +42,12 @@ export const TrustCertificationsSection: React.FC = () => {
 
         {/* 4 Trust Pillars */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {TRUST_CERTIFICATIONS.map((item, idx) => {
+          {TRUST_CERTIFICATIONS.map((item) => {
             const Icon = iconMap[item.iconName] || Award;
             return (
-              <motion.div
+              <div
                 key={item.id}
-                initial={{ opacity: 1, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "250px 0px" }}
-                transition={{ duration: 0.35, delay: idx * 0.05 }}
-                className="group p-6 sm:p-7 rounded-3xl bg-[#121216] border border-white/10 hover:border-[#D4AF37]/50 transition-all duration-300 shadow-xl flex flex-col justify-between"
+                className="group p-6 sm:p-7 rounded-3xl bg-[#121216] border border-white/10 hover:border-[#D4AF37]/50 hover:-translate-y-1 transition-all duration-300 shadow-xl flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
@@ -76,20 +72,16 @@ export const TrustCertificationsSection: React.FC = () => {
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>Verified Standard</span>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>
 
-        {/* 4 Animated Numbers Bar */}
+        {/* 4 Numbers Bar */}
         <div className="mt-16 p-8 rounded-3xl bg-gradient-to-r from-[#141010] via-[#101016] to-[#0A0A0E] border border-white/10 grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
           {trustStats.map((stat, idx) => (
-            <motion.div
+            <div
               key={idx}
-              initial={{ opacity: 1, scale: 0.98 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "250px 0px" }}
-              transition={{ duration: 0.35, delay: idx * 0.05 }}
               className="space-y-1"
             >
               <span className="font-['Syne',sans-serif] text-3xl sm:text-5xl font-black bg-gradient-to-r from-white via-[#FFF4B8] to-[#D4AF37] bg-clip-text text-transparent block">
@@ -101,7 +93,7 @@ export const TrustCertificationsSection: React.FC = () => {
               <span className="text-[11px] text-neutral-400 block font-light">
                 {stat.desc}
               </span>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

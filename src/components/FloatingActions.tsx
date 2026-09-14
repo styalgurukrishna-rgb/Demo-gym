@@ -39,7 +39,7 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
     <>
       {/* DESKTOP FLOATING TOP/CORNER CTA: "READY TO START?" */}
       {showDesktopBar && !isDismissed && (
-        <div className="hidden lg:flex fixed bottom-6 left-6 z-40 items-center gap-3 p-3.5 pr-4 rounded-2xl bg-zinc-900/95 border border-amber-500/40 text-white shadow-2xl backdrop-blur-md animate-fade-in pointer-events-auto">
+        <div className="hidden lg:flex fixed bottom-6 left-6 z-40 items-center gap-3 p-3.5 pr-4 rounded-2xl bg-zinc-900 border border-amber-500/40 text-white shadow-2xl animate-fade-in pointer-events-auto">
           <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400">
             <Sparkles className="w-5 h-5 animate-pulse" />
           </div>
@@ -98,7 +98,7 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
         <div className="relative flex items-center gap-2">
           {/* Tooltip */}
           {showTooltip && (
-            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-zinc-900/95 border border-amber-500/40 text-white text-xs font-medium shadow-2xl backdrop-blur-md animate-bounce">
+            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-zinc-900 border border-amber-500/40 text-white text-xs font-medium shadow-2xl animate-bounce">
               <Sparkles className="w-3.5 h-3.5 text-amber-400" />
               <span className="text-[11px] font-semibold text-zinc-200">Chat With Gym Team</span>
               <button
@@ -136,7 +136,7 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
       </div>
 
       {/* MOBILE NATIVE STICKY BOTTOM QUICK-ACTION BAR (CALL, WHATSAPP, BOOK) */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-zinc-950/95 backdrop-blur-xl border-t border-zinc-800 px-3 py-2.5 shadow-2xl pointer-events-auto">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-zinc-950 border-t border-zinc-800 px-3 py-2.5 shadow-2xl pointer-events-auto">
         <div className="grid grid-cols-3 gap-2 max-w-md mx-auto">
           {/* 1. CALL NOW */}
           <a

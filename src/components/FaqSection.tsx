@@ -18,8 +18,8 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onOpenTrial }) => {
 
   return (
     <section id="faq" className="relative py-24 bg-[#0A0A0D] overflow-hidden border-t border-white/5">
-      {/* Glow */}
-      <div className="absolute top-1/3 right-0 w-96 h-96 bg-[#D4AF37]/10 rounded-full blur-[140px] pointer-events-none" />
+      {/* Glow (Optimized radial gradient) */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(212,175,55,0.04)_0%,transparent_60%)] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
