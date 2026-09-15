@@ -237,7 +237,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md xl:hidden"
+              className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md lg:hidden"
             />
 
             <motion.div
@@ -245,7 +245,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-              className="fixed top-0 right-0 bottom-0 w-[88%] max-w-sm z-50 bg-zinc-950 border-l border-zinc-800/90 p-5 sm:p-6 flex flex-col justify-between overflow-y-auto xl:hidden shadow-2xl"
+              className="fixed top-0 right-0 bottom-0 w-[88%] max-w-sm z-50 bg-zinc-950 border-l border-zinc-800/90 p-5 sm:p-6 flex flex-col justify-between overflow-y-auto lg:hidden shadow-2xl"
             >
               <div>
                 <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80 mb-4">
