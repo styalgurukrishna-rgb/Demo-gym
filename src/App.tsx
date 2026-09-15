@@ -1,9 +1,11 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Navbar } from './components/Navbar';
-import { Footer } from './components/Footer';
-import { FloatingActions } from './components/FloatingActions';
-import { CookieConsentBanner } from './components/CookieConsentBanner';
 import { OfflineNotice } from './components/OfflineNotice';
+
+// Code-split auxiliary components so they don't block critical Header & Hero first paint
+const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
+const FloatingActions = lazy(() => import('./components/FloatingActions').then(m => ({ default: m.FloatingActions })));
+const CookieConsentBanner = lazy(() => import('./components/CookieConsentBanner').then(m => ({ default: m.CookieConsentBanner })));
 
 // Critical First-Screen Page (Direct Import)
 import { HomePage } from './pages/HomePage';
@@ -41,7 +43,6 @@ const ConsultationModal = lazy(() => import('./components/Modals/ConsultationMod
 const SmartPlanAdvisorModal = lazy(() => import('./components/Modals/SmartPlanAdvisorModal').then(m => ({ default: m.SmartPlanAdvisorModal })));
 
 import { PageType, ModalState, Program, Trainer, Facility, PricingPlan, MemberProfile } from './types';
-import { leadStore } from './services/leadStore';
 import { gymConfigStore } from './services/gymConfigStore';
 import { applyPageSeo } from './utils/seo';
 import { updateStructuredData } from './utils/structuredData';
@@ -252,12 +253,16 @@ export default function App() {
     } else if (type === 'facilityLightbox' || type === 'facility') {
       setSelectedFacility(data?.facility || data || null);
     } else if (type === 'login' || type === 'memberLogin') {
-      const existing = leadStore.getCurrentMember();
-      if (existing) {
-        setActiveMember(existing);
-        setModalState({ type: 'memberDashboard' });
-        return;
-      }
+      import('./services/leadStore').then(({ leadStore }) => {
+        const existing = leadStore.getCurrentMember();
+        if (existing) {
+          setActiveMember(existing);
+          setModalState({ type: 'memberDashboard' });
+        } else {
+          setModalState({ type, data });
+        }
+      });
+      return;
     }
     setModalState({ type, data });
   };
@@ -277,9 +282,11 @@ export default function App() {
   };
 
   const handleLogout = () => {
-    leadStore.logoutMember();
-    setActiveMember(null);
-    setModalState({ type: null });
+    import('./services/leadStore').then(({ leadStore }) => {
+      leadStore.logoutMember();
+      setActiveMember(null);
+      setModalState({ type: null });
+    });
   };
 
   return (
@@ -349,17 +356,20 @@ export default function App() {
       {/* Network Offline Status Alert */}
       <OfflineNotice />
 
-      {/* Cookie & Privacy Consent Banner */}
-      <CookieConsentBanner onViewPrivacyPolicy={() => handleNavigate('privacy')} />
+      {/* Auxiliary Below-the-fold UI (Loaded after main interactive paint) */}
+      <Suspense fallback={null}>
+        {/* Cookie & Privacy Consent Banner */}
+        <CookieConsentBanner onViewPrivacyPolicy={() => handleNavigate('privacy')} />
 
-      {/* 4. Footer */}
-      <Footer onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+        {/* 4. Footer */}
+        <Footer onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
 
-      {/* 5. Floating Action Buttons (WhatsApp, Quick Call, Booking) */}
-      <FloatingActions 
-        onOpenJoin={() => handleOpenModal('join')} 
-        onOpenBooking={() => handleNavigate('booking')}
-      />
+        {/* 5. Floating Action Buttons (WhatsApp, Quick Call, Booking) */}
+        <FloatingActions 
+          onOpenJoin={() => handleOpenModal('join')} 
+          onOpenBooking={() => handleNavigate('booking')}
+        />
+      </Suspense>
 
       {/* --- MODALS SUITE (Loaded On Demand via Suspense when triggered) --- */}
       <Suspense fallback={null}>

@@ -1,31 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { 
-  Dumbbell, 
   Sparkles, 
-  ArrowRight, 
-  Flame, 
-  Zap, 
-  ShieldCheck, 
-  Calendar, 
-  CheckCircle2, 
-  Users, 
-  ChevronRight,
-  Play
+  Calendar
 } from 'lucide-react';
-import { STATS_DATA, PROGRAMS, GYM_INFO, TESTIMONIALS } from '../data/gymData';
-import { PageType, ModalState, Program, GymConfig, Trainer, PricingPlan } from '../types';
+import { STATS_DATA } from '../data/gymData';
+import { PageType, ModalState, GymConfig, Trainer } from '../types';
 import { Hero } from '../components/Hero';
-import { WhyChooseUsSection } from '../components/WhyChooseUsSection';
-import { HomeTrainerSection } from '../components/HomeTrainerSection';
-import { HomePricingSection } from '../components/HomePricingSection';
-import { TransformationSection } from '../components/TransformationSection';
-import { TestimonialsSection } from '../components/TestimonialsSection';
-import { FacilitiesSection } from '../components/FacilitiesSection';
-import { TrustCertificationsSection } from '../components/TrustCertificationsSection';
-import { FindOurGymSection } from '../components/FindOurGymSection';
 import { gymConfigStore } from '../services/gymConfigStore';
 import { soundManager } from '../components/common/SoundEffects';
+
+// Lazy-loaded Below-the-fold Sections for Optimal First-Paint Performance
+const WhyChooseUsSection = lazy(() => import('../components/WhyChooseUsSection').then(m => ({ default: m.WhyChooseUsSection })));
+const HomeProgramsSection = lazy(() => import('../components/HomeProgramsSection').then(m => ({ default: m.HomeProgramsSection })));
+const HomeTrainerSection = lazy(() => import('../components/HomeTrainerSection').then(m => ({ default: m.HomeTrainerSection })));
+const TransformationSection = lazy(() => import('../components/TransformationSection').then(m => ({ default: m.TransformationSection })));
+const HomePricingSection = lazy(() => import('../components/HomePricingSection').then(m => ({ default: m.HomePricingSection })));
+const FacilitiesSection = lazy(() => import('../components/FacilitiesSection').then(m => ({ default: m.FacilitiesSection })));
+const TestimonialsSection = lazy(() => import('../components/TestimonialsSection').then(m => ({ default: m.TestimonialsSection })));
+const TrustCertificationsSection = lazy(() => import('../components/TrustCertificationsSection').then(m => ({ default: m.TrustCertificationsSection })));
+const FindOurGymSection = lazy(() => import('../components/FindOurGymSection').then(m => ({ default: m.FindOurGymSection })));
 
 interface HomePageProps {
   onNavigate: (page: PageType) => void;
@@ -89,149 +82,56 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* 3. WHY CHOOSE US (6 Trust Cards) */}
-      <WhyChooseUsSection 
-        onBookTrial={() => onNavigate('booking')}
-        onConsultation={() => onOpenModal('consultation')}
-      />
+      {/* BELOW-THE-FOLD SECTIONS (Streamed in background without blocking Hero & Header) */}
+      <Suspense fallback={null}>
+        {/* 3. WHY CHOOSE US (6 Trust Cards) */}
+        <WhyChooseUsSection 
+          onBookTrial={() => onNavigate('booking')}
+          onConsultation={() => onOpenModal('consultation')}
+        />
 
-      {/* 4. TRAIN WITH PURPOSE: FEATURED PROGRAMS */}
-      <section id="programs" className="py-24 bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.05),transparent_60%)] pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
-                <Flame className="w-3.5 h-3.5" /> High-Performance Disciplines
-              </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight uppercase">
-                TRAIN WITH <span className="text-amber-400">PURPOSE</span>
-              </h2>
-              <p className="text-zinc-400 text-base sm:text-lg max-w-2xl mt-3 font-light">
-                Scientifically structured training splits backed by Olympic strength coaches and biomechanical progression.
-              </p>
-            </div>
-            <button
-              id="view-all-programs-btn"
-              onClick={() => {
-                soundManager.playClick();
-                onNavigate('programs');
-              }}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-sm tracking-wide transition-all border border-zinc-700 hover:border-amber-500/40 group self-start md:self-auto cursor-pointer"
-            >
-              <span>VIEW ALL PROGRAMS</span>
-              <ArrowRight className="w-4 h-4 text-amber-400 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
+        {/* 4. TRAIN WITH PURPOSE: FEATURED PROGRAMS */}
+        <HomeProgramsSection 
+          onNavigate={onNavigate} 
+          onOpenModal={onOpenModal} 
+        />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PROGRAMS.slice(0, 3).map((prog: Program) => (
-              <div
-                key={prog.id}
-                className="group relative rounded-2xl bg-zinc-900/90 border border-zinc-800 overflow-hidden flex flex-col hover:border-amber-500/50 hover:shadow-2xl hover:shadow-amber-500/10 hover:-translate-y-1 transition-all duration-300"
-              >
-                <div className="relative h-60 w-full overflow-hidden">
-                  <img
-                    src={prog.image}
-                    alt={prog.title}
-                    referrerPolicy="no-referrer"
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
-                  {prog.badge && (
-                    <span className="absolute top-4 right-4 px-3 py-1 rounded-full bg-amber-500 text-black font-extrabold text-xs tracking-wider uppercase shadow-md">
-                      {prog.badge}
-                    </span>
-                  )}
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <span className="text-xs font-semibold text-amber-400 uppercase tracking-widest">{prog.level}</span>
-                    <h3 className="text-2xl font-black text-white">{prog.title}</h3>
-                  </div>
-                </div>
+        {/* 5. COACHED BY EXPERTS: TRAINER DISCOVERY PREVIEW */}
+        <HomeTrainerSection 
+          onViewTrainerProfile={(trainer) => onOpenModal('trainer', trainer)}
+          onBookTrainer={handleTrainerBooking}
+          onViewAllTrainers={() => onNavigate('trainers')}
+        />
 
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <p className="text-sm text-zinc-400 mb-5 line-clamp-2">
-                    {prog.tagline}
-                  </p>
+        {/* 6. BUILT FOR RESULTS: TRANSFORMATION COMPARISON SECTION */}
+        <TransformationSection 
+          onStartTransformation={() => onNavigate('booking')} 
+        />
 
-                  <div className="grid grid-cols-2 gap-3 p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/80 mb-6 text-xs">
-                    <div>
-                      <span className="text-zinc-500 block">Duration</span>
-                      <span className="font-bold text-zinc-200">{prog.duration}</span>
-                    </div>
-                    <div>
-                      <span className="text-zinc-500 block">Est. Burn</span>
-                      <span className="font-bold text-amber-400">{prog.caloriesBurn}</span>
-                    </div>
-                  </div>
+        {/* 7. CHOOSE YOUR MEMBERSHIP: HOMEPAGE PRICING & PLAN COMPARISON */}
+        <HomePricingSection 
+          onSelectPlan={(plan) => onOpenModal('payment', { plan, finalPrice: plan.price, billingCycle: 'monthly' })}
+          onOpenHelpMeChoose={() => onOpenModal('helpMeChoose')}
+        />
 
-                  <div className="flex items-center gap-3 pt-2">
-                    <button
-                      id={`start-program-${prog.id}`}
-                      onClick={() => {
-                        soundManager.playClick();
-                        onNavigate('booking');
-                      }}
-                      className="flex-1 py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-black text-xs tracking-wider uppercase transition-all shadow-md active:scale-95 text-center cursor-pointer"
-                    >
-                      Start Program
-                    </button>
-                    <button
-                      id={`view-details-${prog.id}`}
-                      onClick={() => {
-                        soundManager.playClick();
-                        onOpenModal('program', prog);
-                      }}
-                      className="p-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 hover:text-white transition-all border border-zinc-700 cursor-pointer"
-                      title="View Details"
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        {/* 8. FACILITIES SHOWCASE: TAKE A LOOK INSIDE */}
+        <FacilitiesSection 
+          onOpenLightbox={(facility) => onOpenModal('facilityLightbox', facility)}
+          onOpenTour={() => onOpenModal('tour')}
+          onBookPass={() => onNavigate('booking')}
+        />
 
-      {/* 5. COACHED BY EXPERTS: TRAINER DISCOVERY PREVIEW */}
-      <HomeTrainerSection 
-        onViewTrainerProfile={(trainer) => onOpenModal('trainer', trainer)}
-        onBookTrainer={handleTrainerBooking}
-        onViewAllTrainers={() => onNavigate('trainers')}
-      />
+        {/* 9. SOCIAL PROOF: WHAT OUR MEMBERS SAY (TESTIMONIALS SLIDER) */}
+        <TestimonialsSection 
+          onJoinClick={() => onOpenModal('join')}
+        />
 
-      {/* 6. BUILT FOR RESULTS: TRANSFORMATION COMPARISON SECTION */}
-      <TransformationSection 
-        onStartTransformation={() => onNavigate('booking')} 
-      />
+        {/* 10. TRUST & CERTIFICATIONS */}
+        <TrustCertificationsSection />
 
-      {/* 7. CHOOSE YOUR MEMBERSHIP: HOMEPAGE PRICING & PLAN COMPARISON */}
-      <HomePricingSection 
-        onSelectPlan={(plan) => onOpenModal('payment', { plan, finalPrice: plan.price, billingCycle: 'monthly' })}
-        onOpenHelpMeChoose={() => onOpenModal('helpMeChoose')}
-      />
-
-      {/* 8. FACILITIES SHOWCASE: TAKE A LOOK INSIDE */}
-      <FacilitiesSection 
-        onOpenLightbox={(facility) => onOpenModal('facilityLightbox', facility)}
-        onOpenTour={() => onOpenModal('tour')}
-        onBookPass={() => onNavigate('booking')}
-      />
-
-      {/* 9. SOCIAL PROOF: WHAT OUR MEMBERS SAY (TESTIMONIALS SLIDER) */}
-      <TestimonialsSection 
-        onJoinClick={() => onOpenModal('join')}
-      />
-
-      {/* 10. TRUST & CERTIFICATIONS */}
-      <TrustCertificationsSection />
-
-      {/* 11. FIND OUR GYM: LOCATION & GOOGLE MAPS */}
-      <FindOurGymSection onBookTour={() => onOpenModal('tour')} />
+        {/* 11. FIND OUR GYM: LOCATION & GOOGLE MAPS */}
+        <FindOurGymSection onBookTour={() => onOpenModal('tour')} />
+      </Suspense>
 
       {/* 12. READY TO START? (EXPERIENCE KSG DEMO GYM) */}
       <section className="relative py-24 bg-gradient-to-b from-zinc-900 to-zinc-950 border-t border-zinc-800 text-center overflow-hidden">
