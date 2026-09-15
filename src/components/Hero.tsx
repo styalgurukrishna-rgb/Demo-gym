@@ -225,7 +225,7 @@ export const Hero: React.FC<HeroProps> = ({
       ref={heroRef}
       id="home"
       onMouseMove={handleMouseMove}
-      className="relative min-h-[90vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden pt-24 sm:pt-28 pb-16 sm:pb-20 bg-[#09090c] bg-[radial-gradient(ellipse_80%_60%_at_50%_20%,rgba(245,158,11,0.06),transparent_80%),radial-gradient(ellipse_60%_50%_at_50%_80%,rgba(239,68,68,0.04),transparent_70%)]"
+      className="relative min-h-[90vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 bg-[#09090c] bg-[radial-gradient(ellipse_80%_60%_at_50%_20%,rgba(245,158,11,0.06),transparent_80%),radial-gradient(ellipse_60%_50%_at_50%_80%,rgba(239,68,68,0.04),transparent_70%)]"
     >
       {/* 1. DEDICATED STABLE BACKGROUND IMAGE LAYER (Mounted, static, zero scroll-drop) */}
       <div 

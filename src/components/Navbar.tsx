@@ -120,8 +120,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </button>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden xl:flex items-center gap-0.5 px-3 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-800 backdrop-blur-md">
+          {/* Desktop Navigation Links (Visible on lg: 1024px and up) */}
+          <nav className="hidden lg:flex items-center gap-0.5 px-2.5 xl:px-3 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-800 backdrop-blur-md">
             {navLinks.map((link) => {
               const isActive = currentPage === link.page;
               return (
@@ -130,7 +130,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   id={`nav-link-${link.page}`}
                   onClick={() => handleNavClick(link.page)}
                   onMouseEnter={() => soundManager.playHover()}
-                  className={`relative px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 cursor-pointer ${
+                  className={`relative px-2.5 xl:px-3 py-1.5 text-[11px] xl:text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-200 cursor-pointer whitespace-nowrap ${
                     isActive
                       ? 'text-white font-black'
                       : 'text-zinc-400 hover:text-white hover:bg-zinc-800/60'
@@ -149,14 +149,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </nav>
 
-          {/* Right Action Controls - Desktop */}
-          <div className="hidden xl:flex items-center gap-2.5">
+          {/* Right Action Controls - Desktop (Visible on lg: 1024px and up) */}
+          <div className="hidden lg:flex items-center gap-2 xl:gap-2.5">
             {/* Sound FX Toggle */}
             <button
               id="nav-sound-toggle-btn"
               onClick={toggleSound}
               title={isMuted ? "Enable Sound Effects" : "Mute Sound Effects"}
-              className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              className="p-2 xl:p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white transition-colors cursor-pointer shrink-0"
             >
               {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-amber-400 animate-pulse" />}
             </button>
@@ -166,7 +166,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               id="nav-trial-btn-desktop"
               onClick={() => handleNavClick('booking')}
               onMouseEnter={() => soundManager.playHover()}
-              className="px-4 py-2 text-xs font-black uppercase tracking-wider text-zinc-200 hover:text-white hover:bg-zinc-800 border border-zinc-700 rounded-xl transition-all duration-200 cursor-pointer"
+              className="px-3 xl:px-4 py-2 text-[11px] xl:text-xs font-black uppercase tracking-wider text-zinc-200 hover:text-white hover:bg-zinc-800 border border-zinc-700 rounded-xl transition-all duration-200 cursor-pointer whitespace-nowrap"
             >
               Book Free Trial
             </button>
@@ -176,15 +176,15 @@ export const Navbar: React.FC<NavbarProps> = ({
               id="nav-join-now-btn-desktop"
               onClick={() => onOpenModal('join')}
               onMouseEnter={() => soundManager.playHover()}
-              className="relative group overflow-hidden px-4.5 py-2 rounded-xl font-black text-xs uppercase tracking-wider text-black bg-amber-500 hover:bg-amber-400 shadow-md shadow-amber-500/20 active:scale-95 transition-all duration-200 cursor-pointer flex items-center gap-1.5"
+              className="relative group overflow-hidden px-3.5 xl:px-4.5 py-2 rounded-xl font-black text-[11px] xl:text-xs uppercase tracking-wider text-black bg-amber-500 hover:bg-amber-400 shadow-md shadow-amber-500/20 active:scale-95 transition-all duration-200 cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0"
             >
               <Sparkles className="w-3.5 h-3.5 fill-black" />
               <span>JOIN NOW</span>
             </button>
           </div>
 
-          {/* Tablet & Mobile Header Action Controls */}
-          <div className="flex items-center gap-2 xl:hidden">
+          {/* Mobile & Tablet Header Action Controls (Visible ONLY below lg: 1024px) */}
+          <div className="flex items-center gap-2 lg:hidden">
             {/* Tablet-only quick sound toggle */}
             <button
               id="tablet-sound-toggle-btn"
@@ -199,7 +199,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="tablet-join-now-btn"
               onClick={() => onOpenModal('join')}
-              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-black text-xs uppercase tracking-wider text-black bg-amber-500 hover:bg-amber-400 shadow-md shadow-amber-500/20 active:scale-95 transition-all cursor-pointer"
+              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-black text-xs uppercase tracking-wider text-black bg-amber-500 hover:bg-amber-400 shadow-md shadow-amber-500/20 active:scale-95 transition-all cursor-pointer whitespace-nowrap"
             >
               <Sparkles className="w-3.5 h-3.5 fill-black" />
               <span>JOIN NOW</span>

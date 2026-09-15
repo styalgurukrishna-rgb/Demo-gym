@@ -299,7 +299,7 @@ export default function App() {
       />
 
       {/* 2. Dynamic Page View Renderer */}
-      <main id="main-content" className="flex-1 pt-16 pb-20 md:pb-0 bg-zinc-950 relative z-0">
+      <main id="main-content" className={`flex-1 ${currentPage === 'home' ? 'pt-0' : 'pt-20 sm:pt-24'} pb-20 md:pb-0 bg-zinc-950 relative z-0`}>
         {currentPage === 'home' ? (
           <HomePage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
         ) : (
