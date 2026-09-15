@@ -810,7 +810,7 @@ export const SeoKeywordsManagerSection: React.FC<SeoKeywordsManagerSectionProps>
                 type="text"
                 value={seo.ogImage || ''}
                 onChange={(e) => updateSeoData({ ogImage: e.target.value })}
-                placeholder="https://images.unsplash.com/photo-..."
+                placeholder="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80"
                 className="w-full px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 focus:border-amber-500 text-white text-sm font-mono outline-none"
               />
               <p className="text-[11px] text-zinc-500 mt-1">

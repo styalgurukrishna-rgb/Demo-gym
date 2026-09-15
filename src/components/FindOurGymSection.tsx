@@ -6,6 +6,7 @@ import { GymConfig } from '../types';
 import { soundManager } from './common/SoundEffects';
 import { analytics } from '../utils/analytics';
 import { CONTACT_CONFIG } from '../config/contactConfig';
+import { handleImageError } from '../utils/imageFallback';
 
 interface FindOurGymSectionProps {
   onBookTour?: () => void;
@@ -160,15 +161,18 @@ export const FindOurGymSection: React.FC<FindOurGymSectionProps> = ({ onBookTour
           <div className="lg:col-span-6">
             <div className="relative rounded-3xl overflow-hidden border border-zinc-800 bg-zinc-900/60 shadow-2xl group">
               {/* Map Preview Background */}
-              <div 
-                className="h-80 sm:h-96 w-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                style={{
-                  backgroundImage: `url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80')`,
-                }}
-              >
+              <div className="relative h-80 sm:h-96 w-full overflow-hidden bg-zinc-950">
+                <img
+                  src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80&fm=webp"
+                  alt="KSG Gym Location Map Preview"
+                  loading="lazy"
+                  decoding="async"
+                  onError={handleImageError}
+                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                />
                 {/* Gradient Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
-                <div className="absolute inset-0 bg-zinc-950/20" />
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-zinc-950/20 pointer-events-none" />
               </div>
 
               {/* Pin Indicator */}

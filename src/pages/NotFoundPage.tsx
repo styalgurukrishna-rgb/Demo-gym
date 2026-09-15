@@ -4,6 +4,7 @@ import { Dumbbell, Home, ArrowLeft, Compass } from 'lucide-react';
 import { PageType } from '../types';
 import { soundManager } from '../components/common/SoundEffects';
 import { gymConfigStore } from '../services/gymConfigStore';
+import { handleImageError } from '../utils/imageFallback';
 
 interface NotFoundPageProps {
   onNavigate: (page: PageType) => void;
@@ -16,10 +17,16 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({ onNavigate }) => {
     <div className="w-full min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center px-4 py-24 selection:bg-amber-500 selection:text-black relative overflow-hidden">
       {/* Background Ambience */}
       <div className="absolute inset-0 bg-radial from-amber-500/5 via-transparent to-transparent pointer-events-none" />
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-10 mix-blend-luminosity scale-110 pointer-events-none"
-        style={{ backgroundImage: `url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80')` }}
-      />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
+        <img
+          src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80&fm=webp"
+          alt="KSG Gym Background"
+          loading="eager"
+          decoding="async"
+          onError={handleImageError}
+          className="w-full h-full object-cover object-center opacity-10 brightness-90"
+        />
+      </div>
 
       <div className="max-w-xl w-full text-center relative z-10">
         <motion.div

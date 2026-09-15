@@ -17,6 +17,7 @@ import {
 import { GYM_INFO, STATS_DATA, TIMELINE_DATA, TRAINERS } from '../data/gymData';
 import { PageType, ModalState, Trainer } from '../types';
 import { AboutFaqSection } from '../components/AboutFaqSection';
+import { handleImageError } from '../utils/imageFallback';
 
 interface AboutPageProps {
   onNavigate: (page: PageType) => void;

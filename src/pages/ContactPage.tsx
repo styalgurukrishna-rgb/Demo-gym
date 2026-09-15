@@ -17,6 +17,7 @@ import { PageType, ModalState, GymConfig } from '../types';
 import { leadStore } from '../services/leadStore';
 import { gymConfigStore } from '../services/gymConfigStore';
 import { CONTACT_CONFIG } from '../config/contactConfig';
+import { handleImageError } from '../utils/imageFallback';
 
 interface ContactPageProps {
   onNavigate: (page: PageType) => void;
@@ -282,11 +283,16 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
 
             {/* Interactive Map Visual */}
             <div className="rounded-3xl bg-zinc-900 border border-zinc-800 overflow-hidden shadow-xl">
-              <div className="relative h-48 bg-zinc-950 flex items-center justify-center p-6 text-center">
-                <div 
-                  className="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity"
-                  style={{ backgroundImage: `url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80')` }}
+              <div className="relative h-48 bg-zinc-950 flex items-center justify-center p-6 text-center overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80&fm=webp"
+                  alt="Gym Location Map"
+                  loading="lazy"
+                  decoding="async"
+                  onError={handleImageError}
+                  className="absolute inset-0 w-full h-full object-cover object-center opacity-30 brightness-90"
                 />
+                <div className="absolute inset-0 bg-zinc-950/40 pointer-events-none" />
                 <div className="relative z-10">
                   <MapPin className="w-8 h-8 text-amber-400 mx-auto mb-2 animate-bounce" />
                   <h4 className="text-sm font-bold text-white uppercase">{config.brand.gymName}</h4>
