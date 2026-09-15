@@ -321,9 +321,11 @@ function notify() {
 }
 
 export const leadStore = {
-  subscribe(listener: Listener) {
+  subscribe(listener: Listener): () => void {
     listeners.add(listener);
-    return () => listeners.delete(listener);
+    return () => {
+      listeners.delete(listener);
+    };
   },
 
   // USERS & AUTHENTICATION

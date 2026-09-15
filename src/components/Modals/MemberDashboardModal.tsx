@@ -9,6 +9,7 @@ interface MemberDashboardModalProps {
   isOpen: boolean;
   onClose: () => void;
   onLogout: () => void;
+  member?: any;
 }
 
 export const MemberDashboardModal: React.FC<MemberDashboardModalProps> = ({

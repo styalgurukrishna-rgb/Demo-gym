@@ -1,6 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Header } from './components/Header';
 import { OfflineNotice } from './components/OfflineNotice';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
 
 // Code-split auxiliary components so they don't block critical Header & Hero first paint
 const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
@@ -300,57 +301,59 @@ export default function App() {
 
       {/* 2. Dynamic Page View Renderer */}
       <main id="main-content" className="flex-1 pt-16 lg:pt-20 pb-20 md:pb-0 bg-zinc-950 relative z-0">
-        {currentPage === 'home' ? (
-          <HomePage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-        ) : (
-          <Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center"><div className="w-8 h-8 rounded-full border-2 border-amber-400 border-t-transparent animate-spin" /></div>}>
-            {currentPage === 'about' && (
-              <AboutPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-            )}
-            {currentPage === 'programs' && (
-              <ProgramsPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-            )}
-            {currentPage === 'trainers' && (
-              <TrainersPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-            )}
-            {currentPage === 'facilities' && (
-              <FacilitiesPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-            )}
-            {currentPage === 'gallery' && (
-              <GalleryPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-            )}
-            {currentPage === 'pricing' && (
-              <PricingPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-            )}
-            {currentPage === 'booking' && (
-              <BookingPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-            )}
-            {currentPage === 'contact' && (
-              <ContactPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-            )}
-            {currentPage === 'privacy' && (
-              <PrivacyPolicyPage onNavigate={handleNavigate} />
-            )}
-            {currentPage === 'terms' && (
-              <TermsPage onNavigate={handleNavigate} />
-            )}
-            {currentPage === 'not-found' && (
-              <NotFoundPage onNavigate={handleNavigate} />
-            )}
-            {currentPage === 'login' && (
-              <LoginPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-            )}
-            {currentPage === 'member-dashboard' && (
-              <MemberDashboardPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-            )}
-            {currentPage === 'trainer-dashboard' && (
-              <TrainerDashboardPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-            )}
-            {currentPage === 'admin-dashboard' && (
-              <AdminDashboardPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
-            )}
-          </Suspense>
-        )}
+        <ErrorBoundary>
+          {currentPage === 'home' ? (
+            <HomePage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+          ) : (
+            <Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center"><div className="w-8 h-8 rounded-full border-2 border-amber-400 border-t-transparent animate-spin" /></div>}>
+              {currentPage === 'about' && (
+                <AboutPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+              )}
+              {currentPage === 'programs' && (
+                <ProgramsPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+              )}
+              {currentPage === 'trainers' && (
+                <TrainersPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+              )}
+              {currentPage === 'facilities' && (
+                <FacilitiesPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+              )}
+              {currentPage === 'gallery' && (
+                <GalleryPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+              )}
+              {currentPage === 'pricing' && (
+                <PricingPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+              )}
+              {currentPage === 'booking' && (
+                <BookingPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+              )}
+              {currentPage === 'contact' && (
+                <ContactPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+              )}
+              {currentPage === 'privacy' && (
+                <PrivacyPolicyPage onNavigate={handleNavigate} />
+              )}
+              {currentPage === 'terms' && (
+                <TermsPage onNavigate={handleNavigate} />
+              )}
+              {currentPage === 'not-found' && (
+                <NotFoundPage onNavigate={handleNavigate} />
+              )}
+              {currentPage === 'login' && (
+                <LoginPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+              )}
+              {currentPage === 'member-dashboard' && (
+                <MemberDashboardPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+              )}
+              {currentPage === 'trainer-dashboard' && (
+                <TrainerDashboardPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+              )}
+              {currentPage === 'admin-dashboard' && (
+                <AdminDashboardPage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
+              )}
+            </Suspense>
+          )}
+        </ErrorBoundary>
       </main>
 
       {/* Network Offline Status Alert */}
@@ -372,8 +375,9 @@ export default function App() {
       </Suspense>
 
       {/* --- MODALS SUITE (Loaded On Demand via Suspense when triggered) --- */}
-      <Suspense fallback={null}>
-        {/* 1. Free Trial Booking Modal */}
+      <ErrorBoundary>
+        <Suspense fallback={null}>
+          {/* 1. Free Trial Booking Modal */}
         {modalState.type === 'trial' && (
           <FreeTrialModal
             isOpen={true}
@@ -455,9 +459,10 @@ export default function App() {
           <SmartPlanAdvisorModal
             isOpen={true}
             onClose={handleCloseModal}
-            onSelectPlan={(plan) => {
+            onSelectPlan={(plan: any) => {
               handleCloseModal();
-              handleOpenModal('payment', { plan, finalPrice: plan.price, billingCycle: 'monthly' });
+              const finalPrice = typeof plan === 'object' && plan && 'price' in plan ? plan.price : 999;
+              handleOpenModal('payment', { plan, finalPrice, billingCycle: 'monthly' });
             }}
             onBookTrial={() => {
               handleCloseModal();
@@ -514,7 +519,8 @@ export default function App() {
             }}
           />
         )}
-      </Suspense>
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 }

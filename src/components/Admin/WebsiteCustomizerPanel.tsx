@@ -30,6 +30,7 @@ import { SeoKeywordsManagerSection } from './SeoKeywordsManagerSection';
 
 interface WebsiteCustomizerPanelProps {
   onNavigateToPreview?: () => void;
+  onNavigate?: (page: any) => void;
 }
 
 export const WebsiteCustomizerPanel: React.FC<WebsiteCustomizerPanelProps> = ({ onNavigateToPreview }) => {

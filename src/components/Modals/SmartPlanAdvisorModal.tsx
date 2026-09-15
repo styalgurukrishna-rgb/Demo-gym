@@ -22,8 +22,9 @@ import { PricingPlan } from '../../types';
 interface SmartPlanAdvisorModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSelectPlan: (planId: string) => void;
-  onBookConsultation: () => void;
+  onSelectPlan: (planId: any) => void;
+  onBookConsultation?: () => void;
+  onBookTrial?: () => void;
 }
 
 export const SmartPlanAdvisorModal: React.FC<SmartPlanAdvisorModalProps> = ({

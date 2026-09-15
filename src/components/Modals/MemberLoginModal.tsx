@@ -6,7 +6,8 @@ import { soundManager } from '../common/SoundEffects';
 interface MemberLoginModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onLoginSuccess: () => void;
+  onLoginSuccess?: () => void;
+  onSuccess?: (member?: any) => void;
 }
 
 export const MemberLoginModal: React.FC<MemberLoginModalProps> = ({

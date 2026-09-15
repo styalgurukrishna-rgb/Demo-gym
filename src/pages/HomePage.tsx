@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, 
   Calendar
@@ -9,16 +9,17 @@ import { Hero } from '../components/Hero';
 import { gymConfigStore } from '../services/gymConfigStore';
 import { soundManager } from '../components/common/SoundEffects';
 
-// Lazy-loaded Below-the-fold Sections for Optimal First-Paint Performance
-const WhyChooseUsSection = lazy(() => import('../components/WhyChooseUsSection').then(m => ({ default: m.WhyChooseUsSection })));
-const HomeProgramsSection = lazy(() => import('../components/HomeProgramsSection').then(m => ({ default: m.HomeProgramsSection })));
-const HomeTrainerSection = lazy(() => import('../components/HomeTrainerSection').then(m => ({ default: m.HomeTrainerSection })));
-const TransformationSection = lazy(() => import('../components/TransformationSection').then(m => ({ default: m.TransformationSection })));
-const HomePricingSection = lazy(() => import('../components/HomePricingSection').then(m => ({ default: m.HomePricingSection })));
-const FacilitiesSection = lazy(() => import('../components/FacilitiesSection').then(m => ({ default: m.FacilitiesSection })));
-const TestimonialsSection = lazy(() => import('../components/TestimonialsSection').then(m => ({ default: m.TestimonialsSection })));
-const TrustCertificationsSection = lazy(() => import('../components/TrustCertificationsSection').then(m => ({ default: m.TrustCertificationsSection })));
-const FindOurGymSection = lazy(() => import('../components/FindOurGymSection').then(m => ({ default: m.FindOurGymSection })));
+// Direct import homepage sections to prevent black screen voids during fast scrolling
+import { WhyChooseUsSection } from '../components/WhyChooseUsSection';
+import { HomeProgramsSection } from '../components/HomeProgramsSection';
+import { HomeTrainerSection } from '../components/HomeTrainerSection';
+import { TransformationSection } from '../components/TransformationSection';
+import { HomePricingSection } from '../components/HomePricingSection';
+import { FacilitiesSection } from '../components/FacilitiesSection';
+import { TestimonialsSection } from '../components/TestimonialsSection';
+import { TrustCertificationsSection } from '../components/TrustCertificationsSection';
+import { FindOurGymSection } from '../components/FindOurGymSection';
+import { ErrorBoundary } from '../components/common/ErrorBoundary';
 
 interface HomePageProps {
   onNavigate: (page: PageType) => void;
@@ -82,8 +83,8 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </section>
 
-      {/* BELOW-THE-FOLD SECTIONS (Streamed in background without blocking Hero & Header) */}
-      <Suspense fallback={null}>
+      {/* 3-11. HOMEPAGE SECTIONS - Wrapped in ErrorBoundary for guaranteed render stability */}
+      <ErrorBoundary>
         {/* 3. WHY CHOOSE US (6 Trust Cards) */}
         <WhyChooseUsSection 
           onBookTrial={() => onNavigate('booking')}
@@ -131,7 +132,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
         {/* 11. FIND OUR GYM: LOCATION & GOOGLE MAPS */}
         <FindOurGymSection onBookTour={() => onOpenModal('tour')} />
-      </Suspense>
+      </ErrorBoundary>
 
       {/* 12. READY TO START? (EXPERIENCE KSG DEMO GYM) */}
       <section className="relative py-24 bg-gradient-to-b from-zinc-900 to-zinc-950 border-t border-zinc-800 text-center overflow-hidden">

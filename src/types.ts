@@ -144,7 +144,7 @@ export interface DemoInquiryLead {
   currentWebsite?: string;
   serviceType: 'New Website' | 'Redesign Existing Website' | 'Online Booking' | 'Membership System' | 'Complete Gym Website';
   message?: string;
-  status: 'New' | 'Contacted' | 'Follow-up' | 'Converted' | 'Lost';
+  status: 'New' | 'Contacted' | 'Proposal Sent' | 'Follow-up' | 'Converted' | 'Won' | 'Lost';
   createdAt: string;
 }
 
@@ -166,6 +166,7 @@ export interface BrandConfig {
   establishedYear?: string;
   tagline: string;
   logo: string;
+  logoUrl?: string;
   logoBadge: string;
   favicon: string;
   aboutText: string;
@@ -208,6 +209,7 @@ export interface ContactConfig {
   area: string;
   googleMapsUrl: string;
   openingHours: string;
+  hours?: string;
   instagram: string;
   facebook: string;
   youtube: string;

@@ -223,9 +223,17 @@ export const VirtualTourModal: React.FC<VirtualTourModalProps> = ({ isOpen, onCl
             {/* Video Player or Poster Fallback */}
             {isPlayingVideo && !hasVideoError ? (
               <div className="relative w-full h-full">
+                {/* Immediate Poster Backdrop to prevent any black void while video initializes */}
+                <img
+                  src={activeChapter.posterImage}
+                  alt={activeChapter.title}
+                  onError={handleImageError}
+                  className="w-full h-full object-cover absolute inset-0"
+                />
+
                 {/* Lazy loading spinner while iframe connects */}
                 {isVideoLoading && (
-                  <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-zinc-950/80 backdrop-blur-xs transition-opacity duration-300">
+                  <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-zinc-950/70 backdrop-blur-xs transition-opacity duration-300">
                     <div className="w-8 h-8 rounded-full border-2 border-amber-400/20 border-t-amber-400 animate-spin mb-2" />
                     <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-300">
                       Loading Chapter {activeChapter.chapterNumber}...
@@ -240,10 +248,10 @@ export const VirtualTourModal: React.FC<VirtualTourModalProps> = ({ isOpen, onCl
                   title={`${activeChapter.title} - KSG Virtual Tour`}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
-                  loading="lazy"
+                  loading="eager"
                   onLoad={handleIframeLoad}
                   onError={handleIframeError}
-                  className="w-full h-full border-0 absolute inset-0"
+                  className="w-full h-full border-0 absolute inset-0 z-10"
                 />
               </div>
             ) : (

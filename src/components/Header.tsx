@@ -153,8 +153,8 @@ export const Header: React.FC<HeaderProps> = ({
             })}
           </nav>
 
-          {/* Desktop Actions (Visible strictly on lg: 1024px and wider) */}
-          <div className="hidden lg:flex items-center gap-2.5">
+          {/* Desktop Actions (Visible strictly on lg: 1024px and wider: Sound toggle + ONE normal CTA) */}
+          <div className="hidden lg:flex items-center gap-3">
             {/* Sound FX Toggle */}
             <button
               id="header-sound-toggle-btn"
@@ -165,25 +165,15 @@ export const Header: React.FC<HeaderProps> = ({
               {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-amber-400 animate-pulse" />}
             </button>
 
-            {/* Free Trial Button */}
+            {/* Single Normal CTA Button */}
             <button
               id="header-trial-btn-desktop"
               onClick={() => handleNavClick('booking')}
               onMouseEnter={() => soundManager.playHover()}
-              className="px-4 py-2 text-xs font-black uppercase tracking-wider text-zinc-200 hover:text-white hover:bg-zinc-800 border border-zinc-700 rounded-xl transition-all duration-150 cursor-pointer whitespace-nowrap"
-            >
-              Book Free Trial
-            </button>
-
-            {/* Join Now CTA */}
-            <button
-              id="header-join-btn-desktop"
-              onClick={() => onOpenModal('join')}
-              onMouseEnter={() => soundManager.playHover()}
-              className="relative group overflow-hidden px-4.5 py-2 rounded-xl font-black text-xs uppercase tracking-wider text-black bg-amber-500 hover:bg-amber-400 shadow-md shadow-amber-500/20 active:scale-95 transition-all duration-150 cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0"
+              className="px-5 py-2.5 rounded-xl font-black text-xs uppercase tracking-wider text-black bg-amber-500 hover:bg-amber-400 shadow-md shadow-amber-500/20 active:scale-95 transition-all duration-150 cursor-pointer flex items-center gap-1.5 whitespace-nowrap shrink-0"
             >
               <Sparkles className="w-3.5 h-3.5 fill-black" />
-              <span>JOIN NOW</span>
+              <span>BOOK FREE TRIAL</span>
             </button>
           </div>
 

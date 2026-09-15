@@ -19,11 +19,14 @@ import { leadStore } from '../../services/leadStore';
 import { soundManager } from '../common/SoundEffects';
 
 interface TrainersManagerPanelProps {
-  trainers: Trainer[];
-  onRefresh: () => void;
+  trainers?: Trainer[];
+  onRefresh?: () => void;
 }
 
-export const TrainersManagerPanel: React.FC<TrainersManagerPanelProps> = ({ trainers, onRefresh }) => {
+export const TrainersManagerPanel: React.FC<TrainersManagerPanelProps> = ({ 
+  trainers = leadStore.getTrainers(), 
+  onRefresh = () => {} 
+}) => {
   const [editingTrainer, setEditingTrainer] = useState<Trainer | null>(null);
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [certInput, setCertInput] = useState('');

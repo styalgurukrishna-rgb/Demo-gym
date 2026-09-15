@@ -21,8 +21,8 @@ export const OfflineNotice: React.FC = () => {
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
 
-    // Initial check
-    if (typeof navigator !== 'undefined' && !navigator.onLine) {
+    // Initial check: strictly only trigger if navigator explicitly reports false
+    if (typeof navigator !== 'undefined' && navigator.onLine === false) {
       setIsOffline(true);
     }
 

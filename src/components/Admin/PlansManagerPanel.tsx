@@ -21,11 +21,14 @@ import { soundManager } from '../common/SoundEffects';
 import { DeleteConfirmModal } from '../Modals/DeleteConfirmModal';
 
 interface PlansManagerPanelProps {
-  plans: PricingPlan[];
-  onRefresh: () => void;
+  plans?: PricingPlan[];
+  onRefresh?: () => void;
 }
 
-export const PlansManagerPanel: React.FC<PlansManagerPanelProps> = ({ plans, onRefresh }) => {
+export const PlansManagerPanel: React.FC<PlansManagerPanelProps> = ({ 
+  plans = leadStore.getPlans(), 
+  onRefresh = () => {} 
+}) => {
   const [editingPlan, setEditingPlan] = useState<PricingPlan | null>(null);
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [deletePlanTarget, setDeletePlanTarget] = useState<PricingPlan | null>(null);

@@ -3,7 +3,11 @@ import { Star, ChevronLeft, ChevronRight, Quote, Trophy } from 'lucide-react';
 import { TESTIMONIALS } from '../data/gymData';
 import { soundManager } from './common/SoundEffects';
 
-export const TestimonialsSection: React.FC = () => {
+interface TestimonialsSectionProps {
+  onJoinClick?: () => void;
+}
+
+export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ onJoinClick }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
