@@ -225,12 +225,12 @@ export const Hero: React.FC<HeroProps> = ({
       ref={heroRef}
       id="home"
       onMouseMove={handleMouseMove}
-      className="relative min-h-[90vh] lg:min-h-screen w-full flex items-center justify-center overflow-hidden pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 bg-[#09090c] bg-[radial-gradient(ellipse_80%_60%_at_50%_20%,rgba(245,158,11,0.06),transparent_80%),radial-gradient(ellipse_60%_50%_at_50%_80%,rgba(239,68,68,0.04),transparent_70%)]"
+      className="relative min-h-[calc(100vh-4rem)] lg:min-h-[calc(100vh-5rem)] w-full flex items-center justify-center overflow-hidden pt-8 sm:pt-12 md:pt-16 pb-16 sm:pb-20 bg-[#09090c] bg-[radial-gradient(ellipse_80%_60%_at_50%_20%,rgba(245,158,11,0.06),transparent_80%),radial-gradient(ellipse_60%_50%_at_50%_80%,rgba(239,68,68,0.04),transparent_70%)]"
     >
-      {/* 1. DEDICATED STABLE BACKGROUND IMAGE LAYER (Mounted, static, zero scroll-drop) */}
+      {/* 1. DEDICATED STABLE BACKGROUND IMAGE LAYER (Bleeds up behind translucent header) */}
       <div 
         id="hero-background-layer"
-        className="hero-background absolute inset-0 z-0 overflow-hidden pointer-events-none select-none bg-[#09090c]"
+        className="hero-background absolute -top-16 lg:-top-20 inset-x-0 bottom-0 z-0 overflow-hidden pointer-events-none select-none bg-[#09090c]"
       >
         {isVideoBg ? (
           <video

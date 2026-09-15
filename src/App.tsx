@@ -1,5 +1,5 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
-import { Navbar } from './components/Navbar';
+import { Header } from './components/Header';
 import { OfflineNotice } from './components/OfflineNotice';
 
 // Code-split auxiliary components so they don't block critical Header & Hero first paint
@@ -291,15 +291,15 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col selection:bg-amber-500 selection:text-black font-sans">
-      {/* 1. Top Sticky Navigation Bar */}
-      <Navbar
+      {/* 1. Top Fixed Navigation Header */}
+      <Header
         currentPage={currentPage}
         onNavigate={handleNavigate}
         onOpenModal={handleOpenModal}
       />
 
       {/* 2. Dynamic Page View Renderer */}
-      <main id="main-content" className={`flex-1 ${currentPage === 'home' ? 'pt-0' : 'pt-20 sm:pt-24'} pb-20 md:pb-0 bg-zinc-950 relative z-0`}>
+      <main id="main-content" className="flex-1 pt-16 lg:pt-20 pb-20 md:pb-0 bg-zinc-950 relative z-0">
         {currentPage === 'home' ? (
           <HomePage onNavigate={handleNavigate} onOpenModal={handleOpenModal} />
         ) : (
